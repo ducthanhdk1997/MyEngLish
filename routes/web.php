@@ -107,5 +107,7 @@ Route::get('Admin','HomeController@Admin');
 Route::group(['prefix'=>'admin'],function(){
 	Route::group(['prefix'=>'class'],function(){
 		Route::get('list','ClassController@getList');
+		Route::get('add','ClassController@add');
+		Route::get('adduser','ClassController@addUser');
 	});
 });

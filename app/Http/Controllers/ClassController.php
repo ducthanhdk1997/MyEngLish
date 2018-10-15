@@ -20,4 +20,13 @@ class ClassController extends Controller
     	// $grades = Grade::all();
     	return view('admin.classes.list');
     }
+
+    public function add()
+    {
+        return view('admin.classes.add');
+    }
+    public function addUser()
+    {
+        return view('admin.classes.adduser');
+    }
 }
