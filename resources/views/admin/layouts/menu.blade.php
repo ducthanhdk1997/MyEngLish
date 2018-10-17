@@ -34,10 +34,9 @@
           	</li>
           <li><a><i class="fa fa-desktop"></i>Quản lý lớp học<span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li><a href="#">Danh sách lớp học</a></li>
-              <li><a href="#">Mở lớp học</a></li>
-              <li><a href="#">Danh sách khối học</a></li>
-              <li><a href="#">Thêm mới khối học</a></li>
+              <li><a href="{{asset('admin/class/list')}}">Danh sách lớp học</a></li>
+              <li><a href="{{asset('admin/class/add')}}">Mở lớp học</a></li>
+              <li><a href="{{asset('admin/class/adduser')}}">Thêm học viên</a></li>
             </ul>
           </li>
           <li><a><i class="fa fa-table"></i>Quản lý bài tập <span class="fa fa-chevron-down"></span></a>
