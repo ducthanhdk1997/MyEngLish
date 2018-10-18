@@ -8,5 +8,5 @@ class Part extends Model
 {
     //
     protected $table = 'parts';
-    public $timestamps = false;
+
 }

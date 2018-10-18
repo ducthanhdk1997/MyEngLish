@@ -8,5 +8,4 @@ class Classroom extends Model
 {
     //
     protected $table = 'classroom';
-    public $timestamps = false;
 }

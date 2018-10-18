@@ -8,5 +8,4 @@ class Style_Exersice extends Model
 {
     //
     protected $table = 'style_exersice';
-    public $timestamps = false;
 }

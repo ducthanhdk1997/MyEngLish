@@ -8,5 +8,5 @@ class Question extends Model
 {
     //
     protected $table = 'questions';
-    public $timestamps = false;
+
 }

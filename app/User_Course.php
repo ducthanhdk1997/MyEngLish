@@ -8,5 +8,4 @@ class User_Course extends Model
 {
     //
     protected $table = 'user_course';
-    public $timestamps = false;
 }

@@ -8,5 +8,5 @@ class Grade extends Model
 {
     //
     protected $table = 'grades';
-    public $timestamps = false;
+
 }
