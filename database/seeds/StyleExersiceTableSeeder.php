@@ -12,5 +12,17 @@ class StyleExersiceTableSeeder extends Seeder
     public function run()
     {
         //
+        $styles = [
+            [
+                'name'=>'day'
+            ],
+            [
+                'name'=>'test'
+            ]
+        ];
+        foreach ($styles as $style)
+        {
+            \App\Style_Exercise::create($style);
+        }
     }
 }

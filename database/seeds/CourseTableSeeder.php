@@ -40,7 +40,7 @@ class CourseTableSeeder extends Seeder
                 'describe' =>'Khóa học dành cho các bạn muốn đạt trình độ B1',
                 'price'=>5600000,
                 'grade_id'=>3
-            ]
+            ],
             [
                 'name'=>"Khoa hoc Toeic dot 1",
                 'time_start' =>Carbon::parse('2018-10-01'),
