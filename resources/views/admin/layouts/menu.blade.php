@@ -25,27 +25,38 @@
       	<div class="menu_section">
         	<h3>Danh mục</h3>
         	<ul class="nav side-menu">
-          	<li><a><i class="fa fa-home"></i> Bài đăng và thông báo <span class="fa fa-chevron-down"></span></a>
+          	<li><a><i class="fa fa-home"></i>Quản lý trình độ <span class="fa fa-chevron-down"></span></a>
 	            <ul class="nav child_menu">
-	              <li><a href="#">Đăng bài mới</a></li>
-	              <li><a href="#">Danh sách bài đăng</a></li>
-	              <li><a href="#">Gửi thông báo</a></li>
+	              <li><a href="{{asset('admin/grade/list')}}">Danh sách trình độ</a></li>
+	              <li><a href="{{asset('admin/grade/add')}}">Thêm trình độ</a></li>
 	            </ul>
           	</li>
-          <li><a><i class="fa fa-desktop"></i>Quản lý lớp học<span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-              <li><a href="{{asset('admin/class/list')}}">Danh sách lớp học</a></li>
-              <li><a href="{{asset('admin/class/add')}}">Mở lớp học</a></li>
-              <li><a href="{{asset('admin/class/adduser')}}">Thêm học viên</a></li>
-            </ul>
-          </li>
-          <li><a><i class="fa fa-table"></i>Quản lý bài tập <span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-              <li><a href="#">Thêm bài tập</a></li>
-              <li><a href="#">Giao bài tập cho lớp</a></li>
-              <li><a href="#">Danh sách bài tập</a></li>
-            </ul>
-          </li>
+            <li><a><i class="fa fa-home"></i>Quản lý khóa học<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a href="{{asset('admin/course/list')}}">Danh sách khóa học</a></li>
+                    <li><a href="{{asset('admin/course/add')}}">Thêm mới khóa học</a></li>
+                </ul>
+            </li>
+            <li><a><i class="fa fa-desktop"></i>Quản lý lớp học<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a href="{{asset('admin/class/list')}}">Danh sách lớp học</a></li>
+                    <li><a href="{{asset('admin/class/add')}}">Mở lớp học</a></li>
+                    <li><a href="{{asset('admin/class/adduser')}}">Thêm học viên</a></li>
+                </ul>
+            </li>
+            <li><a><i class="fa fa-table"></i>Quản lý bài tập <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a href="{{asset('admin/exercise/add')}}">Thêm bài tập</a></li>
+                    <li><a href="{{asset('admin/exercise/assign')}}">Giao bài tập cho lớp</a></li>
+                    <li><a href="{{asset('admin/exercise/list')}}">Danh sách bài tập</a></li>
+                </ul>
+            </li>
+            <li><a><i class="fa fa-table"></i>Quản lý phòng học<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a href="#">Danh sách phòng</a></li>
+                    <li><a href="#">Thêm phòng học</a></li>
+                </ul>
+            </li>
           <li><a><i class="fa fa-clone"></i>Tạo tài khoản mới <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
               <li><a href="#">Admin</a></li>

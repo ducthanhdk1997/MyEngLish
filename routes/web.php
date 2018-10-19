@@ -110,4 +110,18 @@ Route::group(['prefix'=>'admin'],function(){
 		Route::get('add','ClassController@add');
 		Route::get('adduser','ClassController@addUser');
 	});
+	Route::group(['prefix'=>'grade'],function (){
+	    Route::get('list','GradeController@getList');
+	    Route::get('add','GradeController@add');
+    });
+	Route::group(['prefix'=>'course'],function (){
+        Route::get('list','CourseController@getList');
+        Route::get('add','CourseController@add');
+    });
+	Route::group(['prefix'=>'exercise'],function (){
+	   Route::get('list','ExerciseController@getList');
+	   Route::get('add','ExerciseController@add');
+	   Route::get('assign','ExerciseController@assign');
+    });
 });
+
