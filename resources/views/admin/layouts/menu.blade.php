@@ -53,8 +53,8 @@
             </li>
             <li><a><i class="fa fa-table"></i>Quản lý phòng học<span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                    <li><a href="#">Danh sách phòng</a></li>
-                    <li><a href="#">Thêm phòng học</a></li>
+                    <li><a href="{{asset('admin/classroom/list')}}">Danh sách phòng</a></li>
+                    <li><a href="{{asset('admin/classroom/add')}}">Thêm phòng học</a></li>
                 </ul>
             </li>
           <li><a><i class="fa fa-clone"></i>Tạo tài khoản mới <span class="fa fa-chevron-down"></span></a>

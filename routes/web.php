@@ -123,5 +123,10 @@ Route::group(['prefix'=>'admin'],function(){
 	   Route::get('add','ExerciseController@add');
 	   Route::get('assign','ExerciseController@assign');
     });
+    Route::group(['prefix'=>'classroom'],function (){
+        Route::get('list','ClassRoomController@getList');
+        Route::get('add','ClassRoomController@add');
+
+    });
 });
 
