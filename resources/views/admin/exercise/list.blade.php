@@ -1,8 +1,21 @@
 @extends('admin.layouts.index')
 @section('content')
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30 padding-t-30">
-        {{--   List Grade --}}
+        {{--   List Exercise --}}
+        <div class="form-group">
+            <label for="group_class">Chọn trình độ:</label>
+            <select class="form-control" id="group_class">
+                @foreach ($grades as $grade)
+                    @if($grade['ID']==1)
+                        <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
+                    @else
+                        <option value="{{$grade->id}}">{{$grade->name}}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
         <div class="panel panel-default rowlistClass ">
+
             <table class="table  table-hover">
                 <thead>
                 <tr>

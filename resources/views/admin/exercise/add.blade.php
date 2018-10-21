@@ -9,17 +9,15 @@
                 Vui lòng chuẩn bị đáp án trước khi tạo bài tập.
             </div>
             <div class="form-group">
-                <label for="group_class">Bài tập cho khối:</label>
-                <select class="form-control" id="group_class" name="group_class">
-<!--                    --><?php
-//                    foreach ($listGroup as $group) {
-//                        if($group['ID']==1)
-//                        {
-//                            echo '<option value="'.$group['ID'].'" selected>'.$group['Name'].'</option>';
-//                        }else{
-//                            echo '<option value="'.$group['ID'].'">'.$group['Name'].'</option>';
-//                        }
-//                    ?>
+                <label for="group_class">Chọn trình độ:</label>
+                <select class="form-control" id="group_class">
+                    @foreach ($grades as $grade)
+                        @if($grade['ID']==1)
+                            <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
+                        @else
+                            <option value="{{$grade->id}}">{{$grade->name}}</option>
+                        @endif
+                    @endforeach
                 </select>
             </div>
             <div class="form-group">

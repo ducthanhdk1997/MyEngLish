@@ -6,7 +6,13 @@
     <div class="form-group">
       <label for="group_class">Chọn trình độ:</label>
       <select class="form-control" id="group_class" name="IdGroup">
-      	<option value="1" selected>A1</option>'
+        @foreach ($grades as $grade)
+          @if($grade['ID']==1)
+            <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
+          @else
+            <option value="{{$grade->id}}">{{$grade->name}}</option>
+          @endif
+        @endforeach
       </select>
     </div>
     <div class="form-group">
