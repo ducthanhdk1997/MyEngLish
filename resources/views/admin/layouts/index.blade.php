@@ -47,6 +47,7 @@
 
         <!-- jQuery -->
     <script src="{{asset('admin_asset/js/IndexAdmin/indexAdmin.js')}}"></script>
+    @yield('script')
 	 
   </body>
 </html>

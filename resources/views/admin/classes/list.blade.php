@@ -4,7 +4,7 @@
 	{{--   Giao bai tap --}}
 	<div class="form-group">
 		<label for="group_class">Chọn trình độ:</label>
-		<select class="form-control" id="group_class">
+		<select class="form-control" id="grades">
 			 @foreach ($grades as $grade)
 				@if($grade['ID']==1)
 					<option value="{{$grade->id}}" selected>{{$grade->name}}</option>
@@ -20,17 +20,18 @@
 				<tr>
 					<th>STT</th>
 					<th>Tên lớp</th>
-					<th>Sĩ số</th>
 					<th></th>
 					<th></th>
 					<th></th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="list_class">
+			<?php $i=1;?>
+			@foreach($class as $class)
+				@if($class->grade_id==1)
 				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
+					<td>{{$i}}</td>
+					<td>{{$class->name}}</td>
 					<td class="data-table-edit">
 						<a class="" href=""><i class="fa fa-pencil"></i> Edit</a>
 					</td>
@@ -41,9 +42,26 @@
 						<a onclick="if(!confirm('Are you sure?')) return false;" class=" red" href=""><i class="fa fa-trash-o"></i> Delete</a>
 					</td>
 				</tr>
-
+				<?php $i++?>
+				@endif
+			@endforeach
 			</tbody>
 		</table>
 	</div>
 </div>
 @endsection
+
+@section('script')
+	<script>
+		$(document).ready(function () {
+			$('#grades').change(function () {
+				var grade_id = $(this).val();
+
+				$.get("{{asset('admin/ajax/class')}}"+"/"+grade_id,function (data) {
+
+					$('#list_class').html(data)
+                });
+            });
+        });
+	</script>
+@endsection()
