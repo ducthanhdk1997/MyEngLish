@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
@@ -15,7 +16,8 @@ class CourseController extends MasterController
 
     public  function getList()
     {
-        return view('admin.course.list');
+        $courses =  Course::all();
+        return view('admin.course.list',['courses'=>$courses]);
     }
 
     public  function  add()

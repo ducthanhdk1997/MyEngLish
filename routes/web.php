@@ -109,6 +109,7 @@ Route::group(['prefix'=>'admin'],function(){
 		Route::get('list','ClassController@getList');
 		Route::get('add','ClassController@add');
 		Route::get('adduser','ClassController@addUser');
+
 	});
 	Route::group(['prefix'=>'grade'],function (){
 	    Route::get('list','GradeController@getList');
@@ -133,7 +134,9 @@ Route::group(['prefix'=>'admin'],function(){
 //    group ajax
 
     Route::group(['prefix'=>'ajax'],function (){
-        Route::get('class/{grade_id}','AjaxController@getClass');
+        Route::get('class_type_table/{grade_id}','AjaxController@getClassTypeTable');
+        Route::get('class_type_select/{grade_id}','AjaxController@getClassTypeSelect');
+        Route::get('course_type_table/{grade_id}','AjaxController@getCourseTypeTable');
     });
 });
 

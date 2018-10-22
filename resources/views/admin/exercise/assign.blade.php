@@ -32,9 +32,19 @@
         </div>
 
         <div class="form-group">
-            <label for="exer">Chọn lớp:</label>
-            <select class="form-control list_class" id="lstClass" name="idClass">
-                <option value="1" selected>A1_No1</option>
+            <label for="group_class">Chọn lớp học:</label>
+
+            <select class="form-control" id="list_class" name="class_id">
+                <?php $i=1; ?>
+                @foreach($class as $class)
+                    @if($class->grade_id==1)
+                        @if($i==1)
+                            <option value="{{$class->id}}" selected>{{$class->name}}</option>'
+                        @else
+                            <option value="{{$class->id}}">{{$class->name}}</option>'
+                        @endif
+                    @endif
+                @endforeach
             </select>
         </div>
 
