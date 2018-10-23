@@ -3,6 +3,7 @@
 {{-- add user --}}
 <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30 padding-t-30"> 
   <form action="" method="POST">
+      <input type="hidden" name="_token" value="{{csrf_token()}}">
     <div class="form-group">
       <label for="group_class">Chọn trình độ:</label>
       <select class="form-control" id="grades" name="grade_id">

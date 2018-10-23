@@ -19,7 +19,6 @@
         @endif
         <form action="{{asset('admin/grade/add')}}" method="POST">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
-
             <div class="input-group new_grade">
                 <span class="input-group-addon">Tên trình độ:</span>
                 <input id="namegrade" type="text" class="form-control name_grade" name="name">

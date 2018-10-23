@@ -3,14 +3,15 @@
     <div class="post col-md-8 col-sm-8 col-xs-12 padding-r-l-30 padding-t-30">
 
         {{--Tao bai tap--}}
-        <form action="" method="POST">
+        <form action="{{asset('admin/exercise/add')}}" method="POST">
+            <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="alert alert-success fade in alert-dismissible" id="Info" style="margin-top:18px;">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
                 Vui lòng chuẩn bị đáp án trước khi tạo bài tập.
             </div>
             <div class="form-group">
-                <label for="group_class">Chọn trình độ:</label>
-                <select class="form-control" id="group_class">
+                <label for="list_grade">Chọn trình độ:</label>
+                <select class="form-control" id="grade_id">
                     @foreach ($grades as $grade)
                         @if($grade['ID']==1)
                             <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
@@ -23,16 +24,14 @@
             <div class="form-group">
                 <label for="style_exer">Chọn kiểu bài tập:</label>
                 <select class="form-control" id="style_exer" name="style_exer">
-<!--                    --><?php
-//                    foreach ($listStyle as $style) {
-//                        if($style['ID']==1)
-//                        {
-//                            echo '<option value="'.$style['ID'].'" selected>'.$style['Name'].'</option>';
-//                        }else{
-//                            echo '<option value="'.$style['ID'].'">'.$style['Name'].'</option>';
-//                        }
-//                    }
-//                    ?>
+                    echo '';
+                @foreach($style as $style)
+                    @if($style->id==1)
+                        <option value="{{$style->id}}" selected>{{$style->name}}</option>
+                    @else
+                        <option value="{{$style->id}}" >{{$style->name}}</option>
+                    @endif
+                @endforeach()
                 </select>
             </div>
             <div class="name_exer form-group">
@@ -75,7 +74,7 @@
             <div class="answer-sheet" id="answer-sheet">
 
             </div>
-            <button type="submit" class="btn btn-default">Thực hiện</button>
+            <button type="submit" class="btn btn-default" id="thuchien">Thực hiện</button>
 
         </form>
 
@@ -83,5 +82,8 @@
 
     </div>
 
+
+@endsection()
+@section('script')
     <script src="{{asset('admin_asset/js/Baitap/baitap.js')}}"></script>
 @endsection()

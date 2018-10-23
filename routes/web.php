@@ -124,6 +124,7 @@ Route::group(['prefix'=>'admin'],function(){
 	   Route::get('list','ExerciseController@getList');
 	   Route::get('add','ExerciseController@add');
 	   Route::get('assign','ExerciseController@assign');
+	   Route::post('add','ExerciseController@postExercise');
     });
     Route::group(['prefix'=>'classroom'],function (){
         Route::get('list','ClassRoomController@getList');

@@ -44,8 +44,6 @@
       </div>
     </div>
     @include('admin.layouts.js')
-
-        <!-- jQuery -->
     <script src="{{asset('admin_asset/js/IndexAdmin/indexAdmin.js')}}"></script>
     @yield('script')
 	 
