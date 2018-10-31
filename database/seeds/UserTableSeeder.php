@@ -13,8 +13,8 @@ class UserTableSeeder extends Seeder
     {
         $user =[
             'username'=>'admin',
-            'email'=>'nguyenthanhat1997@gmail.com',
-            'password'=>bcrypt('12345'),
+            'email'=>'root@gmail.com',
+            'password'=>bcrypt('secret'),
             'avatar'=>'admin.png',
             'gender'=>0,
             'phone'=> '0326196129',

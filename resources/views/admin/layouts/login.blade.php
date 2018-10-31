@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
@@ -20,48 +20,49 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('/build/css/custom.min.css')}}" rel="stylesheet">
-  </head>
+</head>
 
-  <body class="login">
-    <div>
-      <a class="hiddenanchor" id="signup"></a>
-      <a class="hiddenanchor" id="signin"></a>
+<body class="login">
+<div>
+    <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="signin"></a>
 
-      <div class="login_wrapper">
+    <div class="login_wrapper">
         <div class="animate form login_form">
-          <section class="login_content">
-            <form>
-              <h1>Login Form</h1>
-              <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
-              </div>
-              <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
-              </div>
-              <div>
-                <a class="btn btn-default submit" href="../../../../../gentelella/production/index.html">Log in</a>
-                <a class="reset_pass" href="#">Lost your password?</a>
-              </div>
+            <section class="login_content">
+                <form method="post" action="{{ route('admin.login') }}">
+                    @csrf
+                    <h1>Login Form</h1>
+                    <div>
+                        <input type="email" class="form-control" placeholder="Email" name="email"
+                               value="root@gmail.com"/>
+                    </div>
+                    <div>
+                        <input type="password" class="form-control" placeholder="Password" name="password"
+                               value="secret"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="remember"> Remember me
+                    </div>
+                    <div>
+                        <button class="btn btn-default" type="submit">Log in</button>
+                    </div>
+                    <div class="clearfix"></div>
 
-              <div class="clearfix"></div>
+                    <div class="separator">
+                        <div class="clearfix"></div>
+                        <br/>
 
-              <div class="separator">
-                <p class="change_link">New to site?
-                  <a href="#signup" class="to_register"> Create Account </a>
-                </p>
-
-                <div class="clearfix"></div>
-                <br />
-
-                <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
-                </div>
-              </div>
-            </form>
-          </section>
+                        <div>
+                            <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                            <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and
+                                Terms</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
         </div>
-      </div>
     </div>
-  </body>
+</div>
+</body>
 </html>
