@@ -11,6 +11,7 @@
 	@include('layouts.header')
 	<div id="content">
 		<h1>Duc Thanh</h1>
+		@include('flash::message')
 		@yield('NoiDung')
 	</div>
 	@include('layouts.footer')
