@@ -3,7 +3,7 @@ function initsophan(sophan)
 	var str="";
 	for(var i=1;i<=sophan;i++)
 	{
-		str = str+'<div class=" input-group" id="phan'+i+'">\
+		str = str+'<div class=" input-group" id="'+i+'">\
                 <span class="input-group-addon">Số câu phần '+i+'</span>\
                 <input id="socauphan'+i+'" type="text" class="form-control" name="socauphan'+i+'">\
               </div>'
@@ -16,7 +16,7 @@ function initkhungcacphan(sophanbaitap)
 	var strkhung="";
 	for(var i=1;i<=sophanbaitap;i++)
 	{
-		strkhung=strkhung+'	<div class="panel panel-default" id=phan'+i+'>\
+		strkhung=strkhung+'	<div class="panel panel-default" id='+i+'>\
             					<div class="panel-heading ">Phần '+i+'</div>\
             					<div class="panel-body padding-l-r-0 " id="bodyphan'+i+'">\
               						<div class="selection-left col-md-6 col-xs-6 col-sm-6" id="phan'+i+'left"></div>\
@@ -39,7 +39,7 @@ function initcau(sophanbaitap,strleft,strright)
 		{
 			if(j%2==0)
 			{
-				strright=strright+'<div id="cau'+j+'-'+i+'">\
+				strright=strright+'<div class="cauphai" id="cau'+j+'-'+i+'">\
               <label class="col-xs-4" style="text-align:right;" for="usr">Câu'+j+':</label>\
               <label class="radio-inline"><input type="radio" value="a" name="cau'+j+""+i+'" id="cau'+j+'a-'+i+'">A</label>\
               <label class="radio-inline"><input type="radio" value="b" name="cau'+j+""+i+'" id="cau'+j+'b-'+i+'">B</label>\
@@ -48,7 +48,7 @@ function initcau(sophanbaitap,strleft,strright)
             </div><div class="clearfix"></div>';
 			}
 			else{
-				strleft=strleft+'<div id="cau'+j+'-'+i+'">\
+				strleft=strleft+'<div class="cautrai" id="cau'+j+'-'+i+'">\
               <label class="col-xs-4" style="text-align:right;" for="usr">Câu '+j+':</label>\
               <label class="radio-inline"><input type="radio" value="a" name="cau'+j+""+i+'" id="cau'+j+'a-'+i+'">A</label>\
               <label class="radio-inline"><input type="radio" value="b" name="cau'+j+""+i+'" id="cau'+j+'b-'+i+'">B</label>\
@@ -62,13 +62,17 @@ function initcau(sophanbaitap,strleft,strright)
 	}
 }
 
-$(document).ready(function(){
 
+
+
+
+$(document).ready(function(){
+	var sophan;
 	$('#checktitle').hide();
 	$('#checksocau').hide();
 	var phanbaitap = $('#phan').val();
 	$('#phan').change(function(){
-		var sophan = $('#phan').val();
+		sophan = $('#phan').val();
 		phanbaitap=sophan;
 		$('#socau').html(initsophan(sophan));
 	});
@@ -94,5 +98,61 @@ $(document).ready(function(){
 		}
 		$('#answer-sheet').html(initkhungcacphan(phanbaitap));
 		initcau(phanbaitap);
-	})
+	});
+
+	$('#thuchien').click(function(){
+        for(var i=1;i<=phanbaitap;i++)
+        {
+            var socau = $('#socauphan'+i+'').val();
+
+
+
+
+            for(var j = 1;j<=socau;j++)
+            {
+                var checkcau=0;
+                if($('#cau'+j+'a'+'-'+i+'').is(':checked'))
+                {
+                    continue;
+                }
+                else{
+                    checkcau=checkcau+1;
+                }
+
+                if($('#cau'+j+'b'+'-'+i+'').is(':checked'))
+                {
+                    continue;
+                }
+                else{
+                    checkcau=checkcau+1;
+                }
+
+                if($('#cau'+j+'c'+'-'+i+'').is(':checked'))
+                {
+                    continue;
+                }
+                else{
+                    checkcau=checkcau+1;
+                }
+
+                if($('#cau'+j+'d'+'-'+i+'').is(':checked'))
+                {
+                    continue;
+                }
+                else{
+                    checkcau=checkcau+1;
+                }
+                if(checkcau==4)
+                {
+                    alert('Câu thứ '+j+' của phần '+i+' chưa được chọn');
+                    return false;
+                }
+            }
+
+        }
+
+	});
+
 });
+
+

@@ -21,4 +21,9 @@ class ExerciseController extends MasterController
     {
         return view('admin.exercise.assign');
     }
+
+    public  function  postExercise(Request $request )
+    {
+        echo $request;
+    }
 }

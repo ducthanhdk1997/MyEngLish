@@ -3,6 +3,7 @@
     {{-- new grade --}}
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30 padding-t-30">
         <form action="" method="GET">
+            <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="form-group">
                 <label for="group_class">Chọn trình độ:</label>
                 <select class="form-control" id="group_class">
@@ -15,9 +16,26 @@
                     @endforeach
                 </select>
             </div>
-            <div class="input-group new_grade">
-                <span class="input-group-addon">Tên khóa học:</span>
-                <input id="nameclass" type="text" class="form-control name_grade" name="namegrade">
+            <div class="form-group">
+                <label for="group_class">Tên khóa học:</label>
+                <input id="nameclass" type="text" class="form-control " id="name_course" name="name">
+            </div>
+
+            <div class="form-group">
+                <label for="group_class">Giá:</label>
+                <input id="nameclass" type="text" class="form-control" id="price" name="price">
+            </div>
+            <div class="form-group">
+                <label for="ex">Start</label>
+                <input class="form-control" id="start" type="date" name="start" min="">
+            </div>
+            <div class="form-group">
+                <label for="ex">End</label>
+                <input class="form-control" id="end" type="date" name="end" min="">
+            </div>
+            <div class="form-group">
+                <label for="group_class">Mô tả:</label>
+                <textarea   class="form-control " id="describe" rows="5" name="describe"> </textarea>
             </div>
             <button type="submit" class="btn btn-primary btnGroupClass ">Thêm</button>
         </form>

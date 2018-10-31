@@ -17,19 +17,18 @@ class ClassController extends MasterController
 
     public function getList()
     {
-    	 $class = Classes::all();
-    	 View::share('grades',Grade::all());
-    	return view('admin.classes.list',['class'=>$class]);
+
+    	return view('admin.classes.list');
     }
 
     public function add()
     {
-        View::share('grades',Grade::all());
+
         return view('admin.classes.add');
     }
     public function addUser()
     {
-        View::share('grades',Grade::all());
+
         return view('admin.classes.adduser');
     }
 }
