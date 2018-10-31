@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Classes;
 
-class HomeController extends Controller
+class HomeController extends MasterController
 {
     function __construct()
     {

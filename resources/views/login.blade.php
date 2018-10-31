@@ -24,8 +24,23 @@
                 <form action="{{asset('login')}}" method="POST">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <h1>Login Form</h1>
+                    @if(count($errors)>0)
+                        <div class="alert alert-danger">
+                            <strong>Danger!</strong>
+                            @foreach($errors->all() as $err)
+                                {{$err}}<br>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    @if(session('message'))
+                        <div class="alert alert-danger">
+                            <strong>Danger!</strong>
+                            {{session('message')}}
+                        </div>
+                    @endif
                     <div>
-                        <input type="text" class="form-control" placeholder="Username" required="" name="username" />
+                        <input type="email" class="form-control" placeholder="Email" required="" name="email" />
                     </div>
                     <div>
                         <input type="password" class="form-control" placeholder="Password" required="" name="password"/>

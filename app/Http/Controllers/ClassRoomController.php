@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ClassRoomController extends Controller
+class ClassRoomController extends MasterController
 {
     //
     function __construct()

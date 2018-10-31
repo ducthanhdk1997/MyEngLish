@@ -8,5 +8,5 @@ class User_Exersice extends Model
 {
     //
     protected $table = 'user_exersice';
-    public $timestamps = false;
+
 }

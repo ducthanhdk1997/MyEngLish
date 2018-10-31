@@ -18,6 +18,9 @@
 
 Route::get('setCookie','HomeController@setCookie');
 Route::get('getCookie','HomeController@getCookie');
+Route::get("",function (){
+  return View('welcome');
+});
 
 // upload file
 
@@ -28,10 +31,9 @@ Route::get('uploadFile',function(){
 Route::get('login',function (){
     return view('login');
 });
-Route::get('thanhcong',function(){
-    return view('thanhcong');
-});
+
 Route::post('login','UserController@login');
+Route::get('logout','UserController@logout');
 
 
 //blade template
@@ -45,12 +47,11 @@ Route::post('login','UserController@login');
 Route::get('Admin','HomeController@Admin');
 
 
-Route::group(['prefix'=>'admin'],function(){
+Route::group(['prefix'=>'admin','middleware'=>'has_positions'],function(){
 	Route::group(['prefix'=>'class'],function(){
 		Route::get('list','ClassController@getList');
 		Route::get('add','ClassController@add');
 		Route::get('adduser','ClassController@addUser');
-
 	});
 	Route::group(['prefix'=>'grade'],function (){
 	    Route::get('list','GradeController@getList');
@@ -70,7 +71,6 @@ Route::group(['prefix'=>'admin'],function(){
     Route::group(['prefix'=>'classroom'],function (){
         Route::get('list','ClassRoomController@getList');
         Route::get('add','ClassRoomController@add');
-
     });
 
 //    group ajax

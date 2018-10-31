@@ -12,7 +12,7 @@
 		      </a>
 		      <ul class="dropdown-menu dropdown-usermenu pull-right">
 		        <li><a href="#"> Profile</a></li>
-		        <li><a href="#"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+		        <li><a href="{{asset('logout')}}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 		      </ul>
 		    </li>
 
