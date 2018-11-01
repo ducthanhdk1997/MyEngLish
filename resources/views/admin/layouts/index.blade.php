@@ -27,6 +27,7 @@
           <!-- page content -->
           <div class="row" style="padding-top: 60px">
             <!-- page center content -->
+          @include('flash::message')
             @yield('content')
            
             <!-- end of page center content -->

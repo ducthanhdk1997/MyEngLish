@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::query()->paginate(10);
+        $users = User::query()->where('role_id', '<' , 4)->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
@@ -125,4 +125,5 @@ class UserController extends Controller
         }
         return redirect()->back();
     }
+
 }
