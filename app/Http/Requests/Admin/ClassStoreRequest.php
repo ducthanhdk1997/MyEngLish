@@ -24,7 +24,7 @@ class ClassStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:classes'
+            'name' => 'required|unique:class'
         ];
     }
 }
