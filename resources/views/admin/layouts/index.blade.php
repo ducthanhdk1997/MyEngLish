@@ -27,6 +27,15 @@
           <!-- page content -->
           <div class="row" style="padding-top: 60px">
             <!-- page center content -->
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+          @endif
           @include('flash::message')
             @yield('content')
            
