@@ -21,8 +21,15 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->default('qqq');
             $table->boolean('gender');
             $table->string('phone');
+            $table->unsignedInteger('role_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles')
+                ->ondelete('set null')
+                ->onupdate('cascade');
         });
     }
 

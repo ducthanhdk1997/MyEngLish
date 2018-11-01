@@ -47,7 +47,7 @@ Route::get('logout','UserController@logout');
 Route::get('Admin','HomeController@Admin');
 
 
-Route::group(['prefix'=>'admin','middleware'=>'has_positions'],function(){
+Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
 	Route::group(['prefix'=>'class'],function(){
 		Route::get('list','ClassController@getList');
 		Route::get('add','ClassController@add');
@@ -91,24 +91,17 @@ Route::redirect('/', 'admin');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
     Auth::routes();
-
     Route::group(['middleware' => 'auth'], function(){
         Route::get('/', 'Admin\DashboardController@index')->name('index');
-
         Route::group(['prefix' => 'users', 'as' => 'users.'], function (){
             Route::get('/', 'Admin\UserController@index')->name('index');
-
             Route::get('{user}/edit', 'Admin\UserController@edit')->name('edit');
             Route::put('{user}', 'Admin\UserCOntroller@update')->name('update');
-
             Route::get('create', 'Admin\UserController@create')->name('create');
             Route::post('create', 'Admin\UserController@store')->name('store');
-
             Route::delete('{user}', 'Admin\UserController@destroy')->name('delete');
         });
-
     });
-
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
