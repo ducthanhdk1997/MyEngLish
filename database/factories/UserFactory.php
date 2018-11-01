@@ -15,6 +15,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     $gender=[0=>0,1=>1];
+    $roles = [1 => 0, 2 => 1, 3 => 2, 4=> 3];
     return [
         'username' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -23,6 +24,6 @@ $factory->define(App\User::class, function (Faker $faker) {
         'avatar' => str_random(10).'png',
         'gender' => array_rand($gender),
         'phone' => $faker->phoneNumber,
-        'role_id'=>4,
+        'role_id'=> array_rand($roles),
     ];
 });

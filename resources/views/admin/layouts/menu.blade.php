@@ -58,16 +58,16 @@
                             <li><a href="{{asset('admin/classroom/add')}}">Thêm phòng học</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-clone"></i>Tạo tài khoản mới <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-user"></i>Quản lý giảng viên <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="#">Admin</a></li>
-                            <li><a href="#">Học viên</a></li>
+                            <li><a href="{{ route('admin.users.index') }}">Danh sách</a></li>
+                            <li><a href="{{ route('admin.users.create') }}">Thêm giảng viên</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-user"></i>Quản lý <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-user"></i>Quản lý học viên <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('admin.users.index') }}">Danh sách người dùng</a></li>
-                            <li><a href="{{ route('admin.users.create') }}">Thêm giảng viên</a></li>
+                            <li><a href="{{ route('admin.students.index') }}">Danh sách </a></li>
+                            <li><a href="{{ route('admin.students.create') }}">Thêm học viên</a></li>
                         </ul>
                     </li>
                 </ul>

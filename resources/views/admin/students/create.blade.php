@@ -5,7 +5,7 @@
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30 padding-t-30">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Danh sách người dùng</h2>
+                <h2>Thêm học viên</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -37,11 +37,23 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Chức vụ</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Số điện thoại</label>
                         <div class="col-sm-10">
-                            @foreach($roles as $role)
-                                <input type="radio" name="gender" value="{{ $role->id }}" {{ $role->name == "Học sinh" ? "disabled" : "" }}> {{ $role->name }}
-                            @endforeach
+                            <select name="class">
+                                @foreach($grade as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Số điện thoại</label>
+                        <div class="col-sm-10">
+                            <select name="class">
+                                @foreach($classes as $class)
+                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">

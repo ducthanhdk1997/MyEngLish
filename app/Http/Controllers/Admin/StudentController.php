@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Classes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -26,7 +27,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $classes = Classes::all();
+        return view('admin.students.create', compact('classes'));
     }
 
     /**
