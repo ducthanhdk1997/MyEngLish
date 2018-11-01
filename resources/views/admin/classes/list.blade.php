@@ -56,8 +56,8 @@
 		$(document).ready(function () {
 			$('#grades').change(function () {
 				var grade_id = $(this).val();
-
-				$.get("{{asset('admin/ajax/class_ty_table')}}"+"/"+grade_id,function (data) {
+				alert(grade_id);
+				$.get("{{asset('admin/ajax/classtypetable')}}"+"/"+grade_id,function (data) {
 					$('#list_class').html(data)
                 });
             });

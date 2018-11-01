@@ -68,7 +68,7 @@
             $('#list_grade').change(function () {
                 var grade_id = $(this).val();
 
-                $.get("{{asset('admin/ajax/course_type_table')}}"+"/"+grade_id,function (data) {
+                $.get("{{asset('admin/ajax/coursetypetable')}}"+"/"+grade_id,function (data) {
                     $('#list_course').html(data)
                 });
             })

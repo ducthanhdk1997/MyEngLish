@@ -37,11 +37,11 @@ class AjaxController extends Controller
 				</tr>'
                 );
             $i++;
-
-        }
+       }
     }
     public  function getClassTypeSelect($grade_id)
     {
+
         $class= Classes::where('grade_id',$grade_id)->get();
         $i=1;
         foreach ($class as $class)

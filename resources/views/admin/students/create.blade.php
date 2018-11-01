@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Số điện thoại</label>
                         <div class="col-sm-10">
-                            <select name="class">
+                            <select name="class" id="grades">
                                 @foreach($grades as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -49,9 +49,16 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Số điện thoại</label>
                         <div class="col-sm-10">
-                            <select name="class">
-                                @foreach($classes as $class)
-                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
+                            <select name="class" id="classes">
+                                <?php $i=1; ?>
+                                @foreach($class as $class)
+                                    @if($class->grade_id==1)
+                                        @if($i==1)
+                                            <option value="{{$class->id}}" selected>{{$class->name}}</option>'
+                                        @else
+                                            <option value="{{$class->id}}">{{$class->name}}</option>'
+                                        @endif
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -76,4 +83,16 @@
     </div>
     {{-- end of new class --}}
 
+@endsection()
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#grades').change(function () {
+                var grade_id = $(this).val();
+                $.get("{{asset('admin/ajax/classtypeselect')}}"+"/"+grade_id,function (data) {
+                    $('#classes').html(data)
+                });
+            });
+        });
+    </script>
 @endsection()

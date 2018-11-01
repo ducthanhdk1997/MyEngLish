@@ -80,10 +80,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 
 //    group ajax
 
-    Route::group(['prefix'=>'ajax'],function (){
-        Route::get('class_type_table/{grade_id}','AjaxController@getClassTypeTable');
-        Route::get('class_type_select/{grade_id}','AjaxController@getClassTypeSelect');
-        Route::get('course_type_table/{grade_id}','AjaxController@getCourseTypeTable');
+    Route::group(['prefix'=>'ajax','as'=>'ajax.'],function (){
+        Route::get('classtypetable/{grade_id}','Admin\AjaxController@getClassTypeTable')->name('classtypetable');
+        Route::get('classtypeselect/{grade_id}','Admin\AjaxController@getClassTypeSelect')->name('classtypeselect');
+        Route::get('coursetypetable/{grade_id}','Admin\AjaxController@getCourseTypeTable')->name('coursetypetable');
     });
 });
 
