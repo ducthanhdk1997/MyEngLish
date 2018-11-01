@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ExerciseController extends MasterController
+class ExerciseController extends Controller
 {
     //
     public  function getList()

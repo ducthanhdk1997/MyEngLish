@@ -6,7 +6,7 @@ use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
-class CourseController extends MasterController
+class CourseController extends Controller
 {
     //
     function __construct()

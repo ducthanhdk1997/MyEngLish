@@ -33,7 +33,7 @@
 					<td>{{$i}}</td>
 					<td>{{$class->name}}</td>
 					<td class="data-table-edit">
-						<a class="" href=""><i class="fa fa-pencil"></i> Edit</a>
+						<a class="" href="{{route('admin.class.edit'),$classgit}}"><i class="fa fa-pencil"></i> Edit</a>
 					</td>
 					<td class="data-table-edit">
 						<a class="" href=""><i class="fa fa-pencil"></i> Detail</a>

@@ -47,30 +47,35 @@ Route::get('logout','UserController@logout');
 Route::get('Admin','HomeController@Admin');
 
 
-Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
-	Route::group(['prefix'=>'class'],function(){
-		Route::get('list','ClassController@getList');
-		Route::get('add','ClassController@add');
-		Route::get('adduser','ClassController@addUser');
+Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
+    Route::group(['prefix'=>'grade','as'=>'grade.'],function (){
+        Route::get('list','Admin\GradeController@add')->name('list');
+        Route::get('add','Admin\GradeController@add')->name('add');
+        Route::post('add','Admin\GradeController@postGrade')->name('add');
+        Route::get('{grade}/edit','Admin\GradeController@getGrade')->name('edit');
+        Route::post('{grade}/edit','Admin\GradeController@setName')->name('edit');
+    });
+	Route::group(['prefix'=>'class','as'=>'class.'],function(){
+		Route::get('list','Admin\ClassController@getList')->name('list');
+		Route::get('add','Admin\ClassController@add')->name('add');
+		Route::get('adduser','Admin\ClassController@addUser')->name('adduser');
+		Route::get('{class}/edit','Admin\ClassController@getClass')->name('edit');
+		Route::post('{class}/edit','Admin\ClassController@setName')->name('edit');
 	});
-	Route::group(['prefix'=>'grade'],function (){
-	    Route::get('list','GradeController@getList');
-	    Route::get('add','GradeController@add');
-        Route::post('add','GradeController@postGrade');
+
+	Route::group(['prefix'=>'course','as'=>'course.'],function (){
+        Route::get('list','CourseController@getList')->name('list');
+        Route::get('add','CourseController@add')->name('add');
     });
-	Route::group(['prefix'=>'course'],function (){
-        Route::get('list','CourseController@getList');
-        Route::get('add','CourseController@add');
+	Route::group(['prefix'=>'exersice','as'=>'exersice.'],function (){
+	   Route::get('list','ExerciseController@getList')->name('list');
+	   Route::get('add','ExerciseController@add')->name('add');
+	   Route::get('assign','ExerciseController@assign')->name('assign');
+	   Route::post('add','ExerciseController@postExercise')->name('add');
     });
-	Route::group(['prefix'=>'exercise'],function (){
-	   Route::get('list','ExerciseController@getList');
-	   Route::get('add','ExerciseController@add');
-	   Route::get('assign','ExerciseController@assign');
-	   Route::post('add','ExerciseController@postExercise');
-    });
-    Route::group(['prefix'=>'classroom'],function (){
-        Route::get('list','ClassRoomController@getList');
-        Route::get('add','ClassRoomController@add');
+    Route::group(['prefix'=>'classroom','as'=>'classroom.'],function (){
+        Route::get('list','ClassRoomController@getList')->name('list');
+        Route::get('add','ClassRoomController@add')->name('add');
     });
 
 //    group ajax
