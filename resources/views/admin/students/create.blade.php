@@ -40,7 +40,7 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">Số điện thoại</label>
                         <div class="col-sm-10">
                             <select name="class">
-                                @foreach($grade as $item)
+                                @foreach($grades as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
