@@ -91,12 +91,12 @@ Route::redirect('/', 'admin');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
     Auth::routes();
-
     Route::group(['middleware' => 'auth'], function(){
         Route::get('/', 'Admin\DashboardController@index')->name('index');
-
         Route::group(['prefix' => 'users', 'as' => 'users.'], function (){
             Route::get('/', 'Admin\UserController@index')->name('index');
+
+            Route::get('{user}/detail', 'Admin\UserController@show')->name('detail');
 
             Route::get('{user}/edit', 'Admin\UserController@edit')->name('edit');
             Route::put('{user}', 'Admin\UserCOntroller@update')->name('update');
@@ -106,9 +106,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
 
             Route::delete('{user}', 'Admin\UserController@destroy')->name('delete');
         });
-
     });
-
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

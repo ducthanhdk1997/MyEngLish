@@ -37,10 +37,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Quyền</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Chức vụ</label>
                         <div class="col-sm-10">
                             @foreach($roles as $role)
-                                <input type="radio" name="gender" value="{{ $role->id }}"> {{ $role->name }}
+                                <input type="radio" name="gender" value="{{ $role->id }}" {{ $role->name == "Học sinh" ? "disabled" : "" }}> {{ $role->name }}
                             @endforeach
                         </div>
                     </div>

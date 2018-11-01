@@ -16,6 +16,7 @@
                             <th>Tên</th>
                             <th>Email</th>
                             <th>Số điện thoại</th>
+                            <th>Chức vụ</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -23,15 +24,18 @@
                         @foreach($users as $user)
                             <tr>
                                 <th scope="row">{{ $user->id }}</th>
-                                <td>{{ $user->username }}</td>
+                                <td><a href="{{ route('admin.users.detail', $user) }}">{{ $user->username }}</a></td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone }}</td>
+                                <td>{{ $user->role->name }}</td>
                                 <td>
-                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-success"><i class="fa fa-edit"></i> Sửa</a>
+                                    <button href="{{ route('admin.users.edit', $user) }}" class="btn btn-success" {{ Auth::user()->role_id != 1 ? "disabled" : ""}}>
+                                        <i class="fa fa-edit"></i> Sửa
+                                    </button>
                                     <form action="{{ route('admin.users.delete', $user) }}" method="post" style="display: inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"><i class="fa fa-remove"></i> Xóa</button>
+                                        <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id != 1 ? "disabled" : ""}}><i class="fa fa-remove"></i> Xóa</button>
                                     </form>
                                 </td>
                             </tr>

@@ -16,7 +16,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        dd(Auth::user()->role_id);
         $users = User::query()->paginate(10);
         return view('admin.users.index', compact('users'));
     }
@@ -28,8 +27,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        return view('admin.users.create', compact('roles'));
+        if(\Auth::user()->role_id == 1){
+            $roles = Role::all();
+            return view('admin.users.create', compact('roles'));
+        }
+        return redirect()->route('admin.index');
+
     }
 
     /**
@@ -40,29 +43,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd(Auth::user()->role_id);
-        if(Auth::user()->role_id < 4){
-            $user = new User();
-            $user->username = $request->name;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->gender = $request->gender;
-            if (strlen($request->password) > 0){
-                $user->password = bcrypt($request->password);
-            }
-            else{
-                $user->password = bcrypt('secret');
-            }
-            dd($user);
-            if($user->save()){
-                flash()->success('Thêm người dùng thành công');
-                return redirect()->route('admin.users.index');
-            }
-            else{
-                flash()->error('Thêm ngời dùng thất bại');
-            }
+        $user = new User();
+        $user->username = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->gender = $request->gender;
+        if (strlen($request->password) > 0){
+            $user->password = bcrypt($request->password);
         }
-
+        else{
+            $user->password = bcrypt('secret');
+        }
+        dd($user);
+        if($user->save()){
+            flash()->success('Thêm người dùng thành công');
+            return redirect()->route('admin.users.index');
+        }
+        else{
+            flash()->error('Thêm ngời dùng thất bại');
+        }
     }
 
     /**
@@ -71,9 +70,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('admin.users.detail', compact('user'));
     }
 
     /**

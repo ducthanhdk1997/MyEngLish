@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
             'avatar'=>'admin.png',
             'gender'=>0,
             'phone'=> '0326196129',
-
+            'role_id' =>1,
         ];
 
         \App\User::create($user);
