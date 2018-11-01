@@ -12,11 +12,7 @@
 		      </a>
 		      <ul class="dropdown-menu dropdown-usermenu pull-right">
 		        <li><a href="#"> Profile</a></li>
-<<<<<<< HEAD
-		        <li><a href="{{asset('logout')}}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-=======
 		        <li><a href="{{ route('admin.logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
->>>>>>> 058f3da6f6832471126d0ec18e18cdedfa626f07
 		      </ul>
 		    </li>
 

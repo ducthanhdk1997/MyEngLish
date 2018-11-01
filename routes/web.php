@@ -94,14 +94,35 @@ Route::redirect('/', 'admin');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
     Auth::routes();
+
     Route::group(['middleware' => 'auth'], function(){
         Route::get('/', 'Admin\DashboardController@index')->name('index');
+
         Route::group(['prefix' => 'users', 'as' => 'users.'], function (){
             Route::get('/', 'Admin\UserController@index')->name('index');
+
+            Route::get('{user}/detail', 'Admin\UserController@show')->name('detail');
+
             Route::get('{user}/edit', 'Admin\UserController@edit')->name('edit');
             Route::put('{user}', 'Admin\UserCOntroller@update')->name('update');
+
             Route::get('create', 'Admin\UserController@create')->name('create');
             Route::post('create', 'Admin\UserController@store')->name('store');
+
+            Route::delete('{user}', 'Admin\UserController@destroy')->name('delete');
+        });
+
+        Route::group(['prefix' => 'students', 'as' => 'users.'], function (){
+            Route::get('/', 'Admin\StudentController@index')->name('index');
+
+            Route::get('{user}/detail', 'Admin\UserController@show')->name('detail');
+
+            Route::get('{user}/edit', 'Admin\UserController@edit')->name('edit');
+            Route::put('{user}', 'Admin\UserCOntroller@update')->name('update');
+
+            Route::get('create', 'Admin\UserController@create')->name('create');
+            Route::post('create', 'Admin\UserController@store')->name('store');
+
             Route::delete('{user}', 'Admin\UserController@destroy')->name('delete');
         });
     });

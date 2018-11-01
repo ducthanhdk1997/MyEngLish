@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::query()->paginate(10);
+        $users = User::query()->where('role_id', '<' , 4)->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
@@ -27,8 +27,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        return view('admin.users.create', compact('roles'));
+        if(\Auth::user()->role_id == 1){
+            $roles = Role::all();
+            return view('admin.users.create', compact('roles'));
+        }
+        return redirect()->route('admin.index');
+
     }
 
     /**
@@ -66,9 +70,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('admin.users.detail', compact('user'));
     }
 
     /**
@@ -121,4 +125,5 @@ class UserController extends Controller
         }
         return redirect()->back();
     }
+
 }
