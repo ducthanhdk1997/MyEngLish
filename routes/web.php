@@ -49,16 +49,18 @@ Route::get('Admin','HomeController@Admin');
 
 Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
     Route::group(['prefix'=>'grade','as'=>'grade.'],function (){
-        Route::get('list','Admin\GradeController@getList')->name('list');
+        Route::get('list','Admin\GradeController@add')->name('list');
         Route::get('add','Admin\GradeController@add')->name('add');
         Route::post('add','Admin\GradeController@postGrade')->name('add');
         Route::get('{grade}/edit','Admin\GradeController@getGrade')->name('edit');
         Route::post('{grade}/edit','Admin\GradeController@setName')->name('edit');
     });
 	Route::group(['prefix'=>'class','as'=>'class.'],function(){
-		Route::get('list','ClassController@getList')->name('list');
-		Route::get('add','ClassController@add')->name('add');
-		Route::get('adduser','ClassController@addUser')->name('adduser');
+		Route::get('list','Admin\ClassController@getList')->name('list');
+		Route::get('add','Admin\ClassController@add')->name('add');
+		Route::get('adduser','Admin\ClassController@addUser')->name('adduser');
+		Route::get('{class}/edit','Admin\ClassController@getClass')->name('edit');
+		Route::post('{class}/edit','Admin\ClassController@setName')->name('edit');
 	});
 
 	Route::group(['prefix'=>'course','as'=>'course.'],function (){

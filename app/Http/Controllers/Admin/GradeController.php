@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Grade;
+use App\Http\Requests\Admin\GradeStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\ResPonse;
 use App\PI_Amount;
@@ -27,19 +28,20 @@ class GradeController extends Controller
         return view('admin.grade.add');
     }
 
-    public  function  postGrade(Request $request)
+    public  function  postGrade(GradeStoreRequest $request)
     {
-        $this->validate($request,
-            [
-                'name' => 'required'
-            ],
-            [
-                'name.required' =>'Bạn chưa nhập tên'
-            ]);
+
         $grade = new Grade();
         $grade->name =$request->name;
-        $grade->save();
-        return redirect('admin/grade/add')->with('message','Thêm thành công');
+        if($grade->save())
+        {
+            flash()->success('Them thanh cong');
+            return redirect()->route('admin.grade.add');
+        }
+        else
+        {
+            flash()->error('Them that bai');
+        }
     }
 
     public function getGrade(Grade $grade)
@@ -48,16 +50,16 @@ class GradeController extends Controller
         return view('admin.grade.edit',compact('grade'));
     }
 
-    public  function  setName(Request $request,Grade $grade)
+    public  function  setName(GradeStoreRequest $request,Grade $grade)
     {
-        $this->validate($request,[
-            'name' => 'required'
-        ],
-        [
-            'name.required' => 'Bạn chưa nhập tên'
-        ]);
         $grade->name=$request->name;
-        $grade->save();
-        return redirect()->route('admin.grade.list')->with('message','Sửa tên thành công');
+        if($grade->save()){
+            flash()->success('Sua thanh cong');
+            return redirect()->route('admin.grade.list');
+        }
+        else{
+            flash()->error('Sua that bai');
+        }
+
     }
 }

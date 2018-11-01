@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Classes;
 use App\Grade;
+use function Sodium\compare;
 
-class ClassController extends MasterController
+
+class ClassController extends Controller
 {
     //
     function __construct()
@@ -30,5 +32,10 @@ class ClassController extends MasterController
     {
 
         return view('admin.classes.adduser');
+    }
+
+    public function getClass(Classes $classes)
+    {
+        return view('admin.classes.edit',compact($classes));
     }
 }
