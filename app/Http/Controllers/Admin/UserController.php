@@ -126,4 +126,13 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    public function search(Request $request){
+
+        $key = $request->key;
+        $users = User::query()
+            ->where('username',  'like', "%$key%")
+            ->paginate(10);
+        return view('admin.users.search', compact('users', 'key'));
+    }
+
 }

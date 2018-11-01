@@ -105,6 +105,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
 
             Route::get('{user}/detail', 'Admin\UserController@show')->name('detail');
 
+            ROute::get('search', 'Admin\UserController@search')->name('search');
+
             Route::get('{user}/edit', 'Admin\UserController@edit')->name('edit');
             Route::put('{user}', 'Admin\UserCOntroller@update')->name('update');
 
@@ -114,18 +116,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
             Route::delete('{user}', 'Admin\UserController@destroy')->name('delete');
         });
 
-        Route::group(['prefix' => 'students', 'as' => 'users.'], function (){
+        Route::group(['prefix' => 'students', 'as' => 'students.'], function (){
             Route::get('/', 'Admin\StudentController@index')->name('index');
 
-            Route::get('{user}/detail', 'Admin\UserController@show')->name('detail');
+            Route::get('{user}/detail', 'Admin\StudentController@show')->name('detail');
 
-            Route::get('{user}/edit', 'Admin\UserController@edit')->name('edit');
-            Route::put('{user}', 'Admin\UserCOntroller@update')->name('update');
+            Route::get('{user}/edit', 'Admin\StudentController@edit')->name('edit');
+            Route::put('{user}', 'Admin\StudentController@update')->name('update');
 
-            Route::get('create', 'Admin\UserController@create')->name('create');
-            Route::post('create', 'Admin\UserController@store')->name('store');
+            Route::get('create', 'Admin\StudentController@create')->name('create');
+            Route::post('create', 'Admin\StudentController@store')->name('store');
 
-            Route::delete('{user}', 'Admin\UserController@destroy')->name('delete');
+            Route::delete('{user}', 'Admin\StudentController@destroy')->name('delete');
         });
     });
 });
