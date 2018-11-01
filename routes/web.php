@@ -47,7 +47,7 @@ Route::get('logout','UserController@logout');
 Route::get('Admin','HomeController@Admin');
 
 
-Route::group(['prefix'=>'admin','middleware'=>'has_positions'],function(){
+Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
 	Route::group(['prefix'=>'class'],function(){
 		Route::get('list','ClassController@getList');
 		Route::get('add','ClassController@add');

@@ -67,7 +67,7 @@
                     <li><a><i class="fa fa-user"></i>Quản lý <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{ route('admin.users.index') }}">Danh sách người dùng</a></li>
-                            <li><a href="{{ route('admin.users.create') }}">Thêm người dùng</a></li>
+                            <li><a href="{{ route('admin.users.create') }}">Thêm giảng viên</a></li>
                         </ul>
                     </li>
                 </ul>
