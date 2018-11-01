@@ -38,21 +38,24 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+                            $i = 1;
+                        ?>
                         @foreach($users as $user)
                             <tr>
-                                <th scope="row">{{ $user->id }}</th>
+                                <th scope="row">{{ $i++ }}</th>
                                 <td><a href="{{ route('admin.users.detail', $user) }}">{{ $user->username }}</a></td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone }}</td>
                                 <td>{{ $user->role->name }}</td>
                                 <td>
-                                    <button href="{{ route('admin.users.edit', $user) }}" class="btn btn-success" {{ Auth::user()->role_id != 1 ? "disabled" : ""}}>
+                                    <a href="{{ route('admin.students.edit', $user) }}" class="btn btn-success" {{ Auth::user()->role_id == 4 ? "disabled" : ""}}>
                                         <i class="fa fa-edit"></i> Sửa
-                                    </button>
+                                    </a>
                                     <form action="{{ route('admin.users.delete', $user) }}" method="post" style="display: inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id != 1 ? "disabled" : ""}}><i class="fa fa-remove"></i> Xóa</button>
+                                        <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id == 4 ? "disabled" : ""}}><i class="fa fa-remove"></i> Xóa</button>
                                     </form>
                                 </td>
                             </tr>

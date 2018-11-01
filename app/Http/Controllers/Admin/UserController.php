@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\UserStoreRequest;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::query()->where('role_id', '<' , 4)->paginate(10);
+        $users = User::query()->where('role_id', '!=', 4)->groupBy('id')->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
@@ -41,20 +42,20 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         $user = new User();
         $user->username = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->gender = $request->gender;
+        $user->role_id = $request->role;
         if (strlen($request->password) > 0){
             $user->password = bcrypt($request->password);
         }
         else{
             $user->password = bcrypt('secret');
         }
-        dd($user);
         if($user->save()){
             flash()->success('Thêm người dùng thành công');
             return redirect()->route('admin.users.index');
@@ -93,7 +94,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserStoreRequest $request, User $user)
     {
         $user->username = $request->name;
         $user->email = $request->email;
@@ -126,7 +127,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function search(Request $request){
+    public function search(UserStoreRequest $request){
 
         $key = $request->key;
         $users = User::query()

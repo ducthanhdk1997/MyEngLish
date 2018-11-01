@@ -9,24 +9,24 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <form class="form-horizontal" action="{{ route('admin.users.store') }}" method="post">
+                <form class="form-horizontal" action="{{ route('admin.students.store') }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Tên</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="name" placeholder="Nhập họ tên">
+                            <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nhập họ tên">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" name="email" placeholder="Nhập email">
+                            <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Nhập email">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Số điện thoại</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="phone" placeholder="Nhập họ tên" >
+                            <input type="text" class="form-control" name="phone" value="{{ old('phone') }}" placeholder="Nhập họ tên" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -37,9 +37,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Số điện thoại</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Cấp độ</label>
                         <div class="col-sm-10">
-                            <select name="class" id="grades">
+                            <select name="class" id="grades" class="form-control" style="width: 10%">
                                 @foreach($grades as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -47,16 +47,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Số điện thoại</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Lớp</label>
                         <div class="col-sm-10">
-                            <select name="class" id="classes">
+                            <select name="class" id="classes"  class="form-control" style="width: 10%">
                                 <?php $i=1; ?>
                                 @foreach($class as $class)
-                                    @if($class->grade_id==1)
+                                    @if($class->grade_id == 1)
                                         @if($i==1)
-                                            <option value="{{$class->id}}" selected>{{$class->name}}</option>'
+                                            <option value="{{ $class->id }}" selected>{{ $class->name }}</option>'
                                         @else
-                                            <option value="{{$class->id}}">{{$class->name}}</option>'
+                                            <option value="{{ $class->id }}">{{ $class->name }}</option>'
                                         @endif
                                     @endif
                                 @endforeach

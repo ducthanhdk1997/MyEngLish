@@ -9,7 +9,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <form class="form-horizontal" action="{{ route('admin.users.update', $user) }}" method="post">
+                <form class="form-horizontal" action="{{ route('admin.students.update', $user) }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
