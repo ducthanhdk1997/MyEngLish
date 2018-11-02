@@ -3,7 +3,7 @@
     <div class="post col-md-8 col-sm-8 col-xs-12 padding-r-l-30 padding-t-30">
 
         {{--Tao bai tap--}}
-        <form action="{{asset('admin/exercise/add')}}" method="POST">
+        <form action="{{route('admin.exercise.add')}}" method="POST">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="alert alert-success fade in alert-dismissible" id="Info" style="margin-top:18px;">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
@@ -11,7 +11,7 @@
             </div>
             <div class="form-group">
                 <label for="list_grade">Chọn trình độ:</label>
-                <select class="form-control" id="grade_id">
+                <select class="form-control" id="grade_id" name="grade_id">
                     @foreach ($grades as $grade)
                         @if($grade['ID']==1)
                             <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
@@ -23,8 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="style_exer">Chọn kiểu bài tập:</label>
-                <select class="form-control" id="style_exer" name="style_exer">
-                    echo '';
+                <select class="form-control" id="style_exer" name="style_id">
                 @foreach($style as $style)
                     @if($style->id==1)
                         <option value="{{$style->id}}" selected>{{$style->name}}</option>
@@ -36,15 +35,15 @@
             </div>
             <div class="name_exer form-group">
                 <label for="tenbaitap">Chọn tên bài tập:</label>
-                <input  type="text" class="form-control" name="tenbaitap" id="tenbaitap" >
+                <input  type="text" class="form-control" name="name" id="tenbaitap" >
             </div>
             <div class="alert alert-danger fade in alert-dismissible" id="checktitle">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
                 Tên bài tập không được rỗng
             </div>
             <div class="form-group">
-                <label for="usr">Số phần của câu:</label>
-                <select class="form-control" id="phan" name="past_of_exer">
+                <label for="usr">Bài tập có số phần?:</label>
+                <select class="form-control" id="phan" name="num_part">
                     <option value='1' selected>1</option>
                     <option value='2'>2</option>
                     <option value='3'>3</option>

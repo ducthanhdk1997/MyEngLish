@@ -68,11 +68,11 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
         Route::get('list','CourseController@getList')->name('list');
         Route::get('add','CourseController@add')->name('add');
     });
-	Route::group(['prefix'=>'exersice','as'=>'exersice.'],function (){
+	Route::group(['prefix'=>'exercise','as'=>'exercise.'],function (){
 	   Route::get('list','ExerciseController@getList')->name('list');
 	   Route::get('add','ExerciseController@add')->name('add');
+        Route::post('add','ExerciseController@postExercise')->name('add');
 	   Route::get('assign','ExerciseController@assign')->name('assign');
-	   Route::post('add','ExerciseController@postExercise')->name('add');
     });
     Route::group(['prefix'=>'classroom','as'=>'classroom.'],function (){
         Route::get('list','ClassRoomController@getList')->name('list');

@@ -47,9 +47,9 @@
                     </li>
                     <li><a><i class="fa fa-table"></i>Quản lý bài tập <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{route('admin.exersice.add')}}">Thêm bài tập</a></li>
-                            <li><a href="{{route('admin.exersice.assign')}}">Giao bài tập cho lớp</a></li>
-                            <li><a href="{{route('admin.exersice.list')}}">Danh sách bài tập</a></li>
+                            <li><a href="{{route('admin.exercise.add')}}">Thêm bài tập</a></li>
+                            <li><a href="{{route('admin.exercise.assign')}}">Giao bài tập cho lớp</a></li>
+                            <li><a href="{{route('admin.exercise.list')}}">Danh sách bài tập</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-table"></i>Quản lý phòng học<span class="fa fa-chevron-down"></span></a>

@@ -38,8 +38,15 @@ class ClassController extends Controller
     {
         $classes->name=$request->name;
         $classes->grade_id = $request->grade_id;
-        echo $classes->name;
-        die();
+        if($classes->save())
+        {
+            flash()->success('Thêm lớp thành công');
+            return redirect()->route('admin.class.list');
+        }
+        else
+        {
+            flash()->error('Thêm thất bại');
+        }
     }
 
     public function getClass(Classes $class)
