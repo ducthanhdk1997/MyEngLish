@@ -2,11 +2,11 @@
 @section('content')
 {{-- new class --}}
 <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30 padding-t-30"> 
-  <form action="" method="GET">
+  <form action="" method="POST">
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <div class="form-group">
       <label for="group_class">Chọn trình độ:</label>
-      <select class="form-control" id="group_class" name="IdGroup">
+      <select class="form-control" id="group_class" name="grade_id">
           @foreach ($grades as $grade)
               @if($grade['ID']==1)
                   <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
@@ -18,9 +18,9 @@
     </div>
     <div class="input-group new_class">
       <span class="input-group-addon">Tên lớp:</span>
-      <input id="nameclass" type="text" class="form-control name_class" name="nameclass">
+      <input id="nameclass" type="text" class="form-control name_class" name="name">
     </div>
-    <button type="submit" class="btn btn-primary btnGroupClass ">Thêm</button>
+    <button type="submit" class="btn btn-primary  ">Thêm</button>
   </form>
 </div>
 {{-- end of new class --}}

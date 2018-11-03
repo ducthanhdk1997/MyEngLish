@@ -49,7 +49,7 @@ Route::get('Admin','HomeController@Admin');
 
 Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
     Route::group(['prefix'=>'grade','as'=>'grade.'],function (){
-        Route::get('list','Admin\GradeController@add')->name('list');
+        Route::get('list','Admin\GradeController@getList')->name('list');
         Route::get('add','Admin\GradeController@add')->name('add');
         Route::post('add','Admin\GradeController@postGrade')->name('add');
         Route::get('{grade}/edit','Admin\GradeController@getGrade')->name('edit');
@@ -58,20 +58,21 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 	Route::group(['prefix'=>'class','as'=>'class.'],function(){
 		Route::get('list','Admin\ClassController@getList')->name('list');
 		Route::get('add','Admin\ClassController@add')->name('add');
+		Route::post('add','Admin\ClassController@postClass')->name('add');
 		Route::get('adduser','Admin\ClassController@addUser')->name('adduser');
 		Route::get('{class}/edit','Admin\ClassController@getClass')->name('edit');
-		Route::post('{class}/edit','Admin\ClassController@setName')->name('edit');
+		Route::post('{class}/edit','Admin\ClassController@setName')->name('update');
 	});
 
 	Route::group(['prefix'=>'course','as'=>'course.'],function (){
         Route::get('list','CourseController@getList')->name('list');
         Route::get('add','CourseController@add')->name('add');
     });
-	Route::group(['prefix'=>'exersice','as'=>'exersice.'],function (){
+	Route::group(['prefix'=>'exercise','as'=>'exercise.'],function (){
 	   Route::get('list','ExerciseController@getList')->name('list');
 	   Route::get('add','ExerciseController@add')->name('add');
+        Route::post('add','ExerciseController@postExercise')->name('add');
 	   Route::get('assign','ExerciseController@assign')->name('assign');
-	   Route::post('add','ExerciseController@postExercise')->name('add');
     });
     Route::group(['prefix'=>'classroom','as'=>'classroom.'],function (){
         Route::get('list','ClassRoomController@getList')->name('list');
