@@ -88,7 +88,10 @@
             <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
             </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="#">
+            <form id="logout-form" style="display: none" action="{{route('admin.logout')}}" method="POST">
+                @csrf
+            </form>
+            <a onclick="document.getElementById('logout-form').submit()">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
         </div>

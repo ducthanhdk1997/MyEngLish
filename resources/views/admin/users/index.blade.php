@@ -49,13 +49,15 @@
                                 <td>{{ $user->phone }}</td>
                                 <td>{{ $user->role->name }}</td>
                                 <td>
-                                    <button href="{{ route('admin.users.edit', $user) }}" class="btn btn-success" {{ Auth::user()->role_id != 1 ? "disabled" : ""}}>
+                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-success" {{ Auth::user()->role_id != 1 ? "disabled" : ""}}>
                                         <i class="fa fa-edit"></i> Sửa
-                                    </button>
+                                    </a>
                                     <form action="{{ route('admin.users.delete', $user) }}" method="post" style="display: inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id != 1 ? "disabled" : ""}}><i class="fa fa-remove"></i> Xóa</button>
+                                        <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id != 1 ? "disabled" : ""}} onclick='return confirm("Bạn có muốn xóa " + "\"" + "{{ $user->username }}" + "\"")'>
+                                            <i class="fa fa-remove"></i> Xóa
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

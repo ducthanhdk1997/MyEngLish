@@ -125,8 +125,24 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        if($user->delete()){
+            flash()->success('Bạn đã xóa tài khoản thành công');
+        }
+        else{
+            flash()->error('Bạn đã xóa tài khoản thất bại');
+        }
+        return redirect()->route('admin.students.index');
+    }
+
+    public function search(Request $request){
+        $key = $request->key;
+//        dd($request->search);
+        $users = User::query()
+            ->where('username', 'like', "%$key%")
+            ->where('role_id', 'like', 4)
+            ->paginate(10);
+        return view('admin.students.search', compact('users', 'key'));
     }
 }

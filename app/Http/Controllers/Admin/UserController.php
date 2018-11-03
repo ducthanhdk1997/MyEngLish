@@ -127,11 +127,11 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function search(UserStoreRequest $request){
-
+    public function search(Request $request){
         $key = $request->key;
         $users = User::query()
             ->where('username',  'like', "%$key%")
+            ->where('role_id',  '<>', 4)
             ->paginate(10);
         return view('admin.users.search', compact('users', 'key'));
     }

@@ -12,7 +12,11 @@
 		      </a>
 		      <ul class="dropdown-menu dropdown-usermenu pull-right">
 		        <li><a href="#"> Profile</a></li>
-		        <li><a href="{{ route('admin.logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+		        <li>
+					<a onclick="document.getElementById('logout-form').submit()">
+						<span class="glyphicon glyphicon-off" aria-hidden="true"></span>Logout
+					</a>
+				</li>
 		      </ul>
 		    </li>
 

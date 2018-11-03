@@ -127,6 +127,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
             Route::get('create', 'Admin\StudentController@create')->name('create');
             Route::post('create', 'Admin\StudentController@store')->name('store');
 
+            Route::get('search', 'Admin\StudentController@search')->name('search');
+
             Route::delete('{user}', 'Admin\StudentController@destroy')->name('delete');
         });
     });

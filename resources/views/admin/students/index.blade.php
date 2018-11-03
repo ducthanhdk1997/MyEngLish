@@ -7,7 +7,7 @@
             <div class="form-group pull-right top_search">
                 <div class="input-group">
                     <div class="input-group">
-                        <form action="{{ route('admin.users.search') }}" method="get" style="display: inherit;border-radius: 25px 0 0 25px">
+                        <form action="{{ route('admin.students.search') }}" method="get" style="display: inherit;border-radius: 25px 0 0 25px">
                             {{--@csrf--}}
                             <input type="text" class="form-control" placeholder="Search for..." name="key">
                             <span class="input-group-btn">
@@ -52,10 +52,12 @@
                                     <a href="{{ route('admin.students.edit', $user) }}" class="btn btn-success" {{ Auth::user()->role_id == 4 ? "disabled" : ""}}>
                                         <i class="fa fa-edit"></i> Sửa
                                     </a>
-                                    <form action="{{ route('admin.users.delete', $user) }}" method="post" style="display: inline">
+                                    <form action="{{ route('admin.students.delete', $user) }}" method="post" style="display: inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id == 4 ? "disabled" : ""}}><i class="fa fa-remove"></i> Xóa</button>
+                                        <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id == 4 ? "disabled" : ""}} onclick='return confirm("Bạn có muốn xóa " + "\"" + "{{ $user->username }}" + "\"");'>
+                                            <i class="fa fa-remove"></i> Xóa
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
