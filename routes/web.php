@@ -71,8 +71,9 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 	Route::group(['prefix'=>'exercise','as'=>'exercise.'],function (){
 	   Route::get('list','ExerciseController@getList')->name('list');
 	   Route::get('add','ExerciseController@add')->name('add');
-        Route::post('add','ExerciseController@postExercise')->name('add');
+	   Route::post('add','ExerciseController@postExercise')->name('add');
 	   Route::get('assign','ExerciseController@assign')->name('assign');
+	   Route::post('assign','ExerciseController@postAssign')->name('assign');
     });
     Route::group(['prefix'=>'classroom','as'=>'classroom.'],function (){
         Route::get('list','ClassRoomController@getList')->name('list');
@@ -85,6 +86,8 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
         Route::get('classtypetable/{grade_id}','Admin\AjaxController@getClassTypeTable')->name('classtypetable');
         Route::get('classtypeselect/{grade_id}','Admin\AjaxController@getClassTypeSelect')->name('classtypeselect');
         Route::get('coursetypetable/{grade_id}','Admin\AjaxController@getCourseTypeTable')->name('coursetypetable');
+        Route::get('exercisetypeselect/{grade_id}/{style_id}','Admin\AjaxController@getExerciseTypeSelect')
+                                                                                                    ->name('exercisetypeselect');
     });
 });
 
