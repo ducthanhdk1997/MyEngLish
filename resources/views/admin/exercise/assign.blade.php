@@ -99,7 +99,6 @@
                 var style_id = $(this).val();
                 var grade_id = $('#grades').val();
                 $.get("{{asset('admin/ajax/exercisetypeselect')}}"+"/"+grade_id+"/"+style_id,function (data3) {
-                    alert(data3);
                     $('#exer').html(data3);
                 })
             })

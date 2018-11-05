@@ -12,13 +12,15 @@ use App\Question;
 use App\Style_Exercise;
 use  Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExerciseController extends Controller
 {
     //
     public  function getList()
     {
-        return view('admin.exercise.list');
+        $exercises = Exercise::all();
+        return view('admin.exercise.list',['exercises'=>$exercises]);
     }
 
     public  function  add()
