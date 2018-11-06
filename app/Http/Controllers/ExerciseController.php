@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Class_Exercise;
 use App\Exercise;
+use App\Http\Requests\Admin\Class_ExerciseRerquest;
+use App\Http\Requests\Admin\Class_ExerciseStoreRequest;
 use App\Http\Requests\Admin\ExerciseStoreRequest;
 use App\Part;
 use App\Question;
+use App\Style_Exercise;
 use  Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExerciseController extends Controller
 {
     //
     public  function getList()
     {
-        return view('admin.exercise.list');
+        $exercises = Exercise::all();
+        return view('admin.exercise.list',['exercises'=>$exercises]);
     }
 
     public  function  add()
@@ -24,7 +30,22 @@ class ExerciseController extends Controller
 
     public  function  assign()
     {
-        return view('admin.exercise.assign');
+        $styles = Style_Exercise::all();
+        $exercises = Exercise::all();
+        return view('admin.exercise.assign',['styles'=>$styles,'exercises'=>$exercises]);
+    }
+
+    public  function  postAssign(Class_ExerciseStoreRequest $request)
+    {
+        $class_id = $request->class_id;
+        $exercise_id = $request->exercise_id;
+        $date = $request->date;
+        $time = $request->time;
+        $deadline = $date." ".$time;
+        $class_Exercise=Class_Exercise::create(['class_id'=>$class_id,'exercise_id'=>$exercise_id,'deadline'=>$deadline]);
+        flash('Giao bai tap thanh cong');
+        return redirect()->route('admin.exercise.assign');
+
     }
 
     /**
@@ -67,8 +88,6 @@ class ExerciseController extends Controller
             flash()->success('Them thanh cong');
             return redirect()->route('admin.exercise.list');
         }
-
-
 
         else{
             flash()->error('Them that bai');

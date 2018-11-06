@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Exercise;
 use App\Http\Controllers\Controller;
 
 use App\Classes;
@@ -52,8 +53,9 @@ class AjaxController extends Controller
             }
             else
             {
-                echo ('<option value='.$class->id.'">'.$class->name.'</option>');
+                echo ('<option value="'.$class->id.'">'.$class->name.'</option>');
             }
+            $i++;
         }
     }
 
@@ -72,6 +74,46 @@ class AjaxController extends Controller
                             <td>'.$coure->describe.'</td>
                             <td>'.$coure->price.'</td>
 
+                            <td class="data-table-edit">
+                                <a class="" href=""><i class="fa fa-pencil"></i> Edit</a>
+                            </td>
+                            <td class="data-table-edit">
+                                <a class="" href=""><i class="fa fa-pencil"></i> Detail</a>
+                            </td>
+                            <td class="data-table-delete">
+                                <a onclick="if(!confirm(\'Are you sure?\')) return false;" class=" red" href=""><i class="fa fa-trash-o"></i> Delete</a>
+                            </td>
+                        </tr>');
+        }
+    }
+
+    public  function getExerciseTypeSelect($grade_id,$style_id)
+    {
+        $exercises = Exercise::where('grade_id',$grade_id)->where('style_id',$style_id)->get();
+        $i=1;
+        foreach ($exercises as $exercise)
+        {
+            if($i==1)
+            {
+                echo ('<option value="'.$exercise->id.'" selected>'.$exercise->name.'</option>');
+            }
+            else {
+                echo('<option value="' . $exercise->id .'">' . $exercise->name . '</option>');
+            }
+            $i++;
+        }
+    }
+    public function getExerciseTypeTable($grade_id,$style_id)
+    {
+        $exercises = Exercise::where('grade_id',$grade_id)->where('style_id',$style_id)->get();
+        $i=1;
+        foreach ($exercises as $exercise)
+        {
+            echo ('<tr>
+                            <td>'.$i++.'</td>
+                            <td>'.$exercise->name.'</td>
+                            <td>'.$exercise->num_part.'</td>
+                            <td></td>
                             <td class="data-table-edit">
                                 <a class="" href=""><i class="fa fa-pencil"></i> Edit</a>
                             </td>
