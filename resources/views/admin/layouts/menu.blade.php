@@ -34,8 +34,8 @@
                     </li>
                     <li><a><i class="fa fa-home"></i>Quản lý khóa học<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{route('admin.course.list')}}">Danh sách khóa học</a></li>
-                            <li><a href="{{route('admin.course.add')}}">Thêm mới khóa học</a></li>
+                            <li><a href="{{route('admin.courses.index')}}">Danh sách khóa học</a></li>
+                            <li><a href="{{route('admin.courses.create')}}">Thêm mới khóa học</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-desktop"></i>Quản lý lớp học<span class="fa fa-chevron-down"></span></a>
