@@ -2,7 +2,7 @@
 
 @section('content')
     {{-- new grade --}}
-    <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30 padding-t-30">
+    <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30">
         <div class="x_panel">
             <div class="x_title">
                 <h2>Thông tin người dùng</h2>
@@ -15,7 +15,7 @@
                 <table style="margin: 0 auto;">
                     <tr >
                         <td width="100px"><label for="">Ten</label></td>
-                        <td style="padding-left: 30px"><label for="">aaa</label></td>
+                        <td style="padding-left: 30px"><label for="">{{ $user->username }}</label></td>
                     </tr>
                     <tr>
                         <td width="100px" class="pull-right"><label for="">Email</label></td>

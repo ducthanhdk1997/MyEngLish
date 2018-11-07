@@ -2,7 +2,7 @@
 
 @section('content')
     {{-- new grade --}}
-    <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30 padding-t-30">
+    <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30">
         <div class="x_panel">
             <div class="x_title">
                 <h2>Thêm học viên</h2>
