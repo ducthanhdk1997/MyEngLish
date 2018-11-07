@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ExerciseStoreRequest extends FormRequest
+class Class_ExerciseStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class ExerciseStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'num_part'=>'required|min:1',
-            'style_id'=>'required|min:1',
-            'grade_id'=>'required|min:1',
+            'grade_id'=>'required|numeric|min:1',
+            'style_id'=>'required|numeric|min:1',
+            'date'=>'required|date|after:today',
+            'time' => 'date_format:H:i',
         ];
     }
 }

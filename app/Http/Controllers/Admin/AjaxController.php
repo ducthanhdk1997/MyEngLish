@@ -115,7 +115,7 @@ class AjaxController extends Controller
                             <td>'.$exercise->num_part.'</td>
                             <td></td>
                             <td class="data-table-edit">
-                                <a class="" href=""><i class="fa fa-pencil"></i> Edit</a>
+                                <a class="" href="'.route('admin.exercise.edit',$exercise).'"><i class="fa fa-pencil"></i> Edit</a>
                             </td>
                             <td class="data-table-edit">
                                 <a class="" href=""><i class="fa fa-pencil"></i> Detail</a>

@@ -74,6 +74,8 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 	   Route::post('add','ExerciseController@postExercise')->name('add');
 	   Route::get('assign','ExerciseController@assign')->name('assign');
 	   Route::post('assign','ExerciseController@postAssign')->name('assign');
+	   Route::get('{exercise}/edit','ExerciseController@getExercise')->name('edit');
+	   Route::post('{exercise}/edit','ExerciseController@setName')->name('update');
     });
     Route::group(['prefix'=>'classroom','as'=>'classroom.'],function (){
         Route::get('list','ClassRoomController@getList')->name('list');

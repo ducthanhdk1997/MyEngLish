@@ -44,14 +44,14 @@
                 <tbody id="exercises">
                     <?php $i=1;?>
                     @foreach($exercises as $exercise)
-                        @if($exercise->grade_id==1)
+                        @if($exercise->grade_id==1 && $exercise->style_id ==1)
                         <tr>
                             <td>{{$i++}}</td>
                             <td>{{$exercise->name}}</td>
                             <td>{{$exercise->num_part}}</td>
                             <td></td>
                             <td class="data-table-edit">
-                                <a class="" href=""><i class="fa fa-pencil"></i> Edit</a>
+                                <a class="" href="{{route('admin.exercise.edit',$exercise)}}"><i class="fa fa-pencil"></i> Edit</a>
                             </td>
                             <td class="data-table-edit">
                                 <a class="" href=""><i class="fa fa-pencil"></i> Detail</a>

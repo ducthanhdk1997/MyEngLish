@@ -8,12 +8,24 @@
       <label for="group_class">Chọn trình độ:</label>
       <select class="form-control" id="group_class" name="grade_id">
           @foreach ($grades as $grade)
-              @if($grade['ID']==1)
+              @if($grade['id']==1)
                   <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
               @else
                   <option value="{{$grade->id}}">{{$grade->name}}</option>
               @endif
           @endforeach
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="courses">Chọn trình độ:</label>
+      <select class="form-control" id="courses" name="course_id">
+        @foreach ($courses as $course)
+          @if($course['id']==1)
+            <option value="{{$course->id}}" selected>{{$course->name}}</option>
+          @else
+            <option value="{{$course->id}}">{{$course->name}}</option>
+          @endif
+        @endforeach
       </select>
     </div>
     <div class="input-group new_class">

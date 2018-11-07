@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Class_Course;
+use App\Class_Exercise;
+use App\Course;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ClassStoreRequest;
 use Illuminate\Http\Request;
@@ -26,20 +29,25 @@ class ClassController extends Controller
 
     public function add()
     {
-
-        return view('admin.classes.add');
+        $courses = Course::all();
+        return view('admin.classes.add',['courses'=>$courses]);
     }
     public function addUser()
     {
-
         return view('admin.classes.adduser');
     }
+
     public  function  postClass(ClassStoreRequest $request, Classes $classes)
     {
         $classes->name=$request->name;
         $classes->grade_id = $request->grade_id;
         if($classes->save())
         {
+            $class_id = Classes::where('name',$request->name)->value('id');
+            $course = Class_Course::create([
+                'class_id'=>$class_id,
+                'course_id'=>$request->course_id
+            ]);
             flash()->success('Thêm lớp thành công');
             return redirect()->route('admin.class.list');
         }

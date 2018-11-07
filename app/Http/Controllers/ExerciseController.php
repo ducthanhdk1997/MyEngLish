@@ -56,10 +56,22 @@ class ExerciseController extends Controller
     {
 
 //        return $request->num_part;
-        $exercise->name = $request->name;
+
         $exercise->num_part = $request->num_part;
         $exercise->style_id = $request->style_id;
         $exercise->grade_id = $request->grade_id;
+        $exercises = Exercise::where('grade_id',$request->style_id)
+            ->where('style_id',$request->grade_id)
+            ->get();
+        foreach ($exercises as $exe)
+        {
+            if(str_slug($exe->name)==str_slug($request->name))
+            {
+                flash('Tên tồn tại');
+                return view('admin.exercise.add');
+            }
+        }
+        $exercise->name = $request->name;
         $exercise_name = $request->name;
         $sophan = $request->num_part;
 
@@ -93,5 +105,40 @@ class ExerciseController extends Controller
             flash()->error('Them that bai');
         }
     }
+
+    public  function getExercise(Exercise $exercise)
+    {
+        return view('admin.exercise.edit',compact('exercise'));
+    }
+
+
+    public  function  setName(Request $request,Exercise $exercise)
+    {
+
+        $exercises = Exercise::where('grade_id',$exercise->grade_id)
+            ->where('style_id',$exercise->style_id)
+            ->get();
+        foreach ($exercises as $exe)
+        {
+            if(str_slug($exe->name)==str_slug($request->name))
+            {
+                flash('Tên tồn tại');
+                return view('admin.exercise.edit',compact('exercise'));
+            }
+        }
+        $exercise->name = $request->name;
+        if($exercise->save())
+        {
+            flash('Sửa tên thành công');
+            return redirect()->route('admin.exercise.list');
+        }
+        else
+        {
+            flash('Sửa tên thất bại');
+        }
+    }
+
+
+
 
 }
