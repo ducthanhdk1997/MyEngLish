@@ -17,7 +17,7 @@ class CreateClassExercisesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('class_id')->nullable();
             $table->unsignedInteger('exercise_id')->nullable();
-            $table->date('deadline');
+            $table->datetime('deadline');
             $table->timestamps();
 
             $table->foreign('class_id')
