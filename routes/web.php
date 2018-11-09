@@ -88,6 +88,8 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
                                                                                                     ->name('exercisetypeselect');
         Route::get('exercisetypetable/{grade_id}/{style_id}','Admin\AjaxController@getExerciseTypeTable')
                                                                                                     ->name('exercisetypetable');
+        Route::get('coursetypeselect/{grade_id}','Admin\AjaxController@getCourseTypeSelect')
+                                                                                                    ->name('coursetypeselect');
 
     });
 });

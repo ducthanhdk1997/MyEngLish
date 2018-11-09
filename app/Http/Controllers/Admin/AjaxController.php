@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Classes;
 use App\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AjaxController extends Controller
 {
@@ -21,11 +22,20 @@ class AjaxController extends Controller
         $i=1;
         foreach ($class as $class)
         {
-            echo(
 
+            $course = DB::table('class_course')
+                ->join('courses', 'class_course.course_id', '=', 'courses.id')
+                ->where('class_id',$class->id)
+                ->select( 'courses.name', 'courses.time_end')
+                ->get();
+            foreach ($course as $course)
+            echo(
                 '<tr>
 					<td>'.$i.'</td>
 					<td>'.$class->name.'</td>
+					<td>'.$course->name.'</td>
+					<td>'.$course->time_end.'</td>
+					
 					<td class="data-table-edit">
 						<a class="" href="'.route('admin.class.edit',$class).'"><i class="fa fa-pencil"></i> Edit</a>
 					</td>
@@ -84,6 +94,24 @@ class AjaxController extends Controller
                                 <a onclick="if(!confirm(\'Are you sure?\')) return false;" class=" red" href=""><i class="fa fa-trash-o"></i> Delete</a>
                             </td>
                         </tr>');
+        }
+    }
+
+    public  function  getCourseTypeSelect($grade_id)
+    {
+        $coures = Course::where('grade_id',$grade_id)->get();
+        $i=1;
+        foreach ($coures as $course)
+        {
+            if($i==1)
+            {
+                echo ('<option value="'.$course->id.'" selected>'.$course->name.'</option>');
+            }
+            else
+            {
+                echo ('<option value="'.$course->id.'">'.$course->name.'</option>');
+            }
+            $i++;
         }
     }
 

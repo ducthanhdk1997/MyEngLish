@@ -6,7 +6,7 @@
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <div class="form-group">
       <label for="group_class">Chọn trình độ:</label>
-      <select class="form-control" id="group_class" name="grade_id">
+      <select class="form-control" id="grades" name="grade_id">
           @foreach ($grades as $grade)
               @if($grade['id']==1)
                   <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
@@ -17,7 +17,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="courses">Chọn trình độ:</label>
+      <label for="courses">Chọn khóa học:</label>
       <select class="form-control" id="courses" name="course_id">
         @foreach ($courses as $course)
           @if($course['id']==1)
@@ -37,4 +37,17 @@
 </div>
 {{-- end of new class --}}
 
+@endsection()
+
+@section('script')
+  <script>
+      $(document).ready(function () {
+          $('#grades').change(function () {
+              var grade_id = $(this).val();
+              $.get("{{asset('admin/ajax/coursetypeselect')}}"+"/"+grade_id,function (data) {
+                  $('#courses').html(data)
+              });
+          })
+      })
+  </script>
 @endsection()

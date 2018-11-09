@@ -20,6 +20,8 @@
 				<tr>
 					<th>STT</th>
 					<th>Tên lớp</th>
+					<th>Khóa học</th>
+					<th>Ngày kết thúc</th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -29,19 +31,30 @@
 			<?php $i=1;?>
 			@foreach($class as $class)
 				@if($class->grade_id==1)
-				<tr>
-					<td>{{$i}}</td>
-					<td>{{$class->name}}</td>
-					<td class="data-table-edit">
-						<a class="" href="{{route('admin.class.edit',$class)}}"><i class="fa fa-pencil"></i> Edit</a>
-					</td>
-					<td class="data-table-edit">
-						<a class="" href=""><i class="fa fa-pencil"></i> Detail</a>
-					</td>
-					<td class="data-table-delete">
-						<a onclick="if(!confirm('Are you sure?')) return false;" class=" red" href=""><i class="fa fa-trash-o"></i> Delete</a>
-					</td>
-				</tr>
+					@foreach($class_courses as $class_course)
+						@if($class_course->class_id == $class->id)
+							<?php	$course_id = $class_course->course_id;?>
+							@foreach($courses as $course)
+								@if($course->id == $course_id)
+									<tr>
+										<td>{{$i}}</td>
+										<td>{{$class->name}}</td>
+										<td>{{$course->name}}</td>
+										<td>{{$course->time_end}}</td>
+										<td class="data-table-edit">
+											<a class="" href="{{route('admin.class.edit',$class)}}"><i class="fa fa-pencil"></i> Edit</a>
+										</td>
+										<td class="data-table-edit">
+											<a class="" href=""><i class="fa fa-pencil"></i> Detail</a>
+										</td>
+										<td class="data-table-delete">
+											<a onclick="if(!confirm('Are you sure?')) return false;" class=" red" href=""><i class="fa fa-trash-o"></i> Delete</a>
+										</td>
+									</tr>
+								@endif
+							@endforeach
+						@endif
+					@endforeach
 				<?php $i++?>
 				@endif
 			@endforeach
@@ -59,6 +72,7 @@
 
 				$.get("{{asset('admin/ajax/classtypetable')}}"+"/"+grade_id,function (data) {
 					$('#list_class').html(data)
+					// console.log(data);
                 });
             });
         });

@@ -23,8 +23,9 @@ class ClassController extends Controller
 
     public function getList()
     {
-
-    	return view('admin.classes.list');
+        $class_courses = Class_Course::all();
+        $courses = Course::all();
+    	return view('admin.classes.list',['class_courses'=>$class_courses,'courses'=>$courses]);
     }
 
     public function add()
