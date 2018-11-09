@@ -64,6 +64,14 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 		Route::post('{class}/edit','Admin\ClassController@setName')->name('update');
 	});
 
+	Route::group(['prefix'=>'style_exercise','as'=>'style_exercise.'],function (){
+        Route::get('style_exercises','Admin\StyleExerciseController@index')->name('index');
+	    Route::get('add','Admin\StyleExerciseController@create')->name('create');
+	    Route::post('add','Admin\StyleExerciseController@store')->name('store');
+        Route::get('{style_exercise}/edit','Admin\StyleExerciseController@edit')->name('edit');
+        Route::post('{style_exercise}/edit','Admin\StyleExerciseController@update')->name('update');
+    });
+
 	Route::group(['prefix'=>'exercise','as'=>'exercise.'],function (){
 	   Route::get('list','ExerciseController@getList')->name('list');
 	   Route::get('add','ExerciseController@add')->name('add');

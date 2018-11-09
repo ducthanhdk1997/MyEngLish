@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStyleExercisesTable extends Migration
+class CreateExercisesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,18 @@ class CreateStyleExercisesTable extends Migration
      */
     public function up()
     {
-        Schema::create('style_exercises', function (Blueprint $table) {
+        Schema::create('exercises', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('num_part');
+            $table->unsignedInteger('grade_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('grade_id')
+                ->references('id')
+                ->on('grades')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
         });
     }
 
@@ -27,6 +35,6 @@ class CreateStyleExercisesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('style_exercises');
+        Schema::dropIfExists('exercises');
     }
 }

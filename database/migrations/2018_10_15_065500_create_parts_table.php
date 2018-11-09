@@ -16,9 +16,19 @@ class CreatePartsTable extends Migration
         Schema::create('parts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('description');
+            $table->integer('number_part');
+            $table->unsignedInteger('style_id')->nullable();
             $table->integer('num_question');
-            $table->unsignedInteger('exercise_id');
+            $table->string('image');
+            $table->string('media');
             $table->timestamps();
+
+            $table->foreign('style_id')
+                ->references('id')
+                ->on('style_exercises')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
         });
     }
 
