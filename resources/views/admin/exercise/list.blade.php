@@ -42,9 +42,7 @@
                                         <i class="fa fa-remove"></i> Xóa
                                     </button>
                                 </form>
-
                             </td>
-
                         </tr>
                         @endif
 
@@ -63,7 +61,7 @@
                 var grade_id = $(this).val();
                 var html = '';
                 var token = $('meta[name="csrf-token"]').attr('content');
-                $.get("{{asset('admin/ajax/exercisetypetable')}}"+"/"+grade_id,function (data2) {
+                $.get("{{asset('admin/ajax/exercise')}}"+"/"+grade_id,function (data2) {
                     data2.forEach(function (element) {
                         html+=`<tr>
                             <td>${element.id}</td>
@@ -86,7 +84,6 @@
                 </tr>`
                     })
                     $('#exercises').html(html);
-
                 });
 
             })

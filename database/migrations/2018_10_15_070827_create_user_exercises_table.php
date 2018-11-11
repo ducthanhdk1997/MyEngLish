@@ -20,6 +20,7 @@ class CreateUserExercisesTable extends Migration
             $table->integer('total_question');
             $table->integer('correct_answer');
             $table->float('point');
+            $table->boolean('new');
             $table->timestamps();
 
             $table->foreign('user_id')

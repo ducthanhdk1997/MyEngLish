@@ -115,7 +115,7 @@ class AjaxController extends Controller
         }
     }
 
-    public  function  getExerciseTypeTable($grade_id)
+    public  function  getExercise($grade_id)
     {
         $exercises = Exercise::where('grade_id',$grade_id)->get();
         return $exercises;

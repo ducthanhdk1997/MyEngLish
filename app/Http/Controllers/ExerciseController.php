@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Class_Exercise;
+use App\Classes;
 use App\Exercise;
 use App\Http\Requests\Admin\Class_ExerciseRerquest;
 use App\Http\Requests\Admin\Class_ExerciseStoreRequest;
 use App\Http\Requests\Admin\ExerciseStoreRequest;
-use App\Part;
 use App\Question;
-use App\Style_Exercise;
+use App\User_Class;
+use App\User_Exersice;
 use  Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,21 +31,92 @@ class ExerciseController extends Controller
 
     public  function  assign()
     {
-        $styles = Style_Exercise::all();
+
         $exercises = Exercise::all();
-        return view('admin.exercise.assign',['styles'=>$styles,'exercises'=>$exercises]);
+        return view('admin.exercise.assign',['exercises'=>$exercises]);
     }
 
-    public  function  postAssign(Class_ExerciseStoreRequest $request)
+    public  function  postAssign(Class_ExerciseStoreRequest $request, Class_Exercise $class_Exercise)
     {
         $class_id = $request->class_id;
+        $class = Classes::query()->findOrFail($class_id);
+        $students = $class->students()->get();
+
         $exercise_id = $request->exercise_id;
         $date = $request->date;
         $time = $request->time;
         $deadline = $date." ".$time;
-        $class_Exercise=Class_Exercise::create(['class_id'=>$class_id,'exercise_id'=>$exercise_id,'deadline'=>$deadline]);
-        flash('Giao bai tap thanh cong');
+        $isSexerciseExists = Class_Exercise::query()->where('class_id',$class_id)->where('exercise_id',$exercise_id)->exists();
+        if($isSexerciseExists)
+        {
+            $class_Exercise->deadline = $deadline;
+            if($class_Exercise->where('class_id',$class_id)
+                                ->where('exercise_id',$exercise_id)
+                                ->update(['deadline'=>$deadline])
+            )
+            {
+                foreach ($students as $student)
+                {
+                    if(User_Exersice::query()->where('user_id',$student->id)
+                                    ->where('exercise_id',$exercise_id)
+                                    ->get()=='[]'
+                    )
+                    {
+                        $new = [
+                            'user_id' => $student->id,
+                            'exercise_id' => $exercise_id,
+                            'total_question' => 0,
+                            'correct_answer' => 0,
+                            'point' => 0,
+                            'new' => true
+                        ];
+                       $user_exercise = User_Exersice::create($new);
+                    }
+                    else
+                    {
+                        User_Exersice::where('user_id',$student->id)
+                                    ->where('exercise_id',$exercise_id)
+                                    ->update(['new'=>true]);
+                    }
+                }
+                flash('Giao bai tap thanh cong');
+            }
+            else{
+                flash('Giao bai khong thanh cong');
+            }
+        }
+        else
+        {
+            $class_Exercise=Class_Exercise::create(['class_id'=>$class_id,'exercise_id'=>$exercise_id,'deadline'=>$deadline]);
+            foreach ($students as $student)
+            {
+                if(User_Exersice::where('user_id',$student->id)
+                        ->where('exercise_id',$exercise_id)
+                        ->get()=='[]'
+                )
+                {
+                    $new = [
+                        'user_id' => $student->id,
+                        'exercise_id' => $exercise_id,
+                        'total_question' => 0,
+                        'correct_answer' => 0,
+                        'point' => 0,
+                        'new' => true
+                    ];
+                    $user_exercise = User_Exersice::create($new);
+                }
+                else
+                {
+                    User_Exersice::where('user_id',$student->id)
+                        ->where('exercise_id',$exercise_id)
+                        ->update(['new'=>true]);
+                }
+            }
+            flash('Giao bai tap thanh cong');
+
+        }
         return redirect()->route('admin.exercise.assign');
+
 
     }
 
@@ -55,7 +127,6 @@ class ExerciseController extends Controller
     public  function  store(ExerciseStoreRequest $request, Exercise $exercise)
     {
         $exercises = Exercise::where('grade_id',$request->grade_id)->get();
-
         foreach ($exercises as $ex)
         {
 

@@ -25,7 +25,6 @@ class Class_ExerciseStoreRequest extends FormRequest
     {
         return [
             'grade_id'=>'required|numeric|min:1',
-            'style_id'=>'required|numeric|min:1',
             'date'=>'required|date|after:today',
             'time' => 'date_format:H:i',
         ];

@@ -93,8 +93,8 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
         Route::get('coursetypetable/{grade_id}','Admin\AjaxController@getCourseTypeTable')->name('coursetypetable');
         Route::get('exercisetypeselect/{grade_id}','Admin\AjaxController@getExerciseTypeSelect')
                                                                                                     ->name('exercisetypeselect');
-        Route::get('exercisetypetable/{grade_id}','Admin\AjaxController@getExerciseTypeTable')
-                                                                                                    ->name('exercisetypetable');
+        Route::get('exercise/{grade_id}','Admin\AjaxController@getExercise')
+                                                                                                    ->name('exercise');
         Route::get('coursetypeselect/{grade_id}','Admin\AjaxController@getCourseTypeSelect')
                                                                                                     ->name('coursetypeselect');
 
