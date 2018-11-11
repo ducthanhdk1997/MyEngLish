@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePartsTable extends Migration
+class CreateExercisesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,17 @@ class CreatePartsTable extends Migration
      */
     public function up()
     {
-        Schema::create('parts', function (Blueprint $table) {
+        Schema::create('exercises', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('num_question');
-            $table->unsignedInteger('exercise_id');
+            $table->unsignedInteger('grade_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('grade_id')
+                ->references('id')
+                ->on('grades')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
         });
     }
 
@@ -29,6 +34,6 @@ class CreatePartsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parts');
+        Schema::dropIfExists('exercises');
     }
 }

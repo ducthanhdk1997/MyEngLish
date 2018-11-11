@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Class_Exercise;
+use App\Classes;
 use App\Exercise;
 use App\Http\Requests\Admin\Class_ExerciseRerquest;
 use App\Http\Requests\Admin\Class_ExerciseStoreRequest;
 use App\Http\Requests\Admin\ExerciseStoreRequest;
-use App\Part;
 use App\Question;
-use App\Style_Exercise;
+use App\User_Class;
+use App\User_Exersice;
 use  Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,28 +24,99 @@ class ExerciseController extends Controller
         return view('admin.exercise.list',['exercises'=>$exercises]);
     }
 
-    public  function  add()
+    public  function  create()
     {
         return view('admin.exercise.add');
     }
 
     public  function  assign()
     {
-        $styles = Style_Exercise::all();
+
         $exercises = Exercise::all();
-        return view('admin.exercise.assign',['styles'=>$styles,'exercises'=>$exercises]);
+        return view('admin.exercise.assign',['exercises'=>$exercises]);
     }
 
-    public  function  postAssign(Class_ExerciseStoreRequest $request)
+    public  function  postAssign(Class_ExerciseStoreRequest $request, Class_Exercise $class_Exercise)
     {
         $class_id = $request->class_id;
+        $class = Classes::query()->findOrFail($class_id);
+        $students = $class->students()->get();
+
         $exercise_id = $request->exercise_id;
         $date = $request->date;
         $time = $request->time;
         $deadline = $date." ".$time;
-        $class_Exercise=Class_Exercise::create(['class_id'=>$class_id,'exercise_id'=>$exercise_id,'deadline'=>$deadline]);
-        flash('Giao bai tap thanh cong');
+        $isSexerciseExists = Class_Exercise::query()->where('class_id',$class_id)->where('exercise_id',$exercise_id)->exists();
+        if($isSexerciseExists)
+        {
+            $class_Exercise->deadline = $deadline;
+            if($class_Exercise->where('class_id',$class_id)
+                                ->where('exercise_id',$exercise_id)
+                                ->update(['deadline'=>$deadline])
+            )
+            {
+                foreach ($students as $student)
+                {
+                    if(User_Exersice::query()->where('user_id',$student->id)
+                                    ->where('exercise_id',$exercise_id)
+                                    ->get()=='[]'
+                    )
+                    {
+                        $new = [
+                            'user_id' => $student->id,
+                            'exercise_id' => $exercise_id,
+                            'total_question' => 0,
+                            'correct_answer' => 0,
+                            'point' => 0,
+                            'new' => true
+                        ];
+                       $user_exercise = User_Exersice::create($new);
+                    }
+                    else
+                    {
+                        User_Exersice::where('user_id',$student->id)
+                                    ->where('exercise_id',$exercise_id)
+                                    ->update(['new'=>true]);
+                    }
+                }
+                flash('Giao bai tap thanh cong');
+            }
+            else{
+                flash('Giao bai khong thanh cong');
+            }
+        }
+        else
+        {
+            $class_Exercise=Class_Exercise::create(['class_id'=>$class_id,'exercise_id'=>$exercise_id,'deadline'=>$deadline]);
+            foreach ($students as $student)
+            {
+                if(User_Exersice::where('user_id',$student->id)
+                        ->where('exercise_id',$exercise_id)
+                        ->get()=='[]'
+                )
+                {
+                    $new = [
+                        'user_id' => $student->id,
+                        'exercise_id' => $exercise_id,
+                        'total_question' => 0,
+                        'correct_answer' => 0,
+                        'point' => 0,
+                        'new' => true
+                    ];
+                    $user_exercise = User_Exersice::create($new);
+                }
+                else
+                {
+                    User_Exersice::where('user_id',$student->id)
+                        ->where('exercise_id',$exercise_id)
+                        ->update(['new'=>true]);
+                }
+            }
+            flash('Giao bai tap thanh cong');
+
+        }
         return redirect()->route('admin.exercise.assign');
+
 
     }
 
@@ -52,57 +124,29 @@ class ExerciseController extends Controller
      * @param ExerciseStoreRequest $request
      * @param Exercise $exercise
      */
-    public  function  postExercise(ExerciseStoreRequest $request, Exercise $exercise)
+    public  function  store(ExerciseStoreRequest $request, Exercise $exercise)
     {
-
-//        return $request->num_part;
-
-        $exercise->num_part = $request->num_part;
-        $exercise->style_id = $request->style_id;
-        $exercise->grade_id = $request->grade_id;
-        $exercises = Exercise::where('grade_id',$request->style_id)
-            ->where('style_id',$request->grade_id)
-            ->get();
-        foreach ($exercises as $exe)
+        $exercises = Exercise::where('grade_id',$request->grade_id)->get();
+        foreach ($exercises as $ex)
         {
-            if(str_slug($exe->name)==str_slug($request->name))
+
+            if(str_slug($ex->name) == str_slug($request->name))
             {
-                flash('Tên tồn tại');
+
+                flash('Ten ton tai');
                 return view('admin.exercise.add');
             }
         }
         $exercise->name = $request->name;
-        $exercise_name = $request->name;
-        $sophan = $request->num_part;
-
-        if ($exercise->save()) {
-            $exercise_id = $exercise->where('name', $exercise_name)->value('id');
-            for ($i = 1; $i <= $sophan; $i++)
-            {
-                $socau = $_POST['socauphan' . $i . ''];
-                $part = Part::create([
-                    'name' => "Part" . $i,
-                    'num_question' => $socau,
-                    'exercise_id' => $exercise_id
-                ]);
-
-                $part_id = $part->where('name', 'Part' . $i)->where('exercise_id', $exercise_id)->value('id');
-                for ($j = 1; $j <= $socau; $j++)
-                {
-                    $dapan = $_POST['cau' . $j . $i . ''];
-                    $questions = Question::create([
-                        'answer' => $dapan,
-                        'part_id' => $part_id
-                    ]);
-                }
-
-            }
-            flash()->success('Them thanh cong');
+        $exercise->grade_id = $request->grade_id;
+        if($exercise->save())
+        {
+            flash('Them thanh cong');
             return redirect()->route('admin.exercise.list');
         }
-
-        else{
-            flash()->error('Them that bai');
+        else
+        {
+            flash('them that bai');
         }
     }
 

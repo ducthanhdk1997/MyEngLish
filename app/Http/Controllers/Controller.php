@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Classes;
 use App\Exercise;
 use App\Grade;
-use App\Style_Exercise;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -19,7 +18,7 @@ class Controller extends BaseController
     {
         View::share('grades',Grade::all());
         View::share('class',Classes::all());
-        View::share('style',Style_Exercise::all());
+
 
     }
 

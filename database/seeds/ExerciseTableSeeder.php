@@ -11,26 +11,71 @@ class ExerciseTableSeeder extends Seeder
      */
     public function run()
     {
-
-        $grades = \App\Grade::all();
-        $styles = \App\Style_Exercise::all();
-        $names = ['Bai1'=>0,'Bai2'=>1,'Bai3'=>2,'Bai4'=>3];
-        foreach ($grades as $grade)
+        $exercises = [
+            [
+                'name'=> 'Bai1',
+                'grade_id' => '1'
+            ],
+            [
+                'name'=> 'Bai2',
+                'grade_id' => '1'
+            ],
+            [
+                'name'=> 'Bai3',
+                'grade_id' => '1'
+            ],
+            [
+                'name'=> 'Bai1',
+                'grade_id' => '2'
+            ],
+            [
+                'name'=> 'Bai2',
+                'grade_id' => '2'
+            ],
+            [
+                'name'=> 'Bai3',
+                'grade_id' => '2'
+            ],
+            [
+                'name'=> 'Bai1',
+                'grade_id' => '3'
+            ],
+            [
+                'name'=> 'Bai2',
+                'grade_id' => '3'
+            ],
+            [
+                'name'=> 'Bai3',
+                'grade_id' => '3'
+            ],
+            [
+                'name'=> 'Bai1',
+                'grade_id' => '4'
+            ],
+            [
+                'name'=> 'Bai2',
+                'grade_id' => '4'
+            ],
+            [
+                'name'=> 'Bai3',
+                'grade_id' => '4'
+            ],
+            [
+                'name'=> 'Bai1',
+                'grade_id' => '5'
+            ],
+            [
+                'name'=> 'Bai2',
+                'grade_id' => '5'
+            ],
+            [
+                'name'=> 'Bai3',
+                'grade_id' => '5'
+            ],
+        ];
+        foreach ($exercises as $exercise)
         {
-            foreach ($styles as $style){
-                $newExer = [
-                    'name' => array_rand($names),
-                    'grade_id' => $grade->id,
-                    'style_id' => $style->id,
-                    'num_part' => 1
-                ];
-                $newExer = \App\Exercise::create($newExer);
-            }
+            \App\Exercise::create($exercise);
         }
-
-
-
-
-
     }
 }
