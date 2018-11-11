@@ -7,22 +7,20 @@ class UsersClassTableSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return vcoid
+     * @return void
      */
     public function run()
     {
         $classes = \App\Classes::all();
-        $users = \App\User::all();
-        $newClassUser = [];
-        foreach ($classes as $class){
-            foreach ($users as $user)
-            {
-                $newClassUser[] = [
-                    'user_id' => $user->id,
+        $users = \App\User::query()->where('role_id', 4)->get();
+        foreach ($classes as $class) {
+            foreach ($users as $user) {
+
+                \App\User_Class::query()->create([
                     'class_id' => $class->id,
-                ];
+                    'user_id' => $user->id,
+                ]);
             }
         }
-        \Illuminate\Support\Facades\DB::table('user_class')->insert($newClassUser);
     }
 }

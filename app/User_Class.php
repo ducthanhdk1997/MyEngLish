@@ -8,4 +8,8 @@ class User_Class extends Model
 {
     //
     protected $table = 'user_class';
+
+    public function user(){
+        return $this->belongsTo('\App\User');
+    }
 }
