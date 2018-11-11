@@ -24,12 +24,12 @@ class CreateQuestionTable extends Migration
             $table->float('point');
             $table->string('answer');
             $table->string('image');
-            $table->unsignedInteger('part_id')->nullable();
+            $table->unsignedInteger('exercise_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('part_id')
+            $table->foreign('exercise_id')
                 ->references('id')
-                ->on('parts')
+                ->on('exercises')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
         });

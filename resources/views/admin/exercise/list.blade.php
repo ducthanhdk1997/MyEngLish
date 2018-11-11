@@ -14,51 +14,37 @@
                 @endforeach
             </select>
         </div>
-        <div class="form-group">
-            <label for="group_class">Chọn kiểu bài tập:</label>
-            <select class="form-control" id="style" name="style_id">
-                <?php  $i=1; ?>
-                @foreach ($style as $style)
-                    @if($i==1)
-                        <option value="{{$style->id}}" selected>{{$style->name}}</option>
-                    @else
-                        <option value="{{$style->id}}">{{$style->name}}</option>
-                    @endif
-                    <?php $i++ ?>
-                @endforeach
-            </select>
-        </div>
         <div class="panel panel-default rowlistClass ">
 
             <table class="table  table-hover">
                 <thead>
                 <tr>
-                    <th>STT</th>
+                    <th>ID</th>
                     <th>Tên bài tập</th>
-                    <th>Số phần</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody id="exercises">
-                    <?php $i=1;?>
                     @foreach($exercises as $exercise)
-                        @if($exercise->grade_id==1 && $exercise->style_id ==1)
+                        @if($exercise->grade_id==1)
                         <tr>
-                            <td>{{$i++}}</td>
+                            <td>{{$exercise->id}}</td>
                             <td>{{$exercise->name}}</td>
-                            <td>{{$exercise->num_part}}</td>
-                            <td></td>
                             <td class="data-table-edit">
-                                <a class="" href="{{route('admin.exercise.edit',$exercise)}}"><i class="fa fa-pencil"></i> Edit</a>
+                                <a href="{{ route('admin.exercise.edit',$exercise) }}" class="btn btn-success">
+                                    <i class="fa fa-edit"></i>Edit
+                                </a>
+                                <a class="btn btn-info" href="{{route('admin.question.create',$exercise)}}"><i class="fa fa-plus"></i> Add</a>
+                                <form action="" method="post" style="display: inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fa fa-remove"></i> Xóa
+                                    </button>
+                                </form>
+
                             </td>
-                            <td class="data-table-edit">
-                                <a class="" href=""><i class="fa fa-pencil"></i> Detail</a>
-                            </td>
-                            <td class="data-table-delete">
-                                <a onclick="if(!confirm('Are you sure?')) return false;" class=" red" href=""><i class="fa fa-trash-o"></i> Delete</a>
-                            </td>
+
                         </tr>
                         @endif
 
@@ -75,17 +61,34 @@
         $(document).ready(function () {
             $('#grades').change(function () {
                 var grade_id = $(this).val();
-                var style_id = $('#style').val();
-                $.get("{{asset('admin/ajax/exercisetypetable')}}"+"/"+grade_id+"/"+style_id,function (data2) {
-                    $('#exercises').html(data2);
-                })
-            })
-            $('#style').change(function () {
-                var style_id = $(this).val();
-                var grade_id = $('#grades').val();
-                $.get("{{asset('admin/ajax/exercisetypetable')}}"+"/"+grade_id+"/"+style_id,function (data3) {
-                    $('#exercises').html(data3);
-                })
+                var html = '';
+                var token = $('meta[name="csrf-token"]').attr('content');
+                $.get("{{asset('admin/ajax/exercisetypetable')}}"+"/"+grade_id,function (data2) {
+                    data2.forEach(function (element) {
+                        html+=`<tr>
+                            <td>${element.id}</td>
+                            <td>${element.name}</td>
+                            <td class="data-table-edit">
+                                <a href="/admin/exercise/${element}/edit" class="btn btn-success">
+                                    <i class="fa fa-edit"></i>Edit
+                                </a>
+                                <a class="btn btn-info" href="/admin/question/${element}/create"><i class="fa fa-plus"></i> Add</a>
+                                <form action="" method="post" style="display: inline">
+                                <input type="hidden" name="_token" value="${token}">
+                                <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa fa-remove"></i> Xóa
+                            </button>
+                        </form>
+
+                    </td>
+
+                </tr>`
+                    })
+                    $('#exercises').html(html);
+
+                });
+
             })
         })
     </script>

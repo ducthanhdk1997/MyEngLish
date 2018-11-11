@@ -45,15 +45,9 @@
                             <li><a href="{{route('admin.class.adduser')}}">Thêm học viên</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-home"></i>Kiểu đề<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{{route('admin.style_exercise.index')}}">Danh sách</a></li>
-                            <li><a href="{{route('admin.style_exercise.create')}}">Tạo kiểu đề</a></li>
-                        </ul>
-                    </li>
                     <li><a><i class="fa fa-table"></i>Quản lý bài tập <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{route('admin.exercise.add')}}">Thêm bài tập</a></li>
+                            <li><a href="{{route('admin.exercise.create')}}">Thêm bài tập</a></li>
                             <li><a href="{{route('admin.exercise.assign')}}">Giao bài tập cho lớp</a></li>
                             <li><a href="{{route('admin.exercise.list')}}">Danh sách bài tập</a></li>
                         </ul>

@@ -64,22 +64,21 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 		Route::post('{class}/edit','Admin\ClassController@setName')->name('update');
 	});
 
-	Route::group(['prefix'=>'style_exercise','as'=>'style_exercise.'],function (){
-        Route::get('style_exercises','Admin\StyleExerciseController@index')->name('index');
-	    Route::get('add','Admin\StyleExerciseController@create')->name('create');
-	    Route::post('add','Admin\StyleExerciseController@store')->name('store');
-        Route::get('{style_exercise}/edit','Admin\StyleExerciseController@edit')->name('edit');
-        Route::post('{style_exercise}/edit','Admin\StyleExerciseController@update')->name('update');
-    });
+
 
 	Route::group(['prefix'=>'exercise','as'=>'exercise.'],function (){
 	   Route::get('list','ExerciseController@getList')->name('list');
-	   Route::get('add','ExerciseController@add')->name('add');
-	   Route::post('add','ExerciseController@postExercise')->name('add');
+	   Route::get('add','ExerciseController@create')->name('create');
+	   Route::post('add','ExerciseController@store')->name('store');
 	   Route::get('assign','ExerciseController@assign')->name('assign');
 	   Route::post('assign','ExerciseController@postAssign')->name('assign');
 	   Route::get('{exercise}/edit','ExerciseController@getExercise')->name('edit');
 	   Route::post('{exercise}/edit','ExerciseController@setName')->name('update');
+    });
+
+	Route::group(['prefix'=>'question','as'=>'question.'],function (){
+	    Route::get('add','QuestrionController@create')->name('create');
+        Route::post('add','QuestrionController@store')->name('store');
     });
     Route::group(['prefix'=>'classroom','as'=>'classroom.'],function (){
         Route::get('list','ClassRoomController@getList')->name('list');
@@ -92,9 +91,9 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
         Route::get('classtypetable/{grade_id}','Admin\AjaxController@getClassTypeTable')->name('classtypetable');
         Route::get('classtypeselect/{grade_id}','Admin\AjaxController@getClassTypeSelect')->name('classtypeselect');
         Route::get('coursetypetable/{grade_id}','Admin\AjaxController@getCourseTypeTable')->name('coursetypetable');
-        Route::get('exercisetypeselect/{grade_id}/{style_id}','Admin\AjaxController@getExerciseTypeSelect')
+        Route::get('exercisetypeselect/{grade_id}','Admin\AjaxController@getExerciseTypeSelect')
                                                                                                     ->name('exercisetypeselect');
-        Route::get('exercisetypetable/{grade_id}/{style_id}','Admin\AjaxController@getExerciseTypeTable')
+        Route::get('exercisetypetable/{grade_id}','Admin\AjaxController@getExerciseTypeTable')
                                                                                                     ->name('exercisetypetable');
         Route::get('coursetypeselect/{grade_id}','Admin\AjaxController@getCourseTypeSelect')
                                                                                                     ->name('coursetypeselect');
