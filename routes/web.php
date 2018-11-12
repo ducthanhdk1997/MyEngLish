@@ -163,7 +163,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
 
             Route::get('{class}/detail', 'Admin\ClassController@show')->name('show');
 
-            route::delete('{course}', 'Admin\ClassController@destroy')->name('delete');
+            route::delete('{class}', 'Admin\ClassController@destroy')->name('delete');
         });
     });
 });

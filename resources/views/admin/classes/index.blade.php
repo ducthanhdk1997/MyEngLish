@@ -35,6 +35,7 @@
 					<tr>
 						<th>#</th>
 						<th>Tên lớp</th>
+						<th>Tên giảng viên</th>
 						<th>Khóa học</th>
 						<th>Action</th>
 					</tr>
@@ -47,6 +48,7 @@
 						<tr>
 							<th scope="row">{{ $i++ }}</th>
 							<td><a href="{{ route('admin.classes.show', $class) }}">{{ $class->name }}</a></td>
+							<td>{{ $class->teacher->username }}</td>
 							<td>{{ $class->grade->name }}</td>
 							<td>
 								<a href="{{ route('admin.classes.edit', $class) }}" class="btn btn-success" {{ Auth::user()->role_id == 4 ? "disabled" : ""}}>

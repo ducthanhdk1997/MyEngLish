@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Classes;
+use App\User;
 use App\User_Class;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -52,7 +53,7 @@ class ClassController extends Controller
         $usersClass = User_Class::query()
             ->with('user')
             ->where('class_id', $class->id)
-            ->get();
+            ->paginate(10);
 
         return view('admin.classes.detail', compact('usersClass'));
     }
@@ -63,9 +64,13 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Classes $class)
     {
-        //
+        $teachers = User::query()
+            ->where('role_id', 3)
+            ->get();
+//        dd($teachers);
+        return view('admin.classes.edit', compact('class', 'teachers'));
     }
 
     /**
@@ -75,9 +80,18 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Classes $class)
     {
-        //
+        $class->name = $request->name;
+        $class->user_id = $request->teacher;
+
+        if($class->save()){
+            flash()->success('Cap nhat thanh cong');
+        }
+        else{
+            flash()->error("cap nhat that bai");
+        }
+        return redirect()->route('admin.classes.index');
     }
 
     /**
@@ -86,8 +100,14 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Classes $class)
     {
-        //
+        if($class->delete()){
+            flash()->success('Xóa lớp học thành công');
+        }
+        else{
+            flash()->error('Xóa tài khoản thất bại');
+        }
+        return redirect()->back();
     }
 }
