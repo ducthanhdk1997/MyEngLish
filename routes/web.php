@@ -92,6 +92,8 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
                                                                                                     ->name('coursetypeselect');
 
     });
+
+
 });
 
 
@@ -103,7 +105,6 @@ Route::redirect('/', 'admin');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
     Auth::routes();
-
     Route::group(['middleware' => 'auth'], function(){
         Route::get('/', 'Admin\DashboardController@index')->name('index');
 

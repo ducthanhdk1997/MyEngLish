@@ -13,8 +13,12 @@
     <div class="container body">
       	<div class="main_container">
         <!-- left_col -->
-	        
+
+        @if(Auth::user()->role_id==4)
+            @include('pages.layouts.menu')
+        @else
 		@include('admin.layouts.menu')
+        @endif
         <!-- end of left_col -->
 
         <!-- top navigation -->
