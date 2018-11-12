@@ -182,6 +182,12 @@ class ExerciseController extends Controller
         }
     }
 
+    public  function  show(Exercise $exercise)
+    {
+        $questions = Question::query()->where('exercise_id',$exercise->id)->get();
+        return view('admin.exercise.detail',['questions'=>$questions,'exercise'=>$exercise]);
+    }
+
 
 
 

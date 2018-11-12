@@ -74,6 +74,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 	   Route::post('assign','ExerciseController@postAssign')->name('assign');
 	   Route::get('{exercise}/edit','ExerciseController@getExercise')->name('edit');
 	   Route::post('{exercise}/edit','ExerciseController@setName')->name('update');
+	   Route::get('{exercise}/detail','ExerciseController@show')->name('show');
     });
 
 	Route::group(['prefix'=>'question','as'=>'question.'],function (){
@@ -148,15 +149,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
 
         Route::group(['prefix' => 'courses', 'as' => 'courses.'], function(){
            Route::get('/', 'Admin\CourseController@index')->name('index');
-
            Route::get('create', 'Admin\CourseController@create')->name('create');
            Route::post('create', 'Admin\CourseController@store')->name('store');
-
            Route::get('{course}/edit', 'Admin\CourseController@edit')->name('edit');
            Route::put('{course}', 'Admin\CourseController@update')->name('update');
-
            Route::get('{course}/detail', 'Admin\CourseController@show')->name('show');
-
            route::delete('{course}', 'Admin\CourseController@destroy')->name('delete');
         });
     });
