@@ -155,3 +155,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::group(['prefix'=>'user','as'=>'user.'],function (){
+    Route::get('{exercise}/exercise','ExerciseController@showforuser')->name('exercise');
+    Route::post('{exercise}/exercise','ExerciseController@doExercise')->name('doexercise');
+    Route::get('list',"ExerciseController@listForUser")->name('show');
+    Route::get('done','ExerciseController@listExerHaveDone')->name('done');
+
+});
+

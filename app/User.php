@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,5 +32,15 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Role');
     }
+    public function classes()
+    {
+        return $this->belongsToMany(Classes::class, 'user_class', 'user_id', 'class_id');
+    }
+
+//    public  function exercises()
+//    {
+//        $now = Carbon::now();
+//        return $this->belongsToMany(Exercise::class,'user_exercises','user_id','exercise_id')->wherePivot('deadline','>=',$now);
+//    }
 
 }
