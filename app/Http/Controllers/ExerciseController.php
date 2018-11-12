@@ -27,6 +27,17 @@ class ExerciseController extends Controller
         return view('admin.exercise.list', ['exercises' => $exercises]);
     }
 
+    public function destroy(Exercise $exercise)
+    {
+        if($exercise->delete()){
+            flash()->success('Xóa bài tập  thành công');
+        }
+        else{
+            flash()->error('Xóa bài tập thất bại');
+        }
+        return redirect()->back();
+    }
+
     public function create()
     {
         return view('admin.exercise.add');
@@ -144,8 +155,7 @@ class ExerciseController extends Controller
     public function setName(Request $request, Exercise $exercise)
     {
 
-        $exercises = Exercise::where('grade_id', $exercise->grade_id)
-            ->where('style_id', $exercise->style_id)
+        $exercises = Exercise::query()->where('grade_id', $exercise->grade_id)
             ->get();
         foreach ($exercises as $exe) {
             if (str_slug($exe->name) == str_slug($request->name)) {

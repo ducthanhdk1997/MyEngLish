@@ -40,6 +40,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 
 	Route::group(['prefix'=>'exercise','as'=>'exercise.'],function (){
 	   Route::get('list','ExerciseController@getList')->name('list');
+	   route::delete('{exercise}', 'ExerciseController@destroy')->name('delete');
 	   Route::get('add','ExerciseController@create')->name('create');
 	   Route::post('add','ExerciseController@store')->name('store');
 	   Route::get('assign','ExerciseController@assign')->name('assign');
