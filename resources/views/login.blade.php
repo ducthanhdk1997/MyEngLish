@@ -40,10 +40,10 @@
                         </div>
                     @endif
                     <div>
-                        <input type="email" class="form-control" placeholder="Email" required="" name="email" />
+                        <input type="email" class="form-control" placeholder="Email" name="email" />
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Password" required="" name="password"/>
+                        <input type="password" class="form-control" placeholder="Password"  name="password"/>
                     </div>
                     <button type="submit" class="btn btn-default">Login</button>
                     <div class="clearfix"></div>

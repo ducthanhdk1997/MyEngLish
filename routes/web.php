@@ -16,24 +16,24 @@
 
 
 
-Route::get('setCookie','HomeController@setCookie');
-Route::get('getCookie','HomeController@getCookie');
-Route::get("",function (){
-  return View('welcome');
-});
+//Route::get('setCookie','HomeController@setCookie');
+//Route::get('getCookie','HomeController@getCookie');
+//Route::get("",function (){
+//  return View('welcome');
+//});
 
 // upload file
 
-Route::get('uploadFile',function(){
-	return view('postFile');
-});
+//Route::get('uploadFile',function(){
+//	return view('postFile');
+//});
 
-Route::get('login',function (){
-    return view('login');
-});
+//Route::get('login',function (){
+//    return view('login');
+//});
 
-Route::post('login','UserController@login');
-Route::get('logout','UserController@logout');
+//Route::post('login','UserController@login');
+//Route::get('logout','UserController@logout');
 
 
 //blade template
@@ -41,7 +41,10 @@ Route::get('logout','UserController@logout');
 
 // create db
 
-
+Route::get('login', 'LoginController@getLogin')->name('getLogin');
+ROute::post('login', 'LoginController@postLogin')->name('postLogin');
+ROute::post('logout', 'LoginController@logout')->name('logout');
+Route::get('home', 'HomeController@index');
 
 // route admin
 Route::get('Admin','HomeController@Admin');
@@ -98,7 +101,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::redirect('/', 'admin');
+//Route::redirect('/', '');
+
+Route::get('/', 'HomeController@index');
+
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
     Auth::routes();
@@ -164,6 +170,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
             Route::get('{class}/detail', 'Admin\ClassController@show')->name('show');
 
             route::delete('{class}', 'Admin\ClassController@destroy')->name('delete');
+        });
+
+        Route::group(['prefix' => 'exercises', 'as' => 'exercises.'], function (){
+           Route::get('create', 'Admin\ExersiceController@create')->name('create');
+           Route::post('create', 'Admin\ExersiceController@store')->name('store');
         });
     });
 });

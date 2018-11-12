@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Classes;
+use App\Course;
+use App\Http\Requests\Admin\ClassStoreRequest;
 use App\User;
 use App\User_Class;
 use Illuminate\Http\Request;
@@ -28,7 +30,11 @@ class ClassController extends Controller
      */
     public function create()
     {
-        //
+        $courses = Course::all();
+        $teachers = User::query()
+            ->where('role_id',4)
+            ->get();
+        return view('admin.classes.add', compact('courses', 'teachers'));
     }
 
     /**
@@ -37,9 +43,20 @@ class ClassController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClassStoreRequest $request)
     {
-        //
+        $class = new Classes();
+        $class->name = $request->name;
+        $class->user_id = $request->teacher;
+        $class->grade_id = $request->grade_id;
+
+        if($class->save()){
+            flash()->success('Tạo lớp học thành công');
+            return redirect()->route('admin.classes.index');
+        }
+        else{
+            flash()->error('Tạo lớp thất bại');
+        }
     }
 
     /**
@@ -69,7 +86,6 @@ class ClassController extends Controller
         $teachers = User::query()
             ->where('role_id', 3)
             ->get();
-//        dd($teachers);
         return view('admin.classes.edit', compact('class', 'teachers'));
     }
 
