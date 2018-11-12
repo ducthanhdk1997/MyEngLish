@@ -16,30 +16,7 @@
 
 
 
-//Route::get('setCookie','HomeController@setCookie');
-//Route::get('getCookie','HomeController@getCookie');
-//Route::get("",function (){
-//  return View('welcome');
-//});
 
-// upload file
-
-//Route::get('uploadFile',function(){
-//	return view('postFile');
-//});
-
-//Route::get('login',function (){
-//    return view('login');
-//});
-
-//Route::post('login','UserController@login');
-//Route::get('logout','UserController@logout');
-
-
-//blade template
-
-
-// create db
 
 Route::get('login', 'LoginController@getLogin')->name('getLogin');
 ROute::post('login', 'LoginController@postLogin')->name('postLogin');
