@@ -44,7 +44,7 @@
 Route::get('login', 'LoginController@getLogin')->name('getLogin');
 ROute::post('login', 'LoginController@postLogin')->name('postLogin');
 ROute::post('logout', 'LoginController@logout')->name('logout');
-Route::get('home', 'HomeController@index');
+Route::get('home', 'HomeController@index')->name('home');
 
 // route admin
 Route::get('Admin','HomeController@Admin');
@@ -102,7 +102,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::redirect('/', '');
 
@@ -166,6 +166,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
             Route::put('{class}', 'Admin\ClassController@update')->name('update');
 
             Route::get('{class}/detail', 'Admin\ClassController@show')->name('show');
+            Route::post('{class}/import', 'Admin\ClassController@importStudent')->name('import');
 
             route::delete('{class}', 'Admin\ClassController@destroy')->name('delete');
         });
@@ -177,4 +178,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
     });
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');

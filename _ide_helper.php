@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.6 on 2018-11-01 10:35:51.
+ * Generated for Laravel 5.7.13 on 2018-11-12 22:06:51.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -806,7 +806,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Define a contextual binding.
          *
-         * @param string $concrete
+         * @param array|string $concrete
          * @return \Illuminate\Contracts\Container\ContextualBindingBuilder 
          * @static 
          */ 
@@ -2602,6 +2602,7 @@ namespace Illuminate\Support\Facades {
      *
      * @method static \Illuminate\Contracts\Cache\Repository  store(string|null $name = null)
      * @method static bool has(string $key)
+     * @method static bool missing(string $key)
      * @method static mixed get(string $key, mixed $default = null)
      * @method static mixed pull(string $key, mixed $default = null)
      * @method static void put(string $key, $value, \DateTimeInterface|\DateInterval|float|int $minutes)
@@ -2635,7 +2636,7 @@ namespace Illuminate\Support\Facades {
          * Get a cache driver instance.
          *
          * @param string|null $driver
-         * @return mixed 
+         * @return \Illuminate\Contracts\Cache\Repository 
          * @static 
          */ 
         public static function driver($driver = null)
@@ -2679,6 +2680,18 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Unset the given driver instances.
+         *
+         * @param array|string|null $name
+         * @return $this 
+         * @static 
+         */ 
+        public static function forgetDriver($name = null)
+        {
+            return \Illuminate\Cache\CacheManager::forgetDriver($name);
+        }
+        
+        /**
          * Register a custom driver creator Closure.
          *
          * @param string $driver
@@ -2701,6 +2714,18 @@ namespace Illuminate\Support\Facades {
         public static function has($key)
         {
             return \Illuminate\Cache\Repository::has($key);
+        }
+        
+        /**
+         * Determine if an item doesn't exist in the cache.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function missing($key)
+        {
+            return \Illuminate\Cache\Repository::missing($key);
         }
         
         /**
@@ -2876,7 +2901,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get an item from the cache, or store the default value.
+         * Get an item from the cache, or execute the given Closure and store the result.
          *
          * @param string $key
          * @param \DateTimeInterface|\DateInterval|float|int $minutes
@@ -2890,7 +2915,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get an item from the cache, or store the default value forever.
+         * Get an item from the cache, or execute the given Closure and store the result forever.
          *
          * @param string $key
          * @param \Closure $callback
@@ -2903,7 +2928,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get an item from the cache, or store the default value forever.
+         * Get an item from the cache, or execute the given Closure and store the result forever.
          *
          * @param string $key
          * @param \Closure $callback
@@ -4897,6 +4922,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Write the contents of a file, replacing it atomically if it already exists.
+         *
+         * @param string $path
+         * @param string $content
+         * @return void 
+         * @static 
+         */ 
+        public static function replace($path, $content)
+        {
+            \Illuminate\Filesystem\Filesystem::replace($path, $content);
+        }
+        
+        /**
          * Prepend to a file.
          *
          * @param string $path
@@ -6045,12 +6083,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return Boolean Whether the record has been processed
+         * @return bool Whether the record has been processed
          * @static 
          */ 
         public static function debug($message, $context = array())
         {
-            return \Monolog\Logger::debug($message, $context);
+            return \Monolog\Logger::addDebug($message, $context);
         }
         
         /**
@@ -6058,12 +6096,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return Boolean Whether the record has been processed
+         * @return bool Whether the record has been processed
          * @static 
          */ 
         public static function info($message, $context = array())
         {
-            return \Monolog\Logger::info($message, $context);
+            return \Monolog\Logger::addInfo($message, $context);
         }
         
         /**
@@ -6071,12 +6109,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return Boolean Whether the record has been processed
+         * @return bool Whether the record has been processed
          * @static 
          */ 
         public static function notice($message, $context = array())
         {
-            return \Monolog\Logger::notice($message, $context);
+            return \Monolog\Logger::addNotice($message, $context);
         }
         
         /**
@@ -6084,12 +6122,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return Boolean Whether the record has been processed
+         * @return bool Whether the record has been processed
          * @static 
          */ 
         public static function warning($message, $context = array())
         {
-            return \Monolog\Logger::warning($message, $context);
+            return \Monolog\Logger::addWarning($message, $context);
         }
         
         /**
@@ -6097,12 +6135,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return Boolean Whether the record has been processed
+         * @return bool Whether the record has been processed
          * @static 
          */ 
         public static function error($message, $context = array())
         {
-            return \Monolog\Logger::error($message, $context);
+            return \Monolog\Logger::addError($message, $context);
         }
         
         /**
@@ -6110,12 +6148,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return Boolean Whether the record has been processed
+         * @return bool Whether the record has been processed
          * @static 
          */ 
         public static function critical($message, $context = array())
         {
-            return \Monolog\Logger::critical($message, $context);
+            return \Monolog\Logger::addCritical($message, $context);
         }
         
         /**
@@ -6123,12 +6161,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return Boolean Whether the record has been processed
+         * @return bool Whether the record has been processed
          * @static 
          */ 
         public static function alert($message, $context = array())
         {
-            return \Monolog\Logger::alert($message, $context);
+            return \Monolog\Logger::addAlert($message, $context);
         }
         
         /**
@@ -6136,12 +6174,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return Boolean Whether the record has been processed
+         * @return bool Whether the record has been processed
          * @static 
          */ 
         public static function emergency($message, $context = array())
         {
-            return \Monolog\Logger::emergency($message, $context);
+            return \Monolog\Logger::addEmergency($message, $context);
         }
         
         /**
@@ -6243,7 +6281,18 @@ namespace Illuminate\Support\Facades {
      * @method static array failures()
      * @method static mixed queue(string|array|\Illuminate\Contracts\Mail\Mailable $view, string $queue = null)
      * @method static mixed later(\DateTimeInterface|\DateInterval|int $delay, string|array|\Illuminate\Contracts\Mail\Mailable $view, string $queue = null)
+     * @method static void assertSent(string $mailable, \Closure|string $callback = null)
+     * @method static void assertNotSent(string $mailable, \Closure|string $callback = null)
+     * @method static void assertNothingSent()
+     * @method static void assertQueued(string $mailable, \Closure|string $callback = null)
+     * @method static void assertNotQueued(string $mailable, \Closure|string $callback = null)
+     * @method static void assertNothingQueued()
+     * @method static \Illuminate\Support\Collection sent(string $mailable, \Closure|string $callback = null)
+     * @method static bool hasSent(string $mailable)
+     * @method static \Illuminate\Support\Collection queued(string $mailable, \Closure|string $callback = null)
+     * @method static bool hasQueued(string $mailable)
      * @see \Illuminate\Mail\Mailer
+     * @see \Illuminate\Support\Testing\Fakes\MailFake
      */ 
     class Mail {
         
@@ -6395,6 +6444,7 @@ namespace Illuminate\Support\Facades {
          * @param string|array|\Illuminate\Contracts\Mail\Mailable $view
          * @param string|null $queue
          * @return mixed 
+         * @throws \InvalidArgumentException
          * @static 
          */ 
         public static function queue($view, $queue = null)
@@ -6437,6 +6487,7 @@ namespace Illuminate\Support\Facades {
          * @param string|array|\Illuminate\Contracts\Mail\Mailable $view
          * @param string|null $queue
          * @return mixed 
+         * @throws \InvalidArgumentException
          * @static 
          */ 
         public static function later($delay, $view, $queue = null)
@@ -7381,6 +7432,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Register a callback to be executed when creating job payloads.
+         *
+         * @param callable $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function createPayloadUsing($callback)
+        {
+            //Method inherited from \Illuminate\Queue\Queue            
+            \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
+        }
+        
+        /**
          * Set the IoC container instance.
          *
          * @param \Illuminate\Container\Container $container
@@ -7481,6 +7545,18 @@ namespace Illuminate\Support\Facades {
         public static function intended($default = '/', $status = 302, $headers = array(), $secure = null)
         {
             return \Illuminate\Routing\Redirector::intended($default, $status, $headers, $secure);
+        }
+        
+        /**
+         * Set the intended url.
+         *
+         * @param string $url
+         * @return void 
+         * @static 
+         */ 
+        public static function setIntendedUrl($url)
+        {
+            \Illuminate\Routing\Redirector::setIntendedUrl($url);
         }
         
         /**
@@ -8846,7 +8922,7 @@ namespace Illuminate\Support\Facades {
          *  * _format request attribute
          *  * $default
          *
-         * @param string $default The default format
+         * @param string|null $default The default format
          * @return string The request format
          * @static 
          */ 
@@ -9307,7 +9383,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array 
+         * @return string|array|null 
          * @static 
          */ 
         public static function server($key = null, $default = null)
@@ -9332,7 +9408,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array 
+         * @return string|array|null 
          * @static 
          */ 
         public static function header($key = null, $default = null)
@@ -9476,7 +9552,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array 
+         * @return string|array|null 
          * @static 
          */ 
         public static function query($key = null, $default = null)
@@ -9489,7 +9565,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array 
+         * @return string|array|null 
          * @static 
          */ 
         public static function post($key = null, $default = null)
@@ -9514,7 +9590,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array 
+         * @return string|array|null 
          * @static 
          */ 
         public static function cookie($key = null, $default = null)
@@ -9603,7 +9679,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function validate($rules, $params = null)
         {
-            return \Illuminate\Http\Request::validate($rules, $params);
+            return \Illuminate\Http\Request::Illuminate\Foundation\Providers\{closure}($rules, $params);
         }
         
         /**
@@ -9611,9 +9687,9 @@ namespace Illuminate\Support\Facades {
          *
          * @static 
          */ 
-        public static function hasValidSignature()
+        public static function hasValidSignature($absolute = true)
         {
-            return \Illuminate\Http\Request::hasValidSignature();
+            return \Illuminate\Http\Request::Illuminate\Foundation\Providers\{closure}($absolute);
         }
          
     }
@@ -9906,9 +9982,11 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Routing\RouteRegistrar name(string $value)
      * @method static \Illuminate\Routing\RouteRegistrar namespace(string $value)
      * @method static \Illuminate\Routing\Router|\Illuminate\Routing\RouteRegistrar group(array|\Closure|string $attributes, \Closure|string $routes)
-     * @method static \Illuminate\Routing\Route redirect(string $uri, string $destination, int $status = 301)
+     * @method static \Illuminate\Routing\Route redirect(string $uri, string $destination, int $status = 302)
+     * @method static \Illuminate\Routing\Route permanentRedirect(string $uri, string $destination)
      * @method static \Illuminate\Routing\Route view(string $uri, string $view, array $data = [])
      * @method static void bind(string $key, string|callable $binder)
+     * @method static void model(string $key, string $class, \Closure|null $callback = null)
      * @method static \Illuminate\Routing\Route current()
      * @method static string|null currentRouteName()
      * @method static string|null currentRouteAction()
@@ -12351,12 +12429,13 @@ namespace Illuminate\Support\Facades {
          * Determine if the given request has a valid signature.
          *
          * @param \Illuminate\Http\Request $request
+         * @param bool $absolute
          * @return bool 
          * @static 
          */ 
-        public static function hasValidSignature($request)
+        public static function hasValidSignature($request, $absolute = true)
         {
-            return \Illuminate\Routing\UrlGenerator::hasValidSignature($request);
+            return \Illuminate\Routing\UrlGenerator::hasValidSignature($request, $absolute);
         }
         
         /**
@@ -13151,6 +13230,44 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+            \Illuminate\View\Factory::macro($name, $macro);
+        }
+        
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin)
+        {
+            \Illuminate\View\Factory::mixin($mixin);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+            return \Illuminate\View\Factory::hasMacro($name);
+        }
+        
+        /**
          * Start a component rendering process.
          *
          * @param string $name
@@ -13551,6 +13668,558 @@ namespace Illuminate\Support\Facades {
  
 }
 
+namespace Barryvdh\Debugbar { 
+
+    /**
+     * 
+     *
+     */ 
+    class Facade {
+        
+        /**
+         * Enable the Debugbar and boot, if not already booted.
+         *
+         * @static 
+         */ 
+        public static function enable()
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::enable();
+        }
+        
+        /**
+         * Boot the debugbar (add collectors, renderer and listener)
+         *
+         * @static 
+         */ 
+        public static function boot()
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::boot();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function shouldCollect($name, $default = false)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::shouldCollect($name, $default);
+        }
+        
+        /**
+         * Adds a data collector
+         *
+         * @param \Barryvdh\Debugbar\DataCollectorInterface $collector
+         * @throws DebugBarException
+         * @return $this 
+         * @static 
+         */ 
+        public static function addCollector($collector)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::addCollector($collector);
+        }
+        
+        /**
+         * Handle silenced errors
+         *
+         * @param $level
+         * @param $message
+         * @param string $file
+         * @param int $line
+         * @param array $context
+         * @throws \ErrorException
+         * @static 
+         */ 
+        public static function handleError($level, $message, $file = '', $line = 0, $context = array())
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::handleError($level, $message, $file, $line, $context);
+        }
+        
+        /**
+         * Starts a measure
+         *
+         * @param string $name Internal name, used to stop the measure
+         * @param string $label Public name
+         * @static 
+         */ 
+        public static function startMeasure($name, $label = null)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::startMeasure($name, $label);
+        }
+        
+        /**
+         * Stops a measure
+         *
+         * @param string $name
+         * @static 
+         */ 
+        public static function stopMeasure($name)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::stopMeasure($name);
+        }
+        
+        /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Exception $e
+         * @deprecated in favor of addThrowable
+         * @static 
+         */ 
+        public static function addException($e)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::addException($e);
+        }
+        
+        /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Exception $e
+         * @static 
+         */ 
+        public static function addThrowable($e)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::addThrowable($e);
+        }
+        
+        /**
+         * Returns a JavascriptRenderer for this instance
+         *
+         * @param string $baseUrl
+         * @param string $basePathng
+         * @return \Barryvdh\Debugbar\JavascriptRenderer 
+         * @static 
+         */ 
+        public static function getJavascriptRenderer($baseUrl = null, $basePath = null)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::getJavascriptRenderer($baseUrl, $basePath);
+        }
+        
+        /**
+         * Modify the response and inject the debugbar (or data in headers)
+         *
+         * @param \Symfony\Component\HttpFoundation\Request $request
+         * @param \Symfony\Component\HttpFoundation\Response $response
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */ 
+        public static function modifyResponse($request, $response)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::modifyResponse($request, $response);
+        }
+        
+        /**
+         * Check if the Debugbar is enabled
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isEnabled()
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::isEnabled();
+        }
+        
+        /**
+         * Collects the data from the collectors
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function collect()
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::collect();
+        }
+        
+        /**
+         * Injects the web debug toolbar into the given Response.
+         *
+         * @param \Symfony\Component\HttpFoundation\Response $response A Response instance
+         * Based on https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
+         * @static 
+         */ 
+        public static function injectDebugbar($response)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::injectDebugbar($response);
+        }
+        
+        /**
+         * Disable the Debugbar
+         *
+         * @static 
+         */ 
+        public static function disable()
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::disable();
+        }
+        
+        /**
+         * Adds a measure
+         *
+         * @param string $label
+         * @param float $start
+         * @param float $end
+         * @static 
+         */ 
+        public static function addMeasure($label, $start, $end)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::addMeasure($label, $start, $end);
+        }
+        
+        /**
+         * Utility function to measure the execution of a Closure
+         *
+         * @param string $label
+         * @param \Closure $closure
+         * @static 
+         */ 
+        public static function measure($label, $closure)
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::measure($label, $closure);
+        }
+        
+        /**
+         * Collect data in a CLI request
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function collectConsole()
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::collectConsole();
+        }
+        
+        /**
+         * Adds a message to the MessagesCollector
+         * 
+         * A message can be anything from an object to a string
+         *
+         * @param mixed $message
+         * @param string $label
+         * @static 
+         */ 
+        public static function addMessage($message, $label = 'info')
+        {
+            return \Barryvdh\Debugbar\LaravelDebugbar::addMessage($message, $label);
+        }
+        
+        /**
+         * Checks if a data collector has been added
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasCollector($name)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::hasCollector($name);
+        }
+        
+        /**
+         * Returns a data collector
+         *
+         * @param string $name
+         * @return \DebugBar\DataCollectorInterface 
+         * @throws DebugBarException
+         * @static 
+         */ 
+        public static function getCollector($name)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getCollector($name);
+        }
+        
+        /**
+         * Returns an array of all data collectors
+         *
+         * @return \DebugBar\array[DataCollectorInterface] 
+         * @static 
+         */ 
+        public static function getCollectors()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getCollectors();
+        }
+        
+        /**
+         * Sets the request id generator
+         *
+         * @param \DebugBar\RequestIdGeneratorInterface $generator
+         * @return $this 
+         * @static 
+         */ 
+        public static function setRequestIdGenerator($generator)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setRequestIdGenerator($generator);
+        }
+        
+        /**
+         * 
+         *
+         * @return \DebugBar\RequestIdGeneratorInterface 
+         * @static 
+         */ 
+        public static function getRequestIdGenerator()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getRequestIdGenerator();
+        }
+        
+        /**
+         * Returns the id of the current request
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getCurrentRequestId()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getCurrentRequestId();
+        }
+        
+        /**
+         * Sets the storage backend to use to store the collected data
+         *
+         * @param \DebugBar\StorageInterface $storage
+         * @return $this 
+         * @static 
+         */ 
+        public static function setStorage($storage = null)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setStorage($storage);
+        }
+        
+        /**
+         * 
+         *
+         * @return \DebugBar\StorageInterface 
+         * @static 
+         */ 
+        public static function getStorage()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getStorage();
+        }
+        
+        /**
+         * Checks if the data will be persisted
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isDataPersisted()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::isDataPersisted();
+        }
+        
+        /**
+         * Sets the HTTP driver
+         *
+         * @param \DebugBar\HttpDriverInterface $driver
+         * @return $this 
+         * @static 
+         */ 
+        public static function setHttpDriver($driver)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setHttpDriver($driver);
+        }
+        
+        /**
+         * Returns the HTTP driver
+         * 
+         * If no http driver where defined, a PhpHttpDriver is automatically created
+         *
+         * @return \DebugBar\HttpDriverInterface 
+         * @static 
+         */ 
+        public static function getHttpDriver()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getHttpDriver();
+        }
+        
+        /**
+         * Returns collected data
+         * 
+         * Will collect the data if none have been collected yet
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getData()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getData();
+        }
+        
+        /**
+         * Returns an array of HTTP headers containing the data
+         *
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return array 
+         * @static 
+         */ 
+        public static function getDataAsHeaders($headerName = 'phpdebugbar', $maxHeaderLength = 4096, $maxTotalHeaderLength = 250000)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getDataAsHeaders($headerName, $maxHeaderLength, $maxTotalHeaderLength);
+        }
+        
+        /**
+         * Sends the data through the HTTP headers
+         *
+         * @param bool $useOpenHandler
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return $this 
+         * @static 
+         */ 
+        public static function sendDataInHeaders($useOpenHandler = null, $headerName = 'phpdebugbar', $maxHeaderLength = 4096)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::sendDataInHeaders($useOpenHandler, $headerName, $maxHeaderLength);
+        }
+        
+        /**
+         * Stacks the data in the session for later rendering
+         *
+         * @static 
+         */ 
+        public static function stackData()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::stackData();
+        }
+        
+        /**
+         * Checks if there is stacked data in the session
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasStackedData()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::hasStackedData();
+        }
+        
+        /**
+         * Returns the data stacked in the session
+         *
+         * @param boolean $delete Whether to delete the data in the session
+         * @return array 
+         * @static 
+         */ 
+        public static function getStackedData($delete = true)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getStackedData($delete);
+        }
+        
+        /**
+         * Sets the key to use in the $_SESSION array
+         *
+         * @param string $ns
+         * @return $this 
+         * @static 
+         */ 
+        public static function setStackDataSessionNamespace($ns)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setStackDataSessionNamespace($ns);
+        }
+        
+        /**
+         * Returns the key used in the $_SESSION array
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getStackDataSessionNamespace()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getStackDataSessionNamespace();
+        }
+        
+        /**
+         * Sets whether to only use the session to store stacked data even
+         * if a storage is enabled
+         *
+         * @param boolean $enabled
+         * @return $this 
+         * @static 
+         */ 
+        public static function setStackAlwaysUseSessionStorage($enabled = true)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setStackAlwaysUseSessionStorage($enabled);
+        }
+        
+        /**
+         * Checks if the session is always used to store stacked data
+         * even if a storage is enabled
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isStackAlwaysUseSessionStorage()
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::isStackAlwaysUseSessionStorage();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetSet($key, $value)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetSet($key, $value);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetGet($key)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetGet($key);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetExists($key)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetExists($key);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetUnset($key)
+        {
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetUnset($key);
+        }
+         
+    }
+ 
+}
+
 namespace Laracasts\Flash { 
 
     /**
@@ -13653,6 +14322,155 @@ namespace Laracasts\Flash {
         public static function clear()
         {
             return \Laracasts\Flash\FlashNotifier::clear();
+        }
+         
+    }
+ 
+}
+
+namespace Maatwebsite\Excel\Facades { 
+
+    /**
+     * LaravelExcel Facade
+     *
+     * @category Laravel Excel
+     * @version 1.0.0
+     * @package maatwebsite/excel
+     * @copyright Copyright (c) 2013 - 2014 Maatwebsite (http://www.maatwebsite.nl)
+     * @author Maatwebsite <info@maatwebsite.nl>
+     * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+     */ 
+    class Excel {
+        
+        /**
+         * Create a new file
+         *
+         * @param $filename
+         * @param callable|null $callback
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
+         * @static 
+         */ 
+        public static function create($filename, $callback = null)
+        {
+            return \Maatwebsite\Excel\Excel::create($filename, $callback);
+        }
+        
+        /**
+         * Load an existing file
+         *
+         * @param string $file The file we want to load
+         * @param callback|null $callback
+         * @param string|null $encoding
+         * @param bool $noBasePath
+         * @param callback|null $callbackConfigReader
+         * @return \Maatwebsite\Excel\LaravelExcelReader 
+         * @static 
+         */ 
+        public static function load($file, $callback = null, $encoding = null, $noBasePath = false, $callbackConfigReader = null)
+        {
+            return \Maatwebsite\Excel\Excel::load($file, $callback, $encoding, $noBasePath, $callbackConfigReader);
+        }
+        
+        /**
+         * Set select sheets
+         *
+         * @param $sheets
+         * @return \Maatwebsite\Excel\LaravelExcelReader 
+         * @static 
+         */ 
+        public static function selectSheets($sheets = array())
+        {
+            return \Maatwebsite\Excel\Excel::selectSheets($sheets);
+        }
+        
+        /**
+         * Select sheets by index
+         *
+         * @param array $sheets
+         * @return $this 
+         * @static 
+         */ 
+        public static function selectSheetsByIndex($sheets = array())
+        {
+            return \Maatwebsite\Excel\Excel::selectSheetsByIndex($sheets);
+        }
+        
+        /**
+         * Batch import
+         *
+         * @param $files
+         * @param callback $callback
+         * @return \PHPExcel 
+         * @static 
+         */ 
+        public static function batch($files, $callback)
+        {
+            return \Maatwebsite\Excel\Excel::batch($files, $callback);
+        }
+        
+        /**
+         * Create a new file and share a view
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
+         * @static 
+         */ 
+        public static function shareView($view, $data = array(), $mergeData = array())
+        {
+            return \Maatwebsite\Excel\Excel::shareView($view, $data, $mergeData);
+        }
+        
+        /**
+         * Create a new file and load a view
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
+         * @static 
+         */ 
+        public static function loadView($view, $data = array(), $mergeData = array())
+        {
+            return \Maatwebsite\Excel\Excel::loadView($view, $data, $mergeData);
+        }
+        
+        /**
+         * Set filters
+         *
+         * @param array $filters
+         * @return \Excel 
+         * @static 
+         */ 
+        public static function registerFilters($filters = array())
+        {
+            return \Maatwebsite\Excel\Excel::registerFilters($filters);
+        }
+        
+        /**
+         * Enable certain filters
+         *
+         * @param string|array $filter
+         * @param bool|false|string $class
+         * @return \Excel 
+         * @static 
+         */ 
+        public static function filter($filter, $class = false)
+        {
+            return \Maatwebsite\Excel\Excel::filter($filter, $class);
+        }
+        
+        /**
+         * Get register, enabled (or both) filters
+         *
+         * @param string|boolean $key [description]
+         * @return array 
+         * @static 
+         */ 
+        public static function getFilters($key = false)
+        {
+            return \Maatwebsite\Excel\Excel::getFilters($key);
         }
          
     }
@@ -16032,7 +16850,11 @@ namespace  {
 
     class View extends \Illuminate\Support\Facades\View {}
 
+    class Debugbar extends \Barryvdh\Debugbar\Facade {}
+
     class Flash extends \Laracasts\Flash\Flash {}
+
+    class Excel extends \Maatwebsite\Excel\Facades\Excel {}
  
 }
 

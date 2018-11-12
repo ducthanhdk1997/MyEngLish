@@ -9,6 +9,8 @@ use App\User;
 use App\User_Class;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+//use Maatwebsite\Excel\Excel;
+use Excel;
 
 class ClassController extends Controller
 {
@@ -49,7 +51,6 @@ class ClassController extends Controller
         $class->name = $request->name;
         $class->user_id = $request->teacher;
         $class->grade_id = $request->grade_id;
-
         if($class->save()){
             flash()->success('Tạo lớp học thành công');
             return redirect()->route('admin.classes.index');
@@ -72,7 +73,7 @@ class ClassController extends Controller
             ->where('class_id', $class->id)
             ->paginate(10);
 
-        return view('admin.classes.detail', compact('usersClass'));
+        return view('admin.classes.detail', compact('usersClass', 'class'));
     }
 
     /**
@@ -126,4 +127,44 @@ class ClassController extends Controller
         }
         return redirect()->back();
     }
+
+    public function importStudent(Request $request, Classes $class){
+        if(!$request->hasFile('file-excel')){
+            return redirect()->back()->withErrors("No file selected");
+        }
+        $file = $request->file('file-excel');
+        if(!$file->getclientoriginalextension() == "xlsx"){
+            return redirect()->back()->withErrors("Selected file is not excel file");
+        }
+        $filename = $file->getClientOriginalName();
+        $file->move('excel', $filename);
+        $filePath = 'public/excel/' . $filename;
+//        $filePath = public_path('excel/' . $filename);
+        $reader = Excel::load($filePath);
+
+//        dd($reader->toArray());
+
+        foreach ($reader->toArray() as $key => $row){
+            $password = bcrypt('secret');
+            $student = User::query()->firstOrCreate([
+                'email' => $row['email']
+            ],
+            [
+                'password' => $password,
+                'username' => $row['ho_ten'],
+                'gender' => $row['gioi_tinh'],
+                'phone' => $row['so_dien_thoai'],
+            ]);
+            $student = User::query()
+                ->where('email', $row['email'])
+                ->update([
+                'role_id' => 4
+                ]);
+
+//            $student = User::
+        }
+        flash()->success('Upload thanh cong');
+        return redirect()->route('admin.classes.index');
+    }
+
 }
