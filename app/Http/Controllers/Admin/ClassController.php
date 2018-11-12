@@ -1,77 +1,113 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Class_Course;
-use App\Class_Exercise;
-use App\Course;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\ClassStoreRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
-use App\Classes;
-use App\PI_Amount;
-use function Sodium\compare;
 
+use App\Classes;
+use App\User;
+use App\User_Class;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ClassController extends Controller
 {
-    //
-    function __construct()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        parent::__construct();
+        $classes = Classes::query()->paginate(10);
+        return view('admin.classes.index', compact('classes'));
     }
 
-    public function getList()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $class_courses = Class_Course::all();
-        $courses = Course::all();
-    	return view('admin.classes.list',['class_courses'=>$class_courses,'courses'=>$courses]);
+        //
     }
 
-    public function add()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $courses = Course::all();
-        return view('admin.classes.add',['courses'=>$courses]);
-    }
-    public function addUser()
-    {
-        return view('admin.classes.adduser');
-    }
-
-    public  function  postClass(ClassStoreRequest $request, Classes $classes)
-    {
-        $classes->name=$request->name;
-        $classes->grade_id = $request->grade_id;
-        if($classes->save())
-        {
-            $class_id = Classes::where('name',$request->name)->value('id');
-            $course = Class_Course::create([
-                'class_id'=>$class_id,
-                'course_id'=>$request->course_id
-            ]);
-            flash()->success('Thêm lớp thành công');
-            return redirect()->route('admin.class.list');
-        }
-        else
-        {
-            flash()->error('Thêm thất bại');
-        }
+        //
     }
 
-    public function getClass(Classes $class)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Classes $class)
     {
-        return view('admin.classes.edit',compact('class'));
+        $usersClass = User_Class::query()
+            ->with('user')
+            ->where('class_id', $class->id)
+            ->paginate(10);
+
+        return view('admin.classes.detail', compact('usersClass'));
     }
 
-    public function setName(ClassStoreRequest $request, Classes $classes)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Classes $class)
     {
-        $classes->name = $request->name;
-        if($classes->save()){
-            flash()->success('sua thanh cong');
-            return redirect()->route('admin.class.list');
+        $teachers = User::query()
+            ->where('role_id', 3)
+            ->get();
+//        dd($teachers);
+        return view('admin.classes.edit', compact('class', 'teachers'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Classes $class)
+    {
+        $class->name = $request->name;
+        $class->user_id = $request->teacher;
+
+        if($class->save()){
+            flash()->success('Cap nhat thanh cong');
         }
         else{
-            flash()->error('sua that bai');
+            flash()->error("cap nhat that bai");
         }
+        return redirect()->route('admin.classes.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Classes $class)
+    {
+        if($class->delete()){
+            flash()->success('Xóa lớp học thành công');
+        }
+        else{
+            flash()->error('Xóa tài khoản thất bại');
+        }
+        return redirect()->back();
     }
 }

@@ -55,14 +55,6 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
         Route::get('{grade}/edit','Admin\GradeController@getGrade')->name('edit');
         Route::post('{grade}/edit','Admin\GradeController@setName')->name('edit');
     });
-	Route::group(['prefix'=>'class','as'=>'class.'],function(){
-		Route::get('list','Admin\ClassController@getList')->name('list');
-		Route::get('add','Admin\ClassController@add')->name('add');
-		Route::post('add','Admin\ClassController@postClass')->name('add');
-		Route::get('adduser','Admin\ClassController@addUser')->name('adduser');
-		Route::get('{class}/edit','Admin\ClassController@getClass')->name('edit');
-		Route::post('{class}/edit','Admin\ClassController@setName')->name('update');
-	});
 
 
 
@@ -155,6 +147,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
            Route::put('{course}', 'Admin\CourseController@update')->name('update');
            Route::get('{course}/detail', 'Admin\CourseController@show')->name('show');
            route::delete('{course}', 'Admin\CourseController@destroy')->name('delete');
+        });
+
+        Route::group(['prefix' => 'classes', 'as' => 'classes.'], function (){
+           Route::get('/', 'Admin\ClassController@index')->name('index');
+
+            Route::get('create', 'Admin\ClassController@create')->name('create');
+            Route::post('create', 'Admin\ClassController@store')->name('store');
+
+            Route::get('{class}/edit', 'Admin\ClassController@edit')->name('edit');
+            Route::put('{class}', 'Admin\ClassController@update')->name('update');
+
+            Route::get('{class}/detail', 'Admin\ClassController@show')->name('show');
+
+            route::delete('{class}', 'Admin\ClassController@destroy')->name('delete');
         });
     });
 });
