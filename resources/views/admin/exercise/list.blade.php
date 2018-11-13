@@ -34,14 +34,14 @@
                                 <a href="{{ route('admin.exercise.edit',$exercise) }}" class="btn btn-success">
                                     <i class="fa fa-edit"></i>Edit
                                 </a>
-                                <a href="{{route('admin.exercise.show',$exercise)}}" class="btn btn-success">
+                                <a href="{{route('admin.exercise.show',$exercise)}}" class="btn btn-warning">
                                     <i class=" fa fa-angle-double-right"></i>Detail
                                 </a>
                                 <a class="btn btn-info" href="{{route('admin.question.create',$exercise)}}"><i class="fa fa-plus"></i> Add</a>
-                                <form action="" method="post" style="display: inline">
+                                <form action="{{ route('admin.exercise.delete', $exercise) }}" method="post" style="display: inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id == 4 ? "disabled" : ""}} onclick='return confirm("Bạn có muốn xóa " + "\"" + "{{ $exercise->name }}" + "\"");'>
                                         <i class="fa fa-remove"></i> Xóa
                                     </button>
                                 </form>
