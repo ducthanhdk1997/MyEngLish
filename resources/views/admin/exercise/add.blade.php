@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Chọn file</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" name="file_excel">
+                    <input type="file" class="form-control" name="file-excel">
                 </div>
             </div>
             <div class="col-sm-10 col-sm-offset-2">

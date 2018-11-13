@@ -13,14 +13,15 @@ class LoginController extends Controller
     }
 
     public function postLogin(Request $request){
+//        dd($request->email, $request->password);
         $email = $request->email;
         $password = $request->password;
         if(Auth::attempt(['email' => $email, 'password' => $password])){
+//            dd('hello');
             return redirect()->route('home');
         }
         else{
-            flash()->error('Ten tai khoan hoac mat khau khong dung');
-            return redirect()->route('getLogin');
+            return redirect()->route('getLogin')->withErrors('ádasd');
         }
     }
 

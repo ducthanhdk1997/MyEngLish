@@ -21,8 +21,8 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form action="{{asset('login')}}" method="POST">
-                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <form action="{{ route('postLogin')}}" method="POST">
+                    @csrf
                     <h1>Login Form</h1>
                     @if(count($errors)>0)
                         <div class="alert alert-danger">
