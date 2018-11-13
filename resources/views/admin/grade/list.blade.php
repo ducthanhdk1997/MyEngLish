@@ -22,13 +22,15 @@
                         <td>{{$i}}</td>
                         <td>{{$grade->name}}</td>
                         <td class="data-table-edit">
-                            <a class="" href="{{route('admin.grade.edit',$grade)}}"><i class="fa fa-pencil"></i> Edit</a>
-                        </td>
-                        <td class="data-table-edit">
-                            <a class="" href=""><i class="fa fa-pencil"></i> Detail</a>
-                        </td>
-                        <td class="data-table-delete">
-                            <a onclick="if(!confirm('Are you sure?')) return false;" class=" red" href=""><i class="fa fa-trash-o"></i> Delete</a>
+                            <a class="btn btn-success" href="{{route('admin.grade.edit',$grade)}}"><i class="fa fa-pencil"></i> Edit</a>
+
+                            <form action="{{ route('admin.grade.delete', $grade) }}" method="post" style="display: inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id == 4 ? "disabled" : ""}} onclick='return confirm("Bạn có muốn xóa " + "\"" + "{{ $grade->name }}" + "\"");'>
+                                    <i class="fa fa-remove"></i> Xóa
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     <?php $i++;?>

@@ -34,6 +34,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
         Route::post('add','Admin\GradeController@postGrade')->name('add');
         Route::get('{grade}/edit','Admin\GradeController@getGrade')->name('edit');
         Route::post('{grade}/edit','Admin\GradeController@setName')->name('edit');
+        route::delete('{grade}', 'Admin\GradeController@destroy')->name('delete');
     });
 
 
@@ -163,6 +164,5 @@ Route::group(['prefix'=>'user','as'=>'user.'],function (){
     Route::post('{exercise}/exercise','ExerciseController@doExercise')->name('doexercise');
     Route::get('list',"ExerciseController@listForUser")->name('show');
     Route::get('done','ExerciseController@listExerHaveDone')->name('done');
-
 });
 

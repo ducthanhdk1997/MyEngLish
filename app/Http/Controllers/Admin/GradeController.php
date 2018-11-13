@@ -28,6 +28,7 @@ class GradeController extends Controller
         return view('admin.grade.add');
     }
 
+
     public  function  postGrade(GradeStoreRequest $request)
     {
 
@@ -61,5 +62,16 @@ class GradeController extends Controller
             flash()->error('Sua that bai');
         }
 
+    }
+
+    public function destroy(Grade $grade)
+    {
+        if($grade->delete()){
+            flash()->success('Xóa trình độ  thành công');
+        }
+        else{
+            flash()->error('Xóa trình độ thất bại');
+        }
+        return redirect()->back();
     }
 }

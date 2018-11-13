@@ -37,7 +37,7 @@
                                 <a href="{{route('admin.exercise.show',$exercise)}}" class="btn btn-warning">
                                     <i class=" fa fa-angle-double-right"></i>Detail
                                 </a>
-                                <a class="btn btn-info" href="{{route('admin.question.create',$exercise)}}"><i class="fa fa-plus"></i> Add</a>
+                                {{--<a class="btn btn-info" href="{{route('admin.question.create',$exercise)}}"><i class="fa fa-plus"></i> Add</a>--}}
                                 <form action="{{ route('admin.exercise.delete', $exercise) }}" method="post" style="display: inline">
                                     @csrf
                                     @method('DELETE')
