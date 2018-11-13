@@ -161,7 +161,14 @@ class ClassController extends Controller
                 'role_id' => 4
                 ]);
 
-//            $student = User::
+            $student = User::query()
+                ->where('email', $row['email'])->first();
+//            dd($student->id);
+            $userClass = new User_Class();
+            $userClass->user_id = $student->id;
+            $userClass->class_id = $class->id;
+//            dd($userClass->get());
+            $userClass->save();
         }
         flash()->success('Upload thanh cong');
         return redirect()->route('admin.classes.index');

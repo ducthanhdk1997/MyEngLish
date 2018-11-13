@@ -16,38 +16,16 @@
 
 
 
-//Route::get('setCookie','HomeController@setCookie');
-//Route::get('getCookie','HomeController@getCookie');
-//Route::get("",function (){
-//  return View('welcome');
-//});
 
-// upload file
-
-//Route::get('uploadFile',function(){
-//	return view('postFile');
-//});
-
-//Route::get('login',function (){
-//    return view('login');
-//});
-
-//Route::post('login','UserController@login');
-//Route::get('logout','UserController@logout');
-
-
-//blade template
-
-
-// create db
 
 Route::get('login', 'LoginController@getLogin')->name('getLogin');
 ROute::post('login', 'LoginController@postLogin')->name('postLogin');
 ROute::post('logout', 'LoginController@logout')->name('logout');
+
 Route::get('home', 'HomeController@index')->name('home');
 
 // route admin
-Route::get('Admin','HomeController@Admin');
+Route::get('/','LoginController@getLogin');
 
 
 Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
@@ -106,7 +84,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 
 //Route::redirect('/', '');
 
-Route::get('/', 'HomeController@index');
+//Route::get('/', 'HomeController@index');
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
@@ -174,8 +152,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
         Route::group(['prefix' => 'exercises', 'as' => 'exercises.'], function (){
            Route::get('create', 'Admin\ExersiceController@create')->name('create');
            Route::post('create', 'Admin\ExersiceController@store')->name('store');
+
+           Route::post('assign', 'Admin\ExersiceController@assign')->name('assign');
         });
     });
 });
 
 //Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::group(['prefix'=>'user','as'=>'user.'],function (){
+    Route::get('{exercise}/exercise','ExerciseController@showforuser')->name('exercise');
+    Route::post('{exercise}/exercise','ExerciseController@doExercise')->name('doexercise');
+    Route::get('list',"ExerciseController@listForUser")->name('show');
+    Route::get('done','ExerciseController@listExerHaveDone')->name('done');
+
+});
+

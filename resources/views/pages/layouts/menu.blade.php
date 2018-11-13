@@ -28,8 +28,8 @@
 
                     <li><a><i class="fa fa-home"></i>Quản lý bài tập<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{route('admin.grade.list')}}">Bài tập mới</a></li>
-                            <li><a href="{{route('admin.grade.add')}}">Bài tập đã làm</a></li>
+                            <li><a href="{{route('user.show')}}">Bài tập mới</a></li>
+                            <li><a href="{{route('user.done')}}">Bài tập đã làm</a></li>
                         </ul>
                     </li>
                 </ul>

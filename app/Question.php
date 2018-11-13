@@ -8,6 +8,6 @@ class Question extends Model
 {
     //
     protected $table = 'question';
-    protected $fillable = ['answer','part_id'];
+    protected $fillable = ['answer','part_id', 'name', 'content', 'a', 'b', 'c', 'd', 'point', 'image'];
 
 }

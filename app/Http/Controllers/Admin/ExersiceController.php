@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Class_Exercise;
+use App\Exercise;
+use App\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Excel;
 
 class ExersiceController extends Controller
 {
@@ -35,6 +39,43 @@ class ExersiceController extends Controller
      */
     public function store(Request $request)
     {
+        $exercise = new Exercise();
+        $exercise->name = $request->name;
+        $exercise->grade_id = $request->grade;
+        $exercise->save();
+
+        $check = Exercise::query()->where('name', $request->name)->first();
+//        dd($check->id);
+        if(!$request->hasFile('file-excel')){
+            return redirect()->back()->withErrors("No file selected");
+        }
+        $file = $request->file('file-excel');
+        if(!$file->getclientoriginalextension() == "xlsx"){
+            return redirect()->back()->withErrors("Selected file is not excel file");
+        }
+        $filename = $file->getClientOriginalName();
+        $file->move('excel', $filename);
+        $filePath = 'public/excel/' . $filename;
+//        $filePath = public_path('excel/' . $filename);
+        $reader = Excel::load($filePath);
+        foreach ($reader->toArray() as $key => $row){
+            $question = Question::query()->create([
+                'name' => $row['cau_hoi'],
+                'content' => $row['noi_dung'],
+                'a' => $row['a'],
+                'b' => $row['b'],
+                'c' => $row['c'],
+                'd' => $row['d'],
+                'answer' => $row['dap_an'],
+                'point' => $row['diem_so'],
+                'exercise_id' => $check->id,
+                'image' => 'a'
+            ]);
+
+//            dd($question);
+        }
+        flash()->success('Tạo câu hỏi thành công');
+        return redirect()->back();
 
     }
 
@@ -81,5 +122,20 @@ class ExersiceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function assign(Request $request){
+        $class = new Class_Exercise();
+        $class->class_id = $request->class_id;
+        $class->exercise_id = $request->exercise_id;
+        $class->deadline = $request->date;
+
+        if($class->save()){
+            flash()->success('Giao bai tap thanh cong');
+        }
+        else{
+            flash()->error('Giao bài tập thất bại');
+        }
+        return redirect()->back();
     }
 }

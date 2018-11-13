@@ -1,6 +1,47 @@
 
 /*GENERAL*/
+ /*style exercise*/
 
+.exerchise{
+    width: 700px;
+    margin: auto;
+}
+
+.question{
+    margin-top: 25px;
+    border-top: 2px solid #666666;
+}
+.que_num{
+    width: 48px;
+    padding: 10px 0px 0px 18px;
+    background: #666666;
+    font-size: 20px;
+    color: #fff;
+}
+.cont{
+    padding: 0px;
+    margin-left: 30px;
+    width: 682px;
+}
+.que_cont{
+    font-size: 16px;
+    line-height: 1.75;
+    text-align: justify;
+    background: #F6F6F6;
+    /*padding: 5px 10px 0px 0px;*/
+}
+.ans{
+    margin-left: 70px !important;
+}
+.elem{
+    margin-top:15px;
+}
+.elem input{
+    margin-left: 10px;
+    padding-top: 5px;
+}
+
+/*end of exercise*/
 
 a{
   color: #0583ba;
