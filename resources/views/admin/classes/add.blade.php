@@ -5,18 +5,6 @@
         <form action="{{ route('admin.classes.store') }}" method="POST">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="form-group">
-                <label for="group_class">Chọn trình độ:</label>
-                <select class="form-control" id="grades" name="grade_id">
-                    @foreach ($grades as $grade)
-                        @if($grade['id']==1)
-                            <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
-                        @else
-                            <option value="{{$grade->id}}">{{$grade->name}}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="courses">Chọn khóa học:</label>
                 <select class="form-control" id="courses" name="course_id">
                     @foreach ($courses as $course)

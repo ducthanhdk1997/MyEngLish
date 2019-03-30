@@ -21,7 +21,7 @@ class CreateUserClassTable extends Migration
 
             $table->foreign('class_id')
                 ->references('id')
-                ->on('class')
+                ->on('classes')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 

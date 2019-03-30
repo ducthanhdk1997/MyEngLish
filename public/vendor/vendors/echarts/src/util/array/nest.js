@@ -76,7 +76,7 @@ define(function (require) {
         return {
             /**
              * specified the key to groupby the arrays.
-             * users can specified one more keys.
+             * teachers can specified one more keys.
              * @param {Function} d
              */
             key: function (d) {

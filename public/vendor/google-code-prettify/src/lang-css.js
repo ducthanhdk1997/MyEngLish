@@ -48,7 +48,7 @@
 // Langugage IDs
 // =============
 // The language IDs are typically the file extensions of source files for
-// that language so that users can syntax highlight arbitrary files based
+// that language so that teacher can syntax highlight arbitrary files based
 // on just the extension.  This is heuristic, but works pretty well in
 // practice.
 

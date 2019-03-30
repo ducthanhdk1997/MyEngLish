@@ -15,49 +15,55 @@ class CourseTableSeeder extends Seeder
         //
         $courses = [
             [
-              'name'=>"Khoa hoc A1 dot 1",
-              'time_start' =>Carbon::parse('2018-10-01'),
-              'time_end' =>Carbon::parse('2019-01-01'),
-              'actua_end_date'=>Carbon::parse('2019-01-09'),
-              'describe' =>'Khóa học dành cho các bạn muốn đạt trình độ A1',
+              'name'=>"Khóa học toeic đợt 1",
+              'start_date' =>Carbon::parse('2018-03-01'),
+              'end_date' =>Carbon::parse('2018-05-01'),
+              'describe' =>'Khóa học giúp bạn đạt tối thiểu 500 toeic',
               'price'=>5000000,
-              'grade_id'=>1
             ],
             [
-                'name'=>"Khoa hoc A2 dot 1",
-                'time_start' =>Carbon::parse('2018-10-01'),
-                'time_end' =>Carbon::parse('2019-01-01'),
-                'actua_end_date'=>Carbon::parse('2019-01-09'),
-                'describe' =>'Khóa học dành cho các bạn muốn đạt trình độ A2',
+                'name'=>"Khóa học toeic đợt 2",
+                'start_date' =>Carbon::parse('2019-04-01'),
+                'end_date' =>Carbon::parse('2019-06-01'),
+                'describe' =>'Khóa học giúp bạn đạt tối thiểu 500 toeic',
                 'price'=>5300000,
-                'grade_id'=>2
             ],
             [
-                'name'=>"Khoa hoc B1 dot 1",
-                'time_start' =>Carbon::parse('2018-10-01'),
-                'time_end' =>Carbon::parse('2019-01-01'),
-                'actua_end_date'=>Carbon::parse('2019-01-09'),
-                'describe' =>'Khóa học dành cho các bạn muốn đạt trình độ B1',
+                'name'=>"Khóa học giao tiếp đợt 1",
+                'start_date' =>Carbon::parse('2019-3-17'),
+                'end_date' =>Carbon::parse('2019-5-17'),
+                'describe' =>'Giúp bạn tự tin khi sử dụng tiếng anh để giao tiếp',
                 'price'=>5600000,
-                'grade_id'=>3
             ],
             [
-                'name'=>"Khoa hoc Toeic dot 1",
-                'time_start' =>Carbon::parse('2018-10-01'),
-                'time_end' =>Carbon::parse('2019-01-01'),
-                'actua_end_date'=>Carbon::parse('2019-01-09'),
-                'describe' =>'Khóa học dành cho các bạn muốn đạt trình độ Toeic',
+                'name'=>"Khóa học giao tiếp đợt 2",
+                'start_date' =>Carbon::parse('2019-04-17'),
+                'end_date' =>Carbon::parse('2019-06-17'),
+                'describe' =>'Giúp bạn tự tin khi sử dụng tiếng anh để giao tiếp',
                 'price'=>5600000,
-                'grade_id'=>4
+            ]
+            ,
+            [
+                'name'=>"Khóa học Ielts đợt 1",
+                'start_date' =>Carbon::parse('2018-03-10'),
+                'end_date' =>Carbon::parse('2019-05-10'),
+                'describe' =>'Khóa học giúp bạn đạt tối thiểu 5.0 Ielts',
+                'price'=>5600000,
+            ],
+
+            [
+                'name'=>"Khóa học Ielts đợt 2",
+                'start_date' =>Carbon::parse('2018-04-01'),
+                'end_date' =>Carbon::parse('2019-06-01'),
+                'describe' =>'Khóa học giúp bạn đạt tối thiểu 5.0 Ielts',
+                'price'=>5600000,
             ],
             [
-                'name'=>"Khoa hoc Ielts dot 1",
-                'time_start' =>Carbon::parse('2018-10-01'),
-                'time_end' =>Carbon::parse('2019-01-01'),
-                'actua_end_date'=>Carbon::parse('2019-01-09'),
-                'describe' =>'Khóa học dành cho các bạn muốn đạt trình độ Ielts',
-                'price'=>5600000,
-                'grade_id'=>5
+                'name'=>"Khóa học tiếng anh cơ bản cho người mất gốc đợt 1",
+                'start_date' =>Carbon::parse('2018-03-08'),
+                'end_date' =>Carbon::parse('2019-06-08'),
+                'describe' =>'Giúp bạn đạt những kiến thức cơ bạn về tiếng anh',
+                'price'=>5800000,
             ]
 
         ];

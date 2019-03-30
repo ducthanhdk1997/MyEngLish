@@ -84,7 +84,7 @@ function build(done) {
       .pipe($.sourcemaps.init({ loadMaps: true }))
       .pipe($.babel())
       .pipe($.header(head, {pkg: manifest, now: moment()}))
-      .pipe($.replace('global.$', 'global.jQuery')) // Babel bases itself on the variable name we use. Use jQuery for noconflict users.
+      .pipe($.replace('global.$', 'global.jQuery')) // Babel bases itself on the variable name we use. Use jQuery for noconflict teacher.
       .pipe($.sourcemaps.write('./'))
       .pipe(gulp.dest(destinationFolder))
       .pipe($.filter(['*', '!**/*.js.map']))

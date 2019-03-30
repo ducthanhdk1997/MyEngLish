@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\StudentStoreRequest;
 use App\Http\Requests\Admin\UserStoreRequest;
+use App\Http\Requests\Admin\TeacherUpdateRequest;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use phpDocumentor\Reflection\DocBlock;
 
-class UserController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::query()->where('role_id', '!=', 4)->groupBy('id')->paginate(10);
-        return view('admin.users.index', compact('users'));
+        $teachers = User::query()->where('role_id',  2)->paginate(10);
+        return view('admin.teachers.index',['teachers'=>$teachers]);
     }
 
     /**
@@ -30,7 +33,7 @@ class UserController extends Controller
     {
         if(\Auth::user()->role_id == 1){
             $roles = Role::all();
-            return view('admin.users.create', compact('roles'));
+            return view('admin.teachers.create', compact('roles'));
         }
         return redirect()->route('admin.index');
 
@@ -58,7 +61,7 @@ class UserController extends Controller
         }
         if($user->save()){
             flash()->success('Thêm người dùng thành công');
-            return redirect()->route('admin.users.index');
+            return redirect()->route('admin.teachers.index');
         }
         else{
             flash()->error('Thêm ngời dùng thất bại');
@@ -71,43 +74,52 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $teacher)
     {
-        return view('admin.users.detail', compact('user'));
+        return view('admin.teachers.detail', ['teacher'=>$teacher]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param User $teacher
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user, Request $request)
+    public function edit(User $teacher)
     {
-        return view('admin.users.edit', compact('user'));
+        return view('admin.teachers.edit', ['teacher'=>$teacher]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param TeacherUpdateRequest $request
+     * @param User $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(UserStoreRequest $request, User $user)
+    public function update(TeacherUpdateRequest $request, User $teacher)
     {
-        $user->username = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->gender = $request->gender == "on" ? 1 : 0;
+        $teacher->username = $request->username;
+        $teacher->email = $request->email;
+        $teacher->phone = $request->phone;
+        $teacher->gender = $request->gender == "on" ? 1 : 0;
+        $teacher->level = $request->level;
+        $teacher->address = $request->address;
+        $teacher->facebook = $request->facebook;
+        if (strlen($request->password) > 0){
+            $teacher->password = bcrypt($request->password);
+        }
+        else{
+            $teacher->password = bcrypt('secret');
+        }
 
-        if ($user->save()){
+        if ($teacher->save()){
             flash()->success('Thay đổi thành công');
         }
         else{
             flash()->error('Thay đổi thất bại');
         }
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.teachers.index');
     }
 
     /**
@@ -116,9 +128,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $teacher)
     {
-        if($user->delete()){
+        if($teacher->delete()){
             flash()->success('Xoa thanh cong');
         }
         else{
@@ -129,11 +141,11 @@ class UserController extends Controller
 
     public function search(Request $request){
         $key = $request->key;
-        $users = User::query()
+        $teachers = User::query()
             ->where('username',  'like', "%$key%")
             ->where('role_id',  '<>', 4)
             ->paginate(10);
-        return view('admin.users.search', compact('users', 'key'));
+        return view('admin.teachers.search', compact('teachers', 'key'));
     }
 
 }

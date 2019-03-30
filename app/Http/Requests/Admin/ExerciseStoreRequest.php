@@ -24,7 +24,7 @@ class ExerciseStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'grade_id'=>'required|min:1'
+            'name'=>'required|min:1'
         ];
     }
 }

@@ -17,9 +17,6 @@ class RoleTableSeeder extends Seeder
                 'name'=>'admin'
             ],
             [
-                "name"=>"Trợ giảng "
-            ],
-            [
                 "name"=>"Giảng viên"
             ],
             [

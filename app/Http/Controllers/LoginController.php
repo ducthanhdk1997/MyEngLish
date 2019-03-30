@@ -18,7 +18,7 @@ class LoginController extends Controller
         $password = $request->password;
         if(Auth::attempt(['email' => $email, 'password' => $password])){
 //            dd('hello');
-            return redirect()->route('home');
+            return redirect()->route('admin.home.index');
         }
         else{
             return redirect()->route('getLogin')->withErrors('ádasd');

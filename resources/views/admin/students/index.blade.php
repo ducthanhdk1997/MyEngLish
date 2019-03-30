@@ -38,6 +38,7 @@
                             <th>Email</th>
                             <th>Số điện thoại</th>
                             <th>Chức vụ</th>
+                            <th>Trình độ</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -48,21 +49,16 @@
                         @foreach($users as $user)
                             <tr>
                                 <th scope="row">{{ $i++ }}</th>
-                                <td><a href="{{ route('admin.users.detail', $user) }}">{{ $user->username }}</a></td>
+                                <td><a href="{{ route('admin.students.detail', $user) }}">{{ $user->username }}</a></td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone }}</td>
                                 <td>{{ $user->role->name }}</td>
+                                <td>{{$user->level}}</td>
                                 <td>
-                                    <a href="{{ route('admin.students.edit', $user) }}" class="btn btn-success" {{ Auth::user()->role_id == 4 ? "disabled" : ""}}>
+                                    <a href="{{ route('admin.students.edit', $user) }}" class="btn btn-success">
                                         <i class="fa fa-edit"></i> Sửa
                                     </a>
-                                    <form action="{{ route('admin.students.delete', $user) }}" method="post" style="display: inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id == 4 ? "disabled" : ""}} onclick='return confirm("Bạn có muốn xóa " + "\"" + "{{ $user->username }}" + "\"");'>
-                                            <i class="fa fa-remove"></i> Xóa
-                                        </button>
-                                    </form>
+
                                 </td>
                             </tr>
                         @endforeach

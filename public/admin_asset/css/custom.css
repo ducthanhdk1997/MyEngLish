@@ -351,7 +351,8 @@ html , body{
     position: fixed
 }
 body .container.body .right_col {
-    background: #F7F7F7
+    background: #F7F7F7;
+    min-height: 650px;
 }
 .nav-md .container.body .right_col {
     padding: 10px 20px 0;
@@ -367,6 +368,7 @@ body .container.body .right_col {
     .nav-md .container.body .right_col,
     .nav-md .container.body .top_nav {
         width: 100%;
+        hight:100%;
         margin: 0
     }
     .nav-md .container.body .col-md-3.left_col {
@@ -3124,7 +3126,7 @@ ul.project_files li a i {
     margin-bottom: 5px
 }
 .thumbnail {
-    height: 190px;
+    height: auto ;
     overflow: hidden
 }
 .view {

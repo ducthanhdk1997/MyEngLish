@@ -7,7 +7,7 @@
             <div class="form-group pull-right top_search">
                 <div class="input-group">
                     <div class="input-group">
-                        <form action="{{ route('admin.users.search') }}" method="get" style="display: inherit;border-radius: 25px 0 0 25px">
+                        <form action="{{ route('teachers') }}" method="get" style="display: inherit;border-radius: 25px 0 0 25px">
                             {{--@csrf--}}
                             <input type="text" class="form-control" placeholder="Search for..." name="key">
                             <span class="input-group-btn">

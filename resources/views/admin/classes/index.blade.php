@@ -21,16 +21,32 @@
 		</div>
 	</div>
 	<div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30">
+		<div class="form-group">
+			<label for="group_class">Chọn khóa học:</label>
+			<select class="form-control" id="courses" name="course_id">
+				<a href="{{route('admin.classes.index')}}">
+					<option value="-1"> All</option></a>
+
+				@foreach ($courses as $cours)
+						@if($cours->id == $course_id)
+							<option value="{{$cours->id}}" selected> {{$cours->name}}</option>
+						@else
+							<option value="{{$cours->id}}"> {{$cours->name}}</option>
+						@endif
+
+				@endforeach
+			</select>
+		</div>
 		<a href="{{ route('admin.classes.create') }}" class="btn btn-primary pull-left">
 			<i class="fa fa-plus-circle"> Create</i>
 		</a>
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>Danh sách học viên</h2>
+				<h2>Danh sách lớp học</h2>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<table class="table table-hover">
+				<table class="table table-hover " id="table_classes">
 					<thead>
 					<tr>
 						<th>#</th>
@@ -40,7 +56,7 @@
 						<th>Action</th>
 					</tr>
 					</thead>
-					<tbody>
+					<tbody id="table_classes">
                     <?php
                     $i = 1;
                     ?>
@@ -49,18 +65,11 @@
 							<th scope="row">{{ $i++ }}</th>
 							<td><a href="{{ route('admin.classes.show', $class) }}">{{ $class->name }}</a></td>
 							<td>{{ $class->teacher->username }}</td>
-							<td>{{ $class->grade->name }}</td>
+							<td>{{ $class->course->name }}</td>
 							<td>
-								<a href="{{ route('admin.classes.edit', $class) }}" class="btn btn-success" {{ Auth::user()->role_id == 4 ? "disabled" : ""}}>
+								<a href="{{ route('admin.classes.edit', $class) }}" class="btn btn-success" {{ Auth::user()->role_id == 3 ? "disabled" : ""}}>
 									<i class="fa fa-edit"></i> Sửa
 								</a>
-								<form action="{{ route('admin.classes.delete', $class) }}" method="post" style="display: inline">
-									@csrf
-									@method('DELETE')
-									<button type="submit" class="btn btn-danger" {{ Auth::user()->role_id == 4 ? "disabled" : ""}} onclick='return confirm("Bạn có muốn xóa " + "\"" + "{{ $class->name }}" + "\"");'>
-										<i class="fa fa-remove"></i> Xóa
-									</button>
-								</form>
 							</td>
 						</tr>
 					@endforeach
@@ -75,3 +84,17 @@
 	{{-- end of new class --}}
 
 @endsection()
+
+@section('script')
+	<script>
+        $(document).ready(function () {
+            $('#courses').change(function () {
+                var course_id = $(this).val();
+                var url = "http://myenglish.test:8080/admin/classes/"+course_id + '';
+                location.replace(url);
+            })
+        })
+	</script>
+@endsection()
+
+@

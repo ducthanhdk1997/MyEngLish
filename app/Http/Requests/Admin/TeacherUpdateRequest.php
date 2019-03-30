@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class ClassStoreRequest extends FormRequest
+class TeacherUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +25,12 @@ class ClassStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:classes'
+            'username' => 'required',
+            'email' => ['required',
+                Rule::unique('users')->ignore($this->route('teacher')->id)
+            ],
+            'phone' => 'required',
+            'facebook' => 'required',
         ];
     }
 }

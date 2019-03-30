@@ -7,7 +7,7 @@
             <div class="form-group pull-right top_search">
                 <div class="input-group">
                     <div class="input-group">
-                        <form action="{{ route('admin.users.search') }}" method="get" style="display: inherit;border-radius: 25px 0 0 25px">
+                        <form action="{{ route('admin.teachers.search') }}" method="get" style="display: inherit;border-radius: 25px 0 0 25px">
                             {{--@csrf--}}
                             <input type="text" class="form-control" placeholder="Search for..." name="key">
                             <span class="input-group-btn">
@@ -34,6 +34,7 @@
                             <th>Email</th>
                             <th>Số điện thoại</th>
                             <th>Chức vụ</th>
+                            <th>Trình độ</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -41,31 +42,25 @@
                         <?php
                             $i = 1;
                         ?>
-                        @foreach($users as $user)
+                        @foreach($teachers as $teacher)
                             <tr>
                                 <th scope="row">{{ $i++ }}</th>
-                                <td><a href="{{ route('admin.users.detail', $user) }}">{{ $user->username }}</a></td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->phone }}</td>
-                                <td>{{ $user->role->name }}</td>
+                                <td><a href="{{ route('admin.teachers.detail', $teacher) }}">{{ $teacher->username }}</a></td>
+                                <td>{{ $teacher->email }}</td>
+                                <td>{{ $teacher->phone }}</td>
+                                <td>{{ $teacher->role->name }}</td>
+                                <td>{{$teacher->level}}</td>
                                 <td>
-                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-success" {{ Auth::user()->role_id != 1 ? "disabled" : ""}}>
+                                    <a href="{{ route('admin.teachers.edit', $teacher) }}" class="btn btn-success" >
                                         <i class="fa fa-edit"></i> Sửa
                                     </a>
-                                    <form action="{{ route('admin.users.delete', $user) }}" method="post" style="display: inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" {{ Auth::user()->role_id != 1 ? "disabled" : ""}} onclick='return confirm("Bạn có muốn xóa " + "\"" + "{{ $user->username }}" + "\"")'>
-                                            <i class="fa fa-remove"></i> Xóa
-                                        </button>
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="text-center">
-                    {{ $users->links() }}
+                    {{ $teachers->links() }}
                 </div>
             </div>
         </div>

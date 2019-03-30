@@ -17,55 +17,29 @@
 
 
 
-
 Route::get('login', 'LoginController@getLogin')->name('getLogin');
 ROute::post('login', 'LoginController@postLogin')->name('postLogin');
 ROute::post('logout', 'LoginController@logout')->name('logout');
 
-Route::get('home', 'HomeController@index')->name('home');
-
 // route admin
-Route::get('/','LoginController@getLogin');
+Route::get('/', 'LoginController@getLogin')->name('getLogin');
 
 
 Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
-    Route::group(['prefix'=>'grade','as'=>'grade.'],function (){
-        Route::get('list','Admin\GradeController@getList')->name('list');
-        Route::get('add','Admin\GradeController@add')->name('add');
-        Route::post('add','Admin\GradeController@postGrade')->name('add');
-        Route::get('{grade}/edit','Admin\GradeController@getGrade')->name('edit');
-        Route::post('{grade}/edit','Admin\GradeController@setName')->name('edit');
-        route::delete('{grade}', 'Admin\GradeController@destroy')->name('delete');
-    });
 
 
 
-	Route::group(['prefix'=>'exercise','as'=>'exercise.'],function (){
-	   Route::get('list','ExerciseController@getList')->name('list');
-	   route::delete('{exercise}', 'ExerciseController@destroy')->name('delete');
-	   Route::get('add','ExerciseController@create')->name('create');
-	   Route::post('add','ExerciseController@store')->name('store');
-	   Route::get('assign','ExerciseController@assign')->name('assign');
-	   Route::post('assign','ExerciseController@postAssign')->name('assign');
-	   Route::get('{exercise}/edit','ExerciseController@getExercise')->name('edit');
-	   Route::post('{exercise}/edit','ExerciseController@setName')->name('update');
-	   Route::get('{exercise}/detail','ExerciseController@show')->name('show');
-    });
 
-	Route::group(['prefix'=>'question','as'=>'question.'],function (){
-	    Route::get('add','QuestrionController@create')->name('create');
-        Route::post('add','QuestrionController@store')->name('store');
-    });
     Route::group(['prefix'=>'classroom','as'=>'classroom.'],function (){
-        Route::get('list','ClassRoomController@getList')->name('list');
-        Route::get('add','ClassRoomController@add')->name('add');
+        Route::get('list','Admin\ClassRoomController@getList')->name('list');
+        Route::get('add','Admin\ClassRoomController@add')->name('add');
     });
 
 //    group ajax
 
     Route::group(['prefix'=>'ajax','as'=>'ajax.'],function (){
-        Route::get('classtypetable/{grade_id}','Admin\AjaxController@getClassTypeTable')->name('classtypetable');
-        Route::get('classtypeselect/{grade_id}','Admin\AjaxController@getClassTypeSelect')->name('classtypeselect');
+        Route::get('classtypetable/{course_id}','Admin\AjaxController@getClassTypeTable')->name('classtypetable');
+        Route::get('classtypeselect/{course_id}','Admin\AjaxController@getClassTypeSelect')->name('classtypeselect');
         Route::get('coursetypetable/{grade_id}','Admin\AjaxController@getCourseTypeTable')->name('coursetypetable');
         Route::get('exercisetypeselect/{grade_id}','Admin\AjaxController@getExerciseTypeSelect')
                                                                                                     ->name('exercisetypeselect');
@@ -94,20 +68,34 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
     Route::group(['middleware' => 'auth'], function(){
         Route::get('/', 'Admin\DashboardController@index')->name('index');
 
-        Route::group(['prefix' => 'users', 'as' => 'users.'], function (){
-            Route::get('/', 'Admin\UserController@index')->name('index');
+        Route::group(['prefix' => 'home', 'as' => 'home.'],function (){
+            Route::get('/','Admin\HomeController@index')->name('index');
 
-            Route::get('{user}/detail', 'Admin\UserController@show')->name('detail');
+        });
 
-            ROute::get('search', 'Admin\UserController@search')->name('search');
+        Route::group(['prefix' => 'note', 'as' =>'note.'], function (){
+            Route::get('detail/{state}','Admin\NoteController@show')->name('show');
+        });
 
-            Route::get('{user}/edit', 'Admin\UserController@edit')->name('edit');
-            Route::put('{user}', 'Admin\UserCOntroller@update')->name('update');
+        Route::group(['prefix' => 'exam', 'as' =>'exam.'], function (){
+            Route::get('detail/{state}','Admin\ExamController@show')->name('show');
+        });
 
-            Route::get('create', 'Admin\UserController@create')->name('create');
-            Route::post('create', 'Admin\UserController@store')->name('store');
 
-            Route::delete('{user}', 'Admin\UserController@destroy')->name('delete');
+        Route::group(['prefix' => 'teachers', 'as' => 'teachers.'], function (){
+            Route::get('/', 'Admin\TeacherController@index')->name('index');
+
+            Route::get('{teacher}/detail', 'Admin\TeacherController@show')->name('detail');
+
+            ROute::get('search', 'Admin\TeacherController@search')->name('search');
+
+            Route::get('{teacher}/edit', 'Admin\TeacherController@edit')->name('edit');
+            Route::put('{teacher}', 'Admin\TeacherController@update')->name('update');
+
+            Route::get('create', 'Admin\TeacherController@create')->name('create');
+            Route::post('create', 'Admin\TeacherController@store')->name('store');
+
+            Route::delete('{teachers}', 'Admin\TeacherController@destroy')->name('delete');
         });
 
         Route::group(['prefix' => 'students', 'as' => 'students.'], function (){
@@ -144,29 +132,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
 
             Route::get('{class}/edit', 'Admin\ClassController@edit')->name('edit');
             Route::put('{class}', 'Admin\ClassController@update')->name('update');
-
+            Route::get('{course_id}','Admin\ClassController@showByCourses')->name('showByCourses');
             Route::get('{class}/detail', 'Admin\ClassController@show')->name('show');
             Route::post('{class}/import', 'Admin\ClassController@importStudent')->name('import');
 
-            route::delete('{class}', 'Admin\ClassController@destroy')->name('delete');
+
         });
 
-        Route::group(['prefix' => 'exercises', 'as' => 'exercises.'], function (){
-           Route::get('create', 'Admin\ExersiceController@create')->name('create');
-           Route::post('create', 'Admin\ExersiceController@store')->name('store');
 
-           Route::post('assign', 'Admin\ExersiceController@assign')->name('assign');
-        });
     });
 });
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::group(['prefix'=>'user','as'=>'user.'],function (){
-    Route::get('{exercise}/exercise','ExerciseController@showforuser')->name('exercise');
-    Route::post('{exercise}/exercise','ExerciseController@doExercise')->name('doexercise');
-    Route::get('list',"ExerciseController@listForUser")->name('show');
-    Route::get('done','ExerciseController@listExerHaveDone')->name('done');
-});
 

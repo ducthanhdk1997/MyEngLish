@@ -3,12 +3,14 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
     use Notifiable;
 
     /**
@@ -16,8 +18,11 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table = 'users';
+
+
     protected $fillable = [
-        'username', 'email', 'password','gender', 'phone', 'role_id'
+        'username', 'email','address', 'password','gender', 'phone','facebook','level', 'role_id'
     ];
 
     /**
@@ -37,10 +42,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Classes::class, 'user_class', 'user_id', 'class_id');
     }
 
-//    public  function exercises()
-//    {
-//        $now = Carbon::now();
-//        return $this->belongsToMany(Exercise::class,'user_exercises','user_id','exercise_id')->wherePivot('deadline','>=',$now);
-//    }
+
 
 }

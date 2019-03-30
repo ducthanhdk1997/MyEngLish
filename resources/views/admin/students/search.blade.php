@@ -41,7 +41,7 @@
                     @foreach($users as $user)
                         <tr>
                             <th scope="row">{{ $user->id }}</th>
-                            <td><a href="{{ route('admin.users.detail', $user) }}">{{ $user->username }}</a></td>
+                            <td><a href="{{ route('teachers', $user) }}">{{ $user->username }}</a></td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->role->name }}</td>

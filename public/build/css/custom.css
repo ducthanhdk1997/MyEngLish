@@ -3113,10 +3113,7 @@ ul.project_files li a i {
     border-left: 2px solid transparent;
     border-right: 2px solid transparent
 }
-.thumbnail .image {
-    height: 120px;
-    overflow: hidden
-}
+
 .caption {
     padding: 9px 5px;
     background: #F7F7F7
@@ -3124,10 +3121,7 @@ ul.project_files li a i {
 .caption p {
     margin-bottom: 5px
 }
-.thumbnail {
-    height: 190px;
-    overflow: hidden
-}
+
 .view {
     overflow: hidden;
     position: relative;

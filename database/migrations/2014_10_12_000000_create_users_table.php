@@ -17,10 +17,13 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('username');
             $table->string('email');
+            $table->string('address');
             $table->string('password');
             $table->string('avatar')->default('qqq');
             $table->boolean('gender');
             $table->string('phone');
+            $table->string('facebook');
+            $table->string('level');
             $table->unsignedInteger('role_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
@@ -40,6 +43,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('teachers');
     }
 }

@@ -16,19 +16,12 @@ class CreateCoursesTable extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->date('time_start');
-            $table->date('time_end');
-            $table->date('actua_end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->text('describe');
             $table->double('price');
-            $table->unsignedInteger('grade_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('grade_id')
-                ->references('id')
-                ->on('grades')
-                ->onUpdate('cascade')
-                ->onDelete('set null');
         });
     }
 

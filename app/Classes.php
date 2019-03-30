@@ -7,24 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Classes extends Model
 {
-    protected $table = 'class';
+    protected $table = 'classes';
 
-    public function grade()
-    {
-        return $this->belongsTo('\App\Grade');
-    }
+    protected $fillable = [
+        'name', 'teacher_id', 'course_id'
+    ];
 
-    public function teacher(){
-        return $this->belongsTo('\App\User', 'user_id', 'id');
-    }
 
     public function students()
     {
         return $this->belongsToMany(User::class, 'user_class', 'class_id', 'user_id');
     }
-    public  function exercises()
+
+    public  function course()
     {
-        $now = Carbon::now();
-        return $this->belongsToMany(Exercise::class,'class_exercises','class_id','exercise_id')->wherePivot('deadline','>=',$now);
+        return $this->belongsTo('App\Course');
     }
+    public  function teacher()
+    {
+        return $this->belongsTo('App\User','teacher_id');
+    }
+
 }

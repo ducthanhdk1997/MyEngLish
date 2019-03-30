@@ -1604,7 +1604,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Set the callback to be used to resolve users.
+         * Set the callback to be used to resolve teachers.
          *
          * @param \Closure $userResolver
          * @return $this 
@@ -6274,8 +6274,8 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
-     * @method static \Illuminate\Mail\PendingMail to($users)
-     * @method static \Illuminate\Mail\PendingMail bcc($users)
+     * @method static \Illuminate\Mail\PendingMail to($teachers)
+     * @method static \Illuminate\Mail\PendingMail bcc($teachers)
      * @method static void raw(string $text, $callback)
      * @method static void send(string|array|\Illuminate\Contracts\Mail\Mailable $view, array $data = [], \Closure|string $callback = null)
      * @method static array failures()

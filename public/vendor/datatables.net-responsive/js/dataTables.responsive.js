@@ -625,7 +625,7 @@ $.extend( Responsive.prototype, {
 					that._detailsDisplay( row, false );
 				}
 				else if ( e.type === 'mousedown' ) {
-					// For mouse users, prevent the focus ring from showing
+					// For mouse teacher, prevent the focus ring from showing
 					$(this).css('outline', 'none');
 				}
 				else if ( e.type === 'mouseup' ) {

@@ -9,7 +9,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <form class="form-horizontal" action="{{ route('admin.users.store') }}" method="post">
+                <form class="form-horizontal" action="{{ route('admin.teachers.store') }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Tên</label>
@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-success"><i class="fa fa-plus-circle"></i> Create</button>
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</a>
+                            <a href="{{ route('admin.teachers.index') }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</a>
                         </div>
                     </div>
                 </form>

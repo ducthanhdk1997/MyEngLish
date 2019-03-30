@@ -21,8 +21,28 @@ class ClassController extends Controller
      */
     public function index()
     {
+        $courses = Course::all();
         $classes = Classes::query()->paginate(10);
-        return view('admin.classes.index', compact('classes'));
+        $course_id = -1;
+        return view('admin.classes.index', ['classes'=>$classes,'courses'=>$courses,'course_id'=>$course_id]);
+    }
+
+    public  function showByCourses($course_id)
+    {
+        $courses = Course::all();
+
+        if($course_id>0)
+        {
+            $classes = Classes::query()->where('course_id',$course_id)->paginate(10);
+            return view('admin.classes.index', ['classes'=>$classes,'courses'=>$courses,'course_id'=>$course_id]);
+
+        }
+        else{
+            $classes = Classes::query()->paginate(10);
+            return view('admin.classes.index', ['classes'=>$classes,'courses'=>$courses,'course_id'=>$course_id]);
+        }
+
+
     }
 
     /**
@@ -34,7 +54,7 @@ class ClassController extends Controller
     {
         $courses = Course::all();
         $teachers = User::query()
-            ->where('role_id',4)
+            ->where('role_id',3)
             ->get();
         return view('admin.classes.add', compact('courses', 'teachers'));
     }
@@ -49,8 +69,8 @@ class ClassController extends Controller
     {
         $class = new Classes();
         $class->name = $request->name;
-        $class->user_id = $request->teacher;
-        $class->grade_id = $request->grade_id;
+        $class->teacher_id = $request->teacher;
+        $class->course_id = $request->course_id;
         if($class->save()){
             flash()->success('Tạo lớp học thành công');
             return redirect()->route('admin.classes.index');
@@ -97,10 +117,10 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Classes $class)
+    public function update(ClassStoreRequest $request, Classes $class)
     {
         $class->name = $request->name;
-        $class->user_id = $request->teacher;
+        $class->teacher_id = $request->teacher;
 
         if($class->save()){
             flash()->success('Cap nhat thanh cong');

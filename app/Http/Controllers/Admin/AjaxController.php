@@ -16,44 +16,21 @@ class AjaxController extends Controller
     {
     }
 
-    public  function  getClassTypeTable($grade_id)
+    public  function  getClassTypeTable($course_id)
     {
-        $class= Classes::where('grade_id',$grade_id)->get();
-        $i=1;
-        foreach ($class as $class)
-        {
-
-            $course = DB::table('class_course')
-                ->join('courses', 'class_course.course_id', '=', 'courses.id')
-                ->where('class_id',$class->id)
-                ->select( 'courses.name', 'courses.time_end')
-                ->get();
-            foreach ($course as $course)
-            echo(
-                '<tr>
-					<td>'.$i.'</td>
-					<td>'.$class->name.'</td>
-					<td>'.$course->name.'</td>
-					<td>'.$course->time_end.'</td>
-					
-					<td class="data-table-edit">
-						<a class="" href="'.route('admin.class.edit',$class).'"><i class="fa fa-pencil"></i> Edit</a>
-					</td>
-					<td class="data-table-edit">
-						<a class="" href=""><i class="fa fa-pencil"></i> Detail</a>
-					</td>
-					<td class="data-table-delete">
-						<a onclick="if(!confirm(\'Are you sure?\')) return false;" class=" red" href=""><i class="fa fa-trash-o"></i> Delete</a>
-					</td>
-				</tr>'
-                );
-            $i++;
-       }
+        $classes = Classes::where('course_id', $course_id)->get();
     }
-    public  function getClassTypeSelect($grade_id)
-    {
 
-        $class= Classes::where('grade_id',$grade_id)->get();
+    public  function getClassTypeSelect($course_id)
+    {
+        if($course_id==-1)
+        {
+            $class = Classes::all();
+        }
+        else
+        {
+            $class= Classes::where('course_id',$course_id)->get();
+        }
         $i=1;
         foreach ($class as $class)
         {

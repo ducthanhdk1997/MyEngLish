@@ -16,13 +16,20 @@ class CreateUserCourseTable extends Migration
         Schema::create('user_course', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable();
+            $table->boolean('state');
+            $table->double('total_amount');
+            $table->unsignedInteger('voucher_id')->nullable();
             $table->unsignedInteger('course_id')->nullable();
-            $table->boolean('bought');
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+            $table->foreign('voucher_id')
+                ->references('id')
+                ->on('vouchers')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 

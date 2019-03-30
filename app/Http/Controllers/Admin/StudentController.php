@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Classes;
+use App\Course;
 use App\Http\Requests\Admin\StudentStoreRequest;
+use App\Http\Requests\Admin\StudentUpdateRequest;
+use App\Http\Requests\Admin\UserStoreRequest;
 use App\User_Class;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,7 +21,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $users = User::query()->where('role_id','=',  4)->paginate(10);
+        $users = User::query()->where('role_id','=',  3)->paginate(10);
         return view('admin.students.index', compact('users'));
     }
 
@@ -29,8 +32,12 @@ class StudentController extends Controller
      */
     public function create()
     {
+        $courses = Course::all();
         $classes = Classes::all();
-        return view('admin.students.create', compact('classes'));
+        return view('admin.students.create', ['classes'=>$classes,'courses'=>$courses]);
+
+
+
     }
 
     /**
@@ -39,14 +46,17 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StudentStoreRequest $request)
+    public function store(UserStoreRequest $request)
     {
         $user = new User();
         $user->username = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->address = $request->address;
         $user->gender = $request->gender == 'on' ? 1 : 0;
-        $user->role_id = 4;
+        $user->role_id = 3;
+        $user->level = 'Học viên';
+        $user->facebook = '';
         if (strlen($request->password) > 0){
             $user->password = bcrypt($request->password);
         }
@@ -101,22 +111,29 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(StudentUpdateRequest $request, User $user)
     {
-        $user->username = $request->name;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->gender = $request->gender == 'on' ? 1 : 0;
-        if(strlen($request->password) > 0){
-            $user->password = $request->password;
+        $user->gender = $request->gender == "on" ? 1 : 0;
+        $user->level = $request->level;
+        $user->address = $request->address;
+        $user->facebook = $request->facebook;
+        if (strlen($request->password) > 0){
+            $user->password = bcrypt($request->password);
         }
+        else{
+            $user->password = bcrypt('secret');
+        }
+
         if ($user->save()){
-            flash()->success('Thay đổi tài khoản thành công');
-            return redirect()->route('admin.students.index');
+            flash()->success('Thay đổi thành công');
         }
         else{
             flash()->error('Thay đổi thất bại');
         }
+        return redirect()->route('admin.teachers.index');
     }
 
     /**

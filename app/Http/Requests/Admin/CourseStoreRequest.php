@@ -25,9 +25,8 @@ class CourseStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|min:6|max:255',
-            'time_start' => 'required',
-            'time_end' => 'required',
-            'actua_end_date' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
             'price' => 'required',
             'describe' => 'required|min:6',
         ];

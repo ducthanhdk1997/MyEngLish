@@ -11,21 +11,7 @@
             <div class="x_content">
                 <form class="form-horizontal" action="{{ route('admin.courses.store') }}" method="post">
                     @csrf
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Trình độ</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" id="group_class">
-                                @foreach ($grades as $grade)
-                                    @if($grade['ID']==1)
-                                        <option value="{{$grade->id}}" selected>{{$grade->name}}</option>
-                                    @else
-                                        <option value="{{$grade->id}}">{{$grade->name}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
+
                         <label for="inputEmail3" class="col-sm-2 control-label">Tên khóa học</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="name" placeholder="Nhập tên khóa học" value="{{ old('name') }}" >
@@ -34,19 +20,13 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Thời gian bắt đầu</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" name="time_start" placeholder="Nhập email" value="{{ old('time_start') }}">
+                            <input type="date" class="form-control" name="start_date" placeholder="Nhập email" value="{{ old('start_date') }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Thời gian kết thúc</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" name="time_end" placeholder="Nhập họ tên" value="{{ old('time_end') }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Thời gian dự kến kết thúc</label>
-                        <div class="col-sm-10">
-                            <input type="date" class="form-control" name="actua_end_date" placeholder="Nhập họ tên" value="{{ old('actua_end_date') }}">
+                            <input type="date" class="form-control" name="end_date" placeholder="Nhập họ tên" value="{{ old('end_date') }}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -65,7 +45,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-primary">Create</button>
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</a>
+                            <a href="{{ route('admin.courses.index') }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</a>
                         </div>
                     </div>
                 </form>

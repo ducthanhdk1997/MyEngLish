@@ -17,11 +17,11 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
-        if(!empty($request->filter)){
-            $filter = $request->filter;
-            $courses = Course::query()->where('grade_id', 'like', "$filter")->paginate(10);
-            return view('admin.course.index', compact('courses', 'filter'));
-        }
+//        if(!empty($request->filter)){
+//            $filter = $request->filter;
+//            $courses = Course::query()->where('grade_id', 'like', "$filter")->paginate(10);
+//            return view('admin.course.index', compact('courses', 'filter'));
+//        }
         $courses = Course::query()->paginate(10);
         return view('admin.course.index', compact('courses'));
     }
@@ -33,8 +33,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $grades = Grade::all();
-        return view('admin.course.create',compact('grades'));
+        return view('admin.course.create');
     }
 
     /**
@@ -47,9 +46,8 @@ class CourseController extends Controller
     {
         $course = new Course();
         $course->name = $request->name;
-        $course->time_start = $request->time_start;
-        $course->time_end = $request->time_end;
-        $course->actua_end_date = $request->actua_end_date;
+        $course->start_date = $request->start_date;
+        $course->end_date = $request->end_date;
         $course->price = $request->price;
         $course->describe = $request->describe;
 
