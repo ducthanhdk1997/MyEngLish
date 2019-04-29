@@ -53,6 +53,7 @@
 						<th>Tên lớp</th>
 						<th>Tên giảng viên</th>
 						<th>Khóa học</th>
+						<th>Lịch học</th>
 						<th>Action</th>
 					</tr>
 					</thead>
@@ -67,8 +68,24 @@
 							<td>{{ $class->teacher->username }}</td>
 							<td>{{ $class->course->name }}</td>
 							<td>
+								@php $i =1;
+								$weekdays = [1=>'Thứ 2',2=>'Thứ 3',3 =>'Thứ 4',4 =>'Thứ 5',5 =>'Thứ 6',6 =>'Thứ 7',7 =>'CN']
+								@endphp
+								@foreach($scheduleclass as $sc)
+									@if($sc->class_id == $class->id)
+										<p>Từ {{$sc->start_date}} đến {{$sc->end_date}} ({{$i++}})</p>
+										<p>{{$weekdays[$sc->weekday]}} {{$sc->shift->name}} {{$sc->classroom->name}}</p>
+									@endif
+								@endforeach
+							</td>
+							<td>
 								<a href="{{ route('admin.classes.edit', $class) }}" class="btn btn-success" {{ Auth::user()->role_id == 3 ? "disabled" : ""}}>
 									<i class="fa fa-edit"></i> Sửa
+								</a>
+							</td>
+							<td>
+								<a href="{{ route('admin.classes.schedule', $class) }}" class="btn btn-success" {{ Auth::user()->role_id == 3 ? "disabled" : ""}}>
+									<i class="fa fa-edit"></i> Lịch học
 								</a>
 							</td>
 						</tr>
@@ -97,4 +114,3 @@
 	</script>
 @endsection()
 
-@

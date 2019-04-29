@@ -21,7 +21,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $users = User::query()->where('role_id','=',  3)->paginate(10);
+        $users = User::query()->where('role_id','=',  4)->paginate(10);
         return view('admin.students.index', compact('users'));
     }
 
@@ -46,15 +46,17 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(UserStoreRequest $request)
     {
+
         $user = new User();
-        $user->username = $request->name;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->address = $request->address;
         $user->gender = $request->gender == 'on' ? 1 : 0;
-        $user->role_id = 3;
+        $user->role_id = 4;
+        $user->address = '';
         $user->level = 'Học viên';
         $user->facebook = '';
         if (strlen($request->password) > 0){
@@ -63,22 +65,14 @@ class StudentController extends Controller
         else{
             $user->password = bcrypt('secret');
         }
+
         if($user->save()){
-            $record = User::query()->where('email', $request->email)->first();
-            $userId = $record->id;
-            $class = new User_Class();
-            $class->user_id = $userId;
-            $class->class_id = $request->class;
-            if($class->save()){
-                flash()->success('Them tai khoan thanh cong');
-                return redirect()->route('admin.students.index');
-            }
-            else{
-                flash()->error('Them tai khoan that bai');
-            }
+            flash()->success('Them tai khoan thanh cong');
+            return redirect()->route('admin.students.index');
         }
         else{
             flash()->error('Them tai khoan that bai');
+            return redirect()->route('admin.students.index');
         }
     }
 

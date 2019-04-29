@@ -14,7 +14,10 @@ class RoleTableSeeder extends Seeder
         //
         $roles =[
             [
-                'name'=>'admin'
+              'name' => 'Admin'
+            ],
+            [
+                'name'=>'Nhân Viên'
             ],
             [
                 "name"=>"Giảng viên"

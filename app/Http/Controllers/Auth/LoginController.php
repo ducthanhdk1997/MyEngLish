@@ -45,7 +45,7 @@ class LoginController extends Controller
 
     protected function credentials(Request $request)
     {
-        return  $request->merge(['role_id' => [1, 2, 3]])
+        return  $request->merge(['role_id' => [1, 2, 3, 4]])
             ->only($this->username(), 'password', 'role_id');
     }
 
@@ -55,7 +55,7 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect()->route('admin.login');
+        return redirect()->route('getLogin');
     }
 
 }

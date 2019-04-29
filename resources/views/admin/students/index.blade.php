@@ -4,7 +4,6 @@
     {{-- new grade --}}
     <div class="page-title">
         <div class="title_right pull-right">
-
             <div class="form-group pull-right top_search">
                 <div class="input-group">
                     <div class="input-group">

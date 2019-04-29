@@ -12,7 +12,7 @@ class UsersClassTableSeeder extends Seeder
     public function run()
     {
         $classes = \App\Classes::all();
-        $users = \App\User::query()->where('role_id', 3)->get();
+        $users = \App\User::query()->where('role_id', 4)->get();
         foreach ($classes  as $classIndex=> $class) {
             foreach ($users as $userIndex =>  $user) {
                 if($classIndex*30 <= $userIndex && $userIndex < ($classIndex+1)*30)

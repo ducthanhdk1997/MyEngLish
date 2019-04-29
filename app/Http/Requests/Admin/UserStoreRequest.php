@@ -28,9 +28,10 @@ class UserStoreRequest extends FormRequest
         return [
             'username' => 'required',
             'email' => ['required',
-                Rule::unique('users')
+                Rule::unique('users'),'email'
             ],
             'phone' => 'required',
+            'gender' => 'required'
 
         ];
     }

@@ -3,9 +3,7 @@
 @section('content')
 
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30">
-        <a href="{{ route('admin.exam.create') }}" class="btn btn-primary pull-left">
-            <i class="fa fa-plus-circle"> Create</i>
-        </a>
+
         <div class="x_panel">
             <div class="title_right pull-right">
                 <div class="form-group pull-right top_search">
@@ -23,7 +21,6 @@
                             <option value="-1" @if(isset($filter)){{$filter == -1 ? "selected" : "" }} @endif >All </option>
                             <option value="1" @if(isset($filter)){{$filter == 1 ? "selected" : "" }} @endif >Chưa xong </option>
                             <option value="2" @if(isset($filter)){{$filter == 2 ? "selected" : "" }} @endif >Đã xong </option>
-                            <option value="3" @if(isset($filter)){{$filter == 3 ? "selected" : "" }} @endif >Hôm nay </option>
                         </select>
                     </form>
                 </div>
@@ -41,6 +38,7 @@
                         <th>Phòng thi</th>
                         <th>Hạn đăng ký</th>
                         <th>Trạng thái</th>
+                        <th>Điểm</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -60,8 +58,8 @@
                             @if($exam->state==0)
                                 <td>Chưa xong</td>
                                 <td>
-                                    <a href="{{ route('admin.exam.edit', $exam) }}" class="btn btn-success">
-                                        <i class="fa fa-edit"></i> Sửa
+                                    <a href="" class="btn btn-success">
+                                        <i class="fa fa-edit"></i> Hủy
                                     </a>
                                 </td>
                             @else

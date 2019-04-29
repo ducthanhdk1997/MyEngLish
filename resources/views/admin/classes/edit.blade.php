@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-success">Update</button>
-                            <a href="{{ route('teachers') }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</a>
+                            <a href="{{ route('admin.classes.index') }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</a>
                         </div>
                     </div>
                 </form>

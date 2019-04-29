@@ -6527,7 +6527,7 @@
 	{
 		$(n)
 			.bind( 'click.DT', oData, function (e) {
-					n.blur(); // Remove focus outline for mouse teachers
+					n.blur(); // Remove focus outline for mouse users
 					fn(e);
 				} )
 			.bind( 'keypress.DT', oData, function (e){

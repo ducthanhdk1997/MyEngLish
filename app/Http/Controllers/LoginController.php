@@ -13,15 +13,25 @@ class LoginController extends Controller
     }
 
     public function postLogin(Request $request){
-//        dd($request->email, $request->password);
         $email = $request->email;
         $password = $request->password;
         if(Auth::attempt(['email' => $email, 'password' => $password])){
-//            dd('hello');
-            return redirect()->route('admin.home.index');
+
+            $role = Auth::user()->role_id;
+            if($role == 1 || $role == 2)
+            {
+                return redirect()->route('admin.home.index');
+            }
+            else
+            {
+                if($role == 4)
+                {
+                    return redirect()->route('student.exam.index');
+                }
+            }
         }
         else{
-            return redirect()->route('getLogin')->withErrors('ádasd');
+            return redirect()->route('getLogin')->withErrors('Tên đăng nhập hoặc mật khẩu không chính xác!');
         }
     }
 

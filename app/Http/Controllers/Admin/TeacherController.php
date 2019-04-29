@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\StudentStoreRequest;
+use App\Http\Requests\Admin\TeacherStoreRequest;
 use App\Http\Requests\Admin\UserStoreRequest;
 use App\Http\Requests\Admin\TeacherUpdateRequest;
 use App\Role;
@@ -20,7 +21,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = User::query()->where('role_id',  2)->paginate(10);
+        $teachers = User::query()->where('role_id',  3)->paginate(10);
         return view('admin.teachers.index',['teachers'=>$teachers]);
     }
 
@@ -31,7 +32,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        if(\Auth::user()->role_id == 1){
+        if(\Auth::user()->role_id == 1 || \Auth::user()->role_id == 2){
             $roles = Role::all();
             return view('admin.teachers.create', compact('roles'));
         }
@@ -45,14 +46,18 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserStoreRequest $request)
+    public function store(TeacherStoreRequest $request)
     {
         $user = new User();
-        $user->username = $request->name;
+        $user = new User();
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->gender = $request->gender;
-        $user->role_id = $request->role;
+        $user->address = '';
+        $user->gender = $request->gender == 'on' ? 1 : 0;
+        $user->role_id = 3;
+        $user->level = $request->level;
+        $user->facebook = '';
         if (strlen($request->password) > 0){
             $user->password = bcrypt($request->password);
         }

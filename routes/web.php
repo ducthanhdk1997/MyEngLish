@@ -16,14 +16,22 @@
 
 
 
-
 Route::get('login', 'LoginController@getLogin')->name('getLogin');
-ROute::post('login', 'LoginController@postLogin')->name('postLogin');
-ROute::post('logout', 'LoginController@logout')->name('logout');
+Route::post('login', 'LoginController@postLogin')->name('postLogin');
+Route::get('logout', 'LoginController@logout')->name('logout');
 
 // route admin
 Route::get('/', 'LoginController@getLogin')->name('getLogin');
 
+Route::get('home','HomeController@index')->name('index');
+
+Route::group(['prefix' => 'student', 'as' => 'student.'],function (){
+    Route::group(['prefix' => 'exma' , 'as' => 'exam.'], function (){
+       Route::get('/','ExamController@index')->name('index');
+       Route::get('create','ExamController@create')->name('create');
+       Route::post('store','ExamController@stote')->name('store');
+    });
+});
 
 Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
 
@@ -35,32 +43,33 @@ Route::group(['prefix'=>'admin','middleware'=>'auth','as'=>'admin.'],function(){
         Route::get('add','Admin\ClassRoomController@add')->name('add');
     });
 
+
+
 //    group ajax
 
     Route::group(['prefix'=>'ajax','as'=>'ajax.'],function (){
         Route::get('classtypetable/{course_id}','Admin\AjaxController@getClassTypeTable')->name('classtypetable');
         Route::get('classtypeselect/{course_id}','Admin\AjaxController@getClassTypeSelect')->name('classtypeselect');
         Route::get('coursetypetable/{grade_id}','Admin\AjaxController@getCourseTypeTable')->name('coursetypetable');
-        Route::get('exercisetypeselect/{grade_id}','Admin\AjaxController@getExerciseTypeSelect')
-                                                                                                    ->name('exercisetypeselect');
-        Route::get('exercise/{grade_id}','Admin\AjaxController@getExercise')
-                                                                                                    ->name('exercise');
         Route::get('coursetypeselect/{grade_id}','Admin\AjaxController@getCourseTypeSelect')
                                                                                                     ->name('coursetypeselect');
+        Route::get('getroombyshiftandday/{day}/{shift}','Admin\AjaxController@getRoomByShiftAndDay')
+                                                                                                ->name('getroombyshiftandday');
+        Route::get('getdetailcourse/{course_id}','Admin\AjaxController@getDetailCourse')->name('getdetailcourse');
+
+        Route::post('getclassroom','Admin\AjaxController@getClassroom')->name('getclassroom');
+
+        Route::post('getusername','Admin\AjaxController@getUsername')->name('getusername');
+
+        Route::post('checkvoucher','Admin\AjaxController@checkVoucher')->name('checkvoucher');
+
+        Route::post('getprice','Admin\AjaxController@getPrice')->name('getprice');
 
     });
 
 
 });
 
-
-
-
-//Route::get('/home', 'HomeController@index')->name('home');
-
-//Route::redirect('/', '');
-
-//Route::get('/', 'HomeController@index');
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
@@ -74,11 +83,30 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
         });
 
         Route::group(['prefix' => 'note', 'as' =>'note.'], function (){
+
             Route::get('detail/{state}','Admin\NoteController@show')->name('show');
         });
 
         Route::group(['prefix' => 'exam', 'as' =>'exam.'], function (){
-            Route::get('detail/{state}','Admin\ExamController@show')->name('show');
+            Route::get('/','Admin\ExamController@index')->name('index');
+            Route::get('{exam}/detail','Admin\ExamController@show')->name('show');
+            Route::get('{exam}/edit','Admin\ExamController@edit')->name('edit');
+            Route::put('{exam}','Admin\ExamController@update')->name('update');
+            Route::get('create','Admin\ExamController@create')->name('create');
+            Route::post('store','Admin\ExamController@store')->name('store');
+        });
+
+        Route::group(['prefix' => 'schedule', 'as' => 'schedule.'],function (){
+            Route::get('index','Admin\ClassSessionController@index')->name('index');
+            Route::get('{class}/create','Admin\ClassSessionController@create')->name('create') ;
+            Route::post('{class}/store','Admin\ClassSessionController@store')->name('store') ;
+            Route::get('edit/{schedule}','Admin\ClassSessionController@edit')->name('edit');
+            Route::post('update/{schedule}','Admin\ClassSessionController@update')->name('update');
+        });
+
+        Route::group(['prefix' => 'user_course' , 'as' =>'user_course.'],function (){
+           route::get('index','Admin\StudentCourseController@index')->name('index');
+           route::post('store','Admin\StudentCourseController@store')->name('store');
         });
 
 
@@ -125,10 +153,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
         });
 
         Route::group(['prefix' => 'classes', 'as' => 'classes.'], function (){
-           Route::get('/', 'Admin\ClassController@index')->name('index');
-
+            Route::get('/', 'Admin\ClassController@index')->name('index');
+            Route::get('{class}/schedule','Admin\ClassController@schedule')->name('schedule');
             Route::get('create', 'Admin\ClassController@create')->name('create');
             Route::post('create', 'Admin\ClassController@store')->name('store');
+            Route::get('adduser','Admin\ClassController@addUser')->name('addUser');
+            Route::post('storeuser','Admin\ClassController@storeUser')->name('storeuser');
 
             Route::get('{class}/edit', 'Admin\ClassController@edit')->name('edit');
             Route::put('{class}', 'Admin\ClassController@update')->name('update');

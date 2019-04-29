@@ -27,7 +27,7 @@ class TeacherUpdateRequest extends FormRequest
         return [
             'username' => 'required',
             'email' => ['required',
-                Rule::unique('users')->ignore($this->route('teacher')->id)
+                Rule::unique('users')->ignore($this->route('teacher')->id),'email address'
             ],
             'phone' => 'required',
             'facebook' => 'required',

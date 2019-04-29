@@ -11,42 +11,16 @@
             <div class="x_content">
                 <form class="form-group" action="{{ route('admin.students.store') }}" method="post">
                     @csrf
-                    <div class="form-group">
-                        <label for="usr">Khóa học:</label>
-                        <select name="course_id"  id="courses" class="form-control">
-                            <option value="-1">All</option>
-                            @foreach($courses as $course)
-                                <option value="{{ $course->id }}" >
-                                    {{ $course->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class=" control-label">Lớp</label>
-                        <select name="class_id" id="classes"  class="form-control">
-                            <?php $i=1; ?>
-                            @foreach($classes as $class)
-                                @if($i==1)
-                                    <option value="{{ $class->id }}" selected>{{ $class->name }}</option>
-                                @else
-                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
+
                     <div class="form-group">
                         <label for="inputEmail3" class="control-label">Tên</label>
-                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nhập họ tên">
+                        <input type="text" class="form-control" name="username" value="{{ old('name') }}" placeholder="Nhập họ tên">
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="control-label">Email</label>
                         <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Nhập email">
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="control-label">Địa chỉ</label>
-                        <input type="email" class="form-control" name="address" value="{{ old('address') }}" placeholder="Nhập địa chỉ">
-                    </div>
+
                     <div class="form-group">
                         <label for="inputEmail3" class=" control-label">Số điện thoại</label>
                         <input type="text" class="form-control" name="phone" value="{{ old('phone') }}" placeholder="Nhập họ tên" >
@@ -79,15 +53,4 @@
 
 @endsection()
 
-@section('script')
-    <script>
-        $(document).ready(function () {
-            $('#courses').change(function () {
-                var course_id = $(this).val();
-                $.get("{{asset('admin/ajax/classtypeselect')}}" + "/" + course_id, function (data) {
-                    $('#classes').html(data)
-                });
-            })
-        })
-    </script>
-@endsection()
+

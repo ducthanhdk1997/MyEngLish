@@ -25,28 +25,16 @@ class UserTableSeeder extends Seeder
                 'facebook'=>'https://www.facebook.com/nguyenthanhat1997'
             ],
             [
-                'username'=>'Nguyễn Đăng Dũng',
-                'email'=>'dung@gmail.com',
-                'password'=>bcrypt('abc123'),
-                'avatar'=>'admin.png',
-                'address' => 'Ha Noi',
-                'gender'=>0,
-                'level' =>'Quản trị',
-                'phone'=> '0326196129',
-                'role_id' =>1,
-                'facebook'=>''
-            ],
-            [
-                'username'=>'Nguyễn Thế Tiến',
-                'email'=>'dung@gmail.com',
+                'username'=>'Nguyễn Đức Thành',
+                'email'=>'thanhducbnutc@gmail.com',
                 'password'=>bcrypt('abc123'),
                 'avatar'=>'admin.png',
                 'address' =>'Ha Noi',
                 'gender'=>0,
-                'level' =>'Quản trị',
+                'level' =>'Thạc sĩ',
                 'phone'=> '0326196129',
-                'role_id' =>1,
-                'facebook'=>''
+                'role_id' =>3,
+                'facebook'=>'https://www.facebook.com/nguyenthanhat1997'
             ],
             [
                 'username'=>'Nguyễn Đức Thành',
@@ -57,7 +45,7 @@ class UserTableSeeder extends Seeder
                 'gender'=>0,
                 'level' =>'Thạc sĩ',
                 'phone'=> '0326196129',
-                'role_id' =>2,
+                'role_id' =>4,
                 'facebook'=>'https://www.facebook.com/nguyenthanhat1997'
             ]
         ];

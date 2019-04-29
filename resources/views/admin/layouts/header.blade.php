@@ -13,7 +13,7 @@
 		      <ul class="dropdown-menu dropdown-usermenu pull-right">
 		        <li><a href="#"> Profile</a></li>
 		        <li>
-					<a onclick="document.getElementById('logout-form').submit()">
+					<a href="{{route('logout')}}">
 						<span class="glyphicon glyphicon-off" aria-hidden="true"></span>Logout
 					</a>
 				</li>

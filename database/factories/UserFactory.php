@@ -31,13 +31,13 @@ $factory->define(App\User::class, function (Faker $faker) {
 $factory->state(App\User::class,'students', function (Faker $faker) {
     return [
         'level' => 'Học viên',
-        'role_id'=> 3,
+        'role_id'=> 4,
     ];
 });
 
 $factory->state(App\User::class,'teachers', function (Faker $faker) {
     return [
         'level' => 'Thạc sĩ',
-        'role_id'=> 2,
+        'role_id'=> 3,
     ];
 });

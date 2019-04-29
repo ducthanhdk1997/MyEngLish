@@ -35,3 +35,7 @@
     <script src="{{ asset('/vendor/moment/min/moment.min.js')}}"></script>
     <script src="{{ asset('/vendor/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{ asset('/admin_asset/js/custom.min.js')}}"></script>
+
+    <script src='{{asset('/vendor/fullcalendar/core/main.js')}}'></script>
+    <script src='{{asset('/vendor/fullcalendar/daygrid/main.js')}}'></script>
+

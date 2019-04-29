@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Tên</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="name" placeholder="Nhập họ tên">
+                            <input type="text" class="form-control" name="username" placeholder="Nhập họ tên">
                         </div>
                     </div>
                     <div class="form-group">
@@ -26,7 +26,14 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Số điện thoại</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="phone" placeholder="Nhập họ tên" >
+                            <input type="text" class="form-control" name="phone" placeholder="Số điện thoại" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Trình độ</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="level" placeholder="Trình độ" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -36,14 +43,7 @@
                             <input type="radio" name="gender" value="0"> Nữ
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Chức vụ</label>
-                        <div class="col-sm-10">
-                            @foreach($roles as $role)
-                                <input type="radio" name="role" value="{{ $role->id }}" {{ $role->name == "Học sinh" ? "disabled" : "" }}> {{ $role->name }}
-                            @endforeach
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Mật khẩu</label>
                         <div class="col-sm-10">

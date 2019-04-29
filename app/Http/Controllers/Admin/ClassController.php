@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Classes;
+use App\Classroom;
 use App\Course;
+use App\Http\Requests\Admin\AddUserStoreRequest;
 use App\Http\Requests\Admin\ClassStoreRequest;
+use App\Schedule_Class;
+use App\Shift;
 use App\User;
 use App\User_Class;
+use App\User_Course;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 //use Maatwebsite\Excel\Excel;
@@ -22,9 +28,16 @@ class ClassController extends Controller
     public function index()
     {
         $courses = Course::all();
+        $scheduleclass = Schedule_Class::all();
         $classes = Classes::query()->paginate(10);
         $course_id = -1;
-        return view('admin.classes.index', ['classes'=>$classes,'courses'=>$courses,'course_id'=>$course_id]);
+        return view('admin.classes.index',
+            [
+                'classes'=>$classes,
+                'courses'=>$courses,
+                'course_id'=>$course_id,
+                'scheduleclass' => $scheduleclass
+            ]);
     }
 
     public  function showByCourses($course_id)
@@ -45,6 +58,17 @@ class ClassController extends Controller
 
     }
 
+    public  function schedule(Classes $class)
+    {
+
+        $scheduldeclass = Schedule_Class::query()->where('class_id','=',$class->id)->get();
+        return view('admin.classes.schedule',[
+
+            'class' => $class,
+            'schedules' => $scheduldeclass
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -52,11 +76,19 @@ class ClassController extends Controller
      */
     public function create()
     {
+        $today = Carbon::now();
+        $day = $today->toDateString();
+        $shift = Shift::all();
+        $classrooms = Classroom::all();
         $courses = Course::all();
         $teachers = User::query()
             ->where('role_id',3)
             ->get();
-        return view('admin.classes.add', compact('courses', 'teachers'));
+        return view('admin.classes.add', ['courses'=>$courses
+                                        ,'classrooms'=>$classrooms
+                                        , 'teachers'=>$teachers
+                                        ,'day'=>$day
+                                        ,'shifts'=>$shift]);
     }
 
     /**
@@ -77,6 +109,7 @@ class ClassController extends Controller
         }
         else{
             flash()->error('Tạo lớp thất bại');
+            return redirect()->back();
         }
     }
 
@@ -88,12 +121,18 @@ class ClassController extends Controller
      */
     public function show(Classes $class)
     {
+
+
         $usersClass = User_Class::query()
             ->with('user')
             ->where('class_id', $class->id)
             ->paginate(10);
 
-        return view('admin.classes.detail', compact('usersClass', 'class'));
+        return view('admin.classes.detail', [
+            'usersClass' => $usersClass,
+            'class' => $class,
+
+        ]);
     }
 
     /**
@@ -192,6 +231,66 @@ class ClassController extends Controller
         }
         flash()->success('Upload thanh cong');
         return redirect()->route('admin.classes.index');
+    }
+
+    public  function addUser()
+    {
+        $courses = Course::all();
+        $classes = Classes::all();
+        return view('admin.classes.adduser',['classes'=>$classes,'courses'=>$courses]);
+    }
+
+    /**
+     * @param AddUserStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public  function  storeUser(AddUserStoreRequest $request)
+    {
+
+        $record = User::query()->where('email', $request->email)->first();
+        if($record == null)
+        {
+            flash()->error('Email không tồn tại!');
+            return redirect()->back();
+        }
+        else
+        {
+            $userId = $record->id;
+            $class = new User_Class();
+            $class->user_id = $userId;
+            $class->class_id = $request->class;
+            $user_class = User_Class::query()
+                ->where('user_id','=',$record->id)
+                ->where('class_id','=',$request->class)
+                ->first();
+            if($user_class !=null)
+            {
+                flash()->error('Học viên đã có trong lớp học!');
+                return redirect()->back();
+            }
+            $classes = Classes::query()->where('id','=',$request->class)->first();
+
+            $course = Course::query()->where('id','=',$classes->course_id)->first();
+
+            $user_course = User_Course::query()
+                ->where('user_id','=',$record->id)
+                ->where('course_id','=',$course->id)
+                ->first();
+            if($user_course == null)
+            {
+                flash()->error('Học viên phải đóng tiền trước khi tham gia lớp học!');
+                return redirect()->back();
+            }
+
+            if($class->save()){
+                flash()->success('Them tai khoan thanh cong');
+                return redirect()->route('admin.classes.show',$request->class);
+            }
+            else{
+                flash()->error('Them tai khoan that bai');
+                return redirect()->back();
+            }
+        }
     }
 
 }

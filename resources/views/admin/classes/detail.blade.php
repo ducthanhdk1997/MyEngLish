@@ -2,29 +2,13 @@
 
 @section('content')
     {{-- new grade --}}
-    <div class="page-title">
-        <div class="title_right pull-right">
-            <div class="form-group pull-right top_search">
-                <div class="input-group">
-                    <div class="input-group">
-                        <form action="{{ route('teachers') }}" method="get" style="display: inherit;border-radius: 25px 0 0 25px">
-                            {{--@csrf--}}
-                            <input type="text" class="form-control" placeholder="Search for..." name="key">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">Go!</button>
-                            </span>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30">
         <div class="form-group">
             <form action="{{ route('admin.classes.import', $class) }}" method="post" enctype="multipart/form-data">
                 @csrf
-                <label for="">Upload:</label>
+                <label for="">Upload sinh viên:</label>
                 <input type="file" class="form-control" style="width: 400px;display: inline" name="file-excel">
                 <button type="submit" class="btn btn-primary" style="margin-bottom: 5px">Submit</button>
             </form>
@@ -67,3 +51,19 @@
     {{-- end of new class --}}
 
 @endsection()
+
+{{--@section('script')--}}
+    {{--<script>--}}
+        {{--$(document).ready(function () {--}}
+            {{--$('#lich').hide();--}}
+            {{--$('#btnThem').click(function () {--}}
+                {{--$('#lich').show();--}}
+                {{--$(this).hide();--}}
+            {{--})--}}
+            {{----}}
+            {{----}}
+
+
+        {{--})--}}
+    {{--</script>--}}
+{{--@endsection()--}}
