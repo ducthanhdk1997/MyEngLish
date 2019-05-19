@@ -14,34 +14,34 @@ class ClassRoomTableSeeder extends Seeder
         //
         $classrooms = [
             [
-                'name'=>'Phong 1'
+                'name'=>'Phòng 1'
             ],
             [
-                'name'=>'Phong 2'
+                'name'=>'Phòng 2'
             ],
             [
-                'name'=>'Phong 3'
+                'name'=>'Phòng 3'
             ],
             [
-                'name'=>'Phong 4'
+                'name'=>'Phòng 4'
             ],
             [
-                'name'=>'Phong 5'
+                'name'=>'Phòng 5'
             ],
             [
-                'name'=>'Phong 6'
+                'name'=>'Phòng 6'
             ],
             [
-                'name'=>'Phong 7'
+                'name'=>'Phòng 7'
             ],
             [
-                'name'=>'Phong 8'
+                'name'=>'Phòng 8'
             ],
             [
-                'name'=>'Phong 9'
+                'name'=>'Phòng 9'
             ],
             [
-                'name'=>'Phong 10'
+                'name'=>'Phòng 10'
             ]
         ];
         foreach ($classrooms as $classroom)

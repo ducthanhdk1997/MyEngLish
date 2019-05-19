@@ -54,6 +54,24 @@ class User extends Authenticatable
 
     }
 
+    public function examResult()
+    {
+        return $this->hasMany('App\Exam_Result', 'user_id');
+
+    }
+
+    public function testResult()
+    {
+        return $this->hasMany('App\ResultTest', 'user_id');
+    }
+
+    public function clas()
+    {
+        return $this->hasMany(Classes::class, 'teacher_id');
+    }
+
+
+
 
 
 }

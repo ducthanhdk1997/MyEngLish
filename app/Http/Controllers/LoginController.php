@@ -18,12 +18,20 @@ class LoginController extends Controller
         if(Auth::attempt(['email' => $email, 'password' => $password])){
 
             $role = Auth::user()->role_id;
-            if($role == 1 || $role == 2)
+            if($role == 1)
             {
-                return redirect()->route('admin.home.index');
+                return redirect()->route('admin.courses.index');
+            }
+            if($role == 2)
+            {
+                return redirect()->route('employee.home.index');
             }
             else
             {
+                if($role == 3)
+                {
+                    return redirect()->route('teacher.class.index');
+                }
                 if($role == 4)
                 {
                     return redirect()->route('student.exam.index');

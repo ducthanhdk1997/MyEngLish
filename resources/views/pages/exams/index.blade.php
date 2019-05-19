@@ -39,7 +39,7 @@
                         <th>Hạn đăng ký</th>
                         <th>Trạng thái</th>
                         <th>Điểm</th>
-                        <th>Action</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -57,11 +57,6 @@
                             <td>{{ $exam->deadline}}</td>
                             @if($exam->state==0)
                                 <td>Chưa xong</td>
-                                <td>
-                                    <a href="" class="btn btn-success">
-                                        <i class="fa fa-edit"></i> Hủy
-                                    </a>
-                                </td>
                             @else
                                 <td>Đã xong</td>
                             @endif

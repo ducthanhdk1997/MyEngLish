@@ -21,7 +21,7 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form action="{{ route('postLogin')}}" method="POST">
+                <form action="{{route('postLogin')}}" method="POST">
                     @csrf
                     <h1>Login Form</h1>
                     @if(count($errors)>0)
@@ -46,8 +46,10 @@
                         <input type="password" class="form-control" placeholder="Password"  name="password"/>
                     </div>
                     <button type="submit" class="btn btn-default">Login</button>
+
                     <div class="clearfix"></div>
                 </form>
+                <a href="{{route('password.getreset')}}">Fogot password</a>
             </section>
         </div>
 

@@ -5,13 +5,13 @@
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30 padding-t-30">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Thay đổi thông tin khóa học</h2>
+                <h2>Thêm khóa học</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <form class="form-horizontal" action="{{ route('admin.courses.store') }}" method="post">
                     @csrf
-
+                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Tên khóa học</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="name" placeholder="Nhập tên khóa học" value="{{ old('name') }}" >

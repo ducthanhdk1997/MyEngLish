@@ -21,21 +21,16 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Thời gian bắt đầu</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" name="time_start" placeholder="Nhập email" value="{{ $course->time_start }}">
+                            <input type="date" class="form-control" name="start_date" placeholder="Nhập email" value="{{ $course->start_date }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Thời gian kết thúc</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" name="time_end" placeholder="Nhập họ tên" value="{{ $course->time_end }}">
+                            <input type="date" class="form-control" name="end_date" placeholder="Nhập họ tên" value="{{ $course->end_date }}">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Thời gian dự kến kết thúc</label>
-                        <div class="col-sm-10">
-                            <input type="date" class="form-control" name="actua_end_date" placeholder="Nhập họ tên" value="{{ $course->actua_end_date }}">
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Giá tiền</label>
                         <div class="col-sm-10">
@@ -52,7 +47,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-success">Update</button>
-                            <a href="{{ route('teachers') }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</a>
+                            <a href="{{ route('admin.courses.update',$course) }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</a>
                         </div>
                     </div>
                 </form>

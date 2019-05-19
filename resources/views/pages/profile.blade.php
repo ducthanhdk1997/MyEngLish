@@ -9,9 +9,8 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <form class="form-horizontal" action="{{ route('admin.students.update', $user) }}" method="post">
+                <form class="form-horizontal" action="{{route('update',$user)}}" enctype="multipart/form-data" method="post">
                     @csrf
-                    @method('PUT')
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Tên</label>
                         <div class="col-sm-10">
@@ -37,16 +36,11 @@
                             <input type="text" class="form-control" name="phone" placeholder="Nhập họ tên" value="{{ $user->phone }}">
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Trình độ</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Avatar</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="level" placeholder="Nhập họ tên" value="{{ $user->level }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Facebook</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="facebook" placeholder="Nhập họ tên" value="{{ $user->facebook }}">
+                            <input type="file" class="form-control" name="avatar" {{old('avatar')}}>
                         </div>
                     </div>
                     <div class="form-group">
@@ -56,10 +50,25 @@
                             <input type="radio" name="gender" {{ $user->gender  == 0 ? "checked" : "" }}> Nữ
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Mật khẩu</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Mật khẩu mới</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="password" placeholder="Nhập mật khẩu">
+                            <input type="password" class="form-control" name="new_password" {{old('new_password')}}>
+                            <p>( Để trống nếu không thay đổi mật khẩu)</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Nhập lại mật khẩu mới</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="renew_password" {{old('renew_password')}}>
+                            <p>( Để trống nếu không thay đổi mật khẩu)</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Mật khẩu cũ</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="old_password">
                             <p>( Để trống nếu không thay đổi mật khẩu)</p>
                         </div>
                     </div>
@@ -67,7 +76,6 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-success">Update</button>
-                            <a href="{{ route('admin.teachers.index') }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</a>
                         </div>
                     </div>
                 </form>

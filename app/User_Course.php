@@ -18,4 +18,14 @@ class User_Course extends Pivot
     {
         return $this->belongsTo('App\Course');
     }
+
+    public  function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    public  function voucher()
+    {
+        return $this->belongsTo('App\Voucher');
+    }
 }

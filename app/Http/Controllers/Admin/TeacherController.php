@@ -56,13 +56,14 @@ class TeacherController extends Controller
         $user->address = '';
         $user->gender = $request->gender == 'on' ? 1 : 0;
         $user->role_id = 3;
+        $user->avatar = 'image.jpg';
         $user->level = $request->level;
         $user->facebook = '';
         if (strlen($request->password) > 0){
-            $user->password = bcrypt($request->password);
+            $user->password = bcrypt ($request->password);
         }
         else{
-            $user->password = bcrypt('secret');
+            $user->password = bcrypt ('abc123');
         }
         if($user->save()){
             flash()->success('Thêm người dùng thành công');
@@ -70,6 +71,7 @@ class TeacherController extends Controller
         }
         else{
             flash()->error('Thêm ngời dùng thất bại');
+            return redirect()->back();
         }
     }
 
@@ -79,10 +81,7 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $teacher)
-    {
-        return view('admin.teachers.detail', ['teacher'=>$teacher]);
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -102,22 +101,9 @@ class TeacherController extends Controller
      * @param User $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(TeacherUpdateRequest $request, User $teacher)
+    public function update(Request $request, User $teacher)
     {
-        $teacher->username = $request->username;
-        $teacher->email = $request->email;
-        $teacher->phone = $request->phone;
-        $teacher->gender = $request->gender == "on" ? 1 : 0;
         $teacher->level = $request->level;
-        $teacher->address = $request->address;
-        $teacher->facebook = $request->facebook;
-        if (strlen($request->password) > 0){
-            $teacher->password = bcrypt($request->password);
-        }
-        else{
-            $teacher->password = bcrypt('secret');
-        }
-
         if ($teacher->save()){
             flash()->success('Thay đổi thành công');
         }
@@ -127,30 +113,7 @@ class TeacherController extends Controller
         return redirect()->route('admin.teachers.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $teacher)
-    {
-        if($teacher->delete()){
-            flash()->success('Xoa thanh cong');
-        }
-        else{
-            flash()->error('Xoa that bai');
-        }
-        return redirect()->back();
-    }
 
-    public function search(Request $request){
-        $key = $request->key;
-        $teachers = User::query()
-            ->where('username',  'like', "%$key%")
-            ->where('role_id',  '<>', 4)
-            ->paginate(10);
-        return view('admin.teachers.search', compact('teachers', 'key'));
-    }
+
 
 }

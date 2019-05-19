@@ -52,8 +52,52 @@
                                 <td>
                                     <input type="radio" id="exam" name="exam" value="{{$exam->id}}" checked>
                                 </td>
+                                <td><button type="submit" class="btn btn-success"  id="btnDangKy">Đăng ký</button></td>
                             </tr>
                         @endforeach
+                        </tbody>
+
+                    </table>
+                </form>
+
+            </div>
+            <hr>
+            <div class="x_title">
+                <h2>Lịch thi đã đăng ký</h2>
+                <div class="clearfix"></div>
+            </div>
+            <br>
+            <div class="x_content">
+                <form action="{{route('student.exam.delete')}}" method="post" class="form-group">
+                    @csrf
+                    <table class="table table-hover" id="myTable">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Khóa học</th>
+                            <th>Title</th>
+                            <th>Ngày thi</th>
+                            <th>Ca thi</th>
+                            <th>Phòng thi</th>
+                            <th>Hạn đăng ký</th>
+                            <th>Hủy</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @if($hasExams !='')
+                                    <th scope="row">1</th>
+                                    <td>{{ $hasExams->course->name }}</td>
+                                    <td>{{ $hasExams->title }}</td>
+                                    <td>{{ $hasExams->start_date }}</td>
+                                    <td>{{$hasExams->shift->name}}</td>
+                                    <td>{{ $hasExams->classroom->name }}</td>
+                                    <td>{{ $hasExams->deadline}}</td>
+                                    <td>
+                                        <input type="radio" id="hasExam" name="hasExam" value="{{$hasExams->id}}">
+                                    </td>
+                                @endif
+                            </tr>
                         </tbody>
                         <tfoot>
                         <tr>
@@ -64,7 +108,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><button type="submit" class="btn btn-success"  id="btnDangKy">Đăng ký</button></td>
+                            <td><button type="submit" class="btn btn-success"  id="btnHuy">Hủy</button></td>
                         </tr>
                         </tfoot>
                     </table>
@@ -79,11 +123,5 @@
 <script>
     function submitForm() {
         $('#myform').submit();
-    }
-
-    function submitForm2() {
-        var exam = $('#exam').val();
-        alert(exam);
-
     }
 </script>

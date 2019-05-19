@@ -28,6 +28,13 @@ class CourseTableSeeder extends Seeder
                 'describe' =>'Khóa học giúp bạn đạt tối thiểu 500 toeic',
                 'price'=>5300000,
             ],
+            [
+                'name'=>"Khóa học IELTS 1",
+                'start_date' =>Carbon::parse('2019-05-27'),
+                'end_date' =>Carbon::parse('2019-05-27')->addWeek(15)->subDay(1),
+                'describe' =>'Khóa học giúp bạn đạt 7.0 IELTS',
+                'price'=>5300000,
+            ],
 
 
         ];

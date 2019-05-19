@@ -9,19 +9,39 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
+                <form action=""  method="get" id="myform" class="form-group form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Khóa học</label>
+                        <div class="col-sm-10">
+                            <select name="course" onchange="submitForm();" class="form-control">
+                                @foreach($cors as $cor)
+                                    <option value="{{$cor->id}}" @if(isset($course)){{$course == $cor ? "selected" : "" }} @endif >{{$cor->name}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label for="inputEmail3" class="col-sm-2 control-label">Thời gian:</label>
+                        <div class="col-sm-10" id="detail_course">
+                            <label for="inputEmail3" class=" control-label">Khoa học bắt đầu từ ngày: {{$course->start_date}} và kết thúc vào ngày: {{$course->end_date}}.</label>
+                        </div>
+                    </div>
+                </form>
                 <form class="form-horizontal" action="{{ route('admin.exam.store') }}" method="post">
                     @csrf
+                    <input type="text" name="course" value="{{$course->id}}" hidden>
+
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="title" value="{{old('title')}}" placeholder="Title">
+                            <input type="text" class="form-control" name="title" value="{{$course->name}}" placeholder="Title">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Ngày thi</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" name="start_date" value="{{old('start_date')}}" id="start" min="{{$day}}" placeholder="Ngày thi">
+                            <input type="date" class="form-control" name="start_date" value="{{old('start_date')}}" id="start" min="{{$day}}" max="{{$course->start_date}}" placeholder="Ngày thi">
                         </div>
                     </div>
                     <div class="form-group">
@@ -31,23 +51,15 @@
                                @php $i=1;
                                @endphp
                                 @foreach($shifts as $shift)
-                                    <option value="{{$shift->id}}" {{ old('shift_id') == $shift->id ? 'selected' : '' }}  >{{$shift->name}}</option>
+                                    @if($shift->id == 6 || $shift->id == 7)
+                                        <option value="{{$shift->id}}" {{ old('shift_id') == $shift->id ? 'selected' : '' }}  >{{$shift->name}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Khóa học</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="course_id" id="courses">
-                                @php $i=1;
-                                @endphp
-                                @foreach($courses as $course)
-                                    <option value="{{$course->id}}"   {{ old('course_id') == $course->id ? 'selected' : '' }}>{{$course->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
+
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Phòng thi</label>
                         <div class="col-sm-10">
@@ -63,15 +75,10 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Hạn đăng kí</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" name="deadline" value="{{old('deadline')}}" min="{{$day}}" id="deadline" placeholder="Hạn đăng kí">
+                            <input type="date" class="form-control" name="deadline" value="{{old('deadline')}}" min="{{$day}}" max="{{$course->start_date}}" id="deadline" placeholder="Hạn đăng kí">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Trạng thái</label>
-                        <div class="col-sm-10">
-                            <input type="radio" name="state" value="0" checked> Chưa xong
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-success">Create</button>
@@ -83,7 +90,11 @@
         </div>
     </div>
     {{-- end of new class --}}
-
+    <script>
+        function submitForm() {
+            $('#myform').submit();
+        }
+    </script>
 @endsection()
 
 @section('script')
@@ -108,6 +119,13 @@
                 });
 
             });
+
+            {{--$('#courses').change(function () {--}}
+                {{--var course_id = $(this).val();--}}
+                {{--$.get("{{asset('admin/ajax/getdetailcourse')}}" + "/" + course_id, function (data) {--}}
+                    {{--$('#detail_course').html(data)--}}
+                {{--});--}}
+            {{--})--}}
         })
     </script>
 

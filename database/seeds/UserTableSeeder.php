@@ -15,8 +15,8 @@ class UserTableSeeder extends Seeder
             [
                 'username'=>'admin',
                 'email'=>'root@gmail.com',
-                'password'=>bcrypt('abc123'),
-                'avatar'=>'admin.png',
+                'password' => bcrypt('abc123'),
+                'avatar'=>'image.jpg',
                 'address'=>'Ha Noi',
                 'gender'=>0,
                 'level' =>'Quản trị',
@@ -26,9 +26,9 @@ class UserTableSeeder extends Seeder
             ],
             [
                 'username'=>'Nguyễn Đức Thành',
-                'email'=>'thanhducbnutc@gmail.com',
-                'password'=>bcrypt('abc123'),
-                'avatar'=>'admin.png',
+                'email'=>'teacher@gmail.com',
+                'password'=>bcrypt ('abc123'),
+                'avatar'=>'image.jpg',
                 'address' =>'Ha Noi',
                 'gender'=>0,
                 'level' =>'Thạc sĩ',
@@ -37,13 +37,25 @@ class UserTableSeeder extends Seeder
                 'facebook'=>'https://www.facebook.com/nguyenthanhat1997'
             ],
             [
-                'username'=>'Nguyễn Đức Thành',
+                'username'=>'Nguyen Duc Thanh',
                 'email'=>'thanh@gmail.com',
-                'password'=>bcrypt('abc123'),
-                'avatar'=>'admin.png',
+                'password'=>bcrypt ('abc123'),
+                'avatar'=>'image.jpg',
                 'address' =>'Ha Noi',
                 'gender'=>0,
-                'level' =>'Thạc sĩ',
+                'level' =>'Học viên',
+                'phone'=> '0326196129',
+                'role_id' =>4,
+                'facebook'=>'https://www.facebook.com/nguyenthanhat1997'
+            ],
+            [
+                'username'=>'employee',
+                'email'=>'employee@gmail.com',
+                'password'=>bcrypt ('abc123'),
+                'avatar'=>'image.jpg',
+                'address' =>'Ha Noi',
+                'gender'=>0,
+                'level' =>'',
                 'phone'=> '0326196129',
                 'role_id' =>4,
                 'facebook'=>'https://www.facebook.com/nguyenthanhat1997'
@@ -57,6 +69,7 @@ class UserTableSeeder extends Seeder
 
         $user = factory(App\User::class, 420)->states('students')->create();
         $userss = factory(App\User::class, 30)->states('teachers')->create();
+        $usersss = factory(App\User::class, 4)->states('employee')->create();
 
 
     }

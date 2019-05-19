@@ -1,17 +1,22 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\ChangeClassSession;
 use App\Class_Session;
 use App\Classroom;
+use App\Detail_Voucher;
 use App\Exam;
+use App\Exam_Result;
 use App\Exercise;
 use App\Http\Controllers\Controller;
 
 use App\Classes;
 use App\Course;
 use App\Http\Requests\Admin\SchedulerStoreRequest;
+use App\ResultTest;
 use App\Schedule_Class;
 use App\User;
+use App\User_Class;
 use App\User_Course;
 use App\Voucher;
 use Illuminate\Database\Eloquent\Builder;
@@ -56,42 +61,6 @@ class AjaxController extends Controller
         }
     }
 
-    public  function  getCourseTypeTable($grade_id)
-    {
-        $coures = Course::where('grade_id',$grade_id)->get();
-        $i=1;
-        foreach ($coures as $coure)
-        {
-            echo ('<tr>
-                            <td>'.$i++.'</td>
-                            <td>'.$coure->name.'</td>
-                            <td>'.$coure->time_start.'</td>
-                            <td>'.$coure->time_end.'</td>
-                            <td>'.$coure->actua_end_date.'</td>
-                            <td>'.$coure->describe.'</td>
-                            <td>'.$coure->price.'</td>
-
-                            <td class="data-table-edit">
-                                <a class="" href=""><i class="fa fa-pencil"></i> Edit</a>
-                            </td>
-                            <td class="data-table-edit">
-                                <a class="" href=""><i class="fa fa-pencil"></i> Detail</a>
-                            </td>
-                            <td class="data-table-delete">
-                                <a onclick="if(!confirm(\'Are you sure?\')) return false;" class=" red" href=""><i class="fa fa-trash-o"></i> Delete</a>
-                            </td>
-                        </tr>');
-        }
-    }
-
-
-
-    public  function  getExercise($grade_id)
-    {
-        $exercises = Exercise::where('grade_id',$grade_id)->get();
-        return $exercises;
-
-    }
 
     public  function  getRoomByShiftAndDay(Request $request)
     {
@@ -99,13 +68,37 @@ class AjaxController extends Controller
         $shift = $request->shift;
 
         $arrroom_id = array();
+
+
+        if($shift == 6)
+        {
+            $shift_id = [1,2];
+        }
+        else
+        {
+            if($shift == 7)
+            {
+                $shift_id = [3,4];
+            }
+            else
+            {
+                $shift_id = [$shift];
+            }
+        }
+
         $rooms1 = Class_Session::query()
             ->where('start_date','=',$day)
-            ->where('shift_id','=',$shift)
+            ->whereIn('shift_id',$shift_id)
+            ->where('state','=',0)
             ->get();
-        $rooms2 = Exam::query()->where('start_date','=',$day)
-                ->where('shift_id','=',$shift)
-                ->get();
+
+        $rooms2 = Exam::query()
+            ->where('start_date','=',$day)
+            ->whereIn('shift_id',$shift_id)
+            ->where('state','=',0)
+            ->get();
+
+
         foreach ($rooms1 as $room)
         {
             array_push($arrroom_id, $room->classroom_id);
@@ -119,7 +112,6 @@ class AjaxController extends Controller
         $rooms = Classroom::query()->whereNotIn('id',$arrroom_id)->get();
 
         $i=1;
-        $data = '';
         foreach ($rooms as $room)
         {
             if($i==1)
@@ -201,6 +193,52 @@ class AjaxController extends Controller
             'state' => true]);
     }
 
+    public function checkChangeClassSession($change_id)
+    {
+        $change = ChangeClassSession::find($change_id);
+
+        $start_date = $change->start_date;
+        $shift = $change->shift_id;
+        $classroom = $change->classroom_id;
+
+        if($shift == 6)
+        {
+            $shift_id = [1,2];
+        }
+        else
+        {
+            if($shift == 7)
+            {
+                $shift_id = [3,4];
+            }
+            else
+            {
+                $shift_id = [$shift];
+            }
+        }
+        $ex = Exam::query()
+            ->where('start_date','=',$start_date)
+            ->where('state','=',0)
+            ->where('classroom_id','=',$classroom)
+            ->whereIn('shift_id',$shift_id)
+            ->count();
+
+        $class_ss = Class_Session::query()
+            ->where('start_date','=',$start_date)
+            ->where('state','=',0)
+            ->where('classroom_id','=',$classroom)
+            ->whereIn('shift_id',$shift_id)
+            ->count();
+        if($ex !=0 || $class_ss !=0)
+        {
+            return response()->json(['errors' => 'Phòng học không sàng!']);
+        }
+        else
+        {
+            return response()->json(['success' => 'Phòng học sẵn sàng!']);
+        }
+    }
+
 
 
 
@@ -239,9 +277,70 @@ class AjaxController extends Controller
 
     }
 
+    public function getStudents(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'first_score' => 'required|numeric|min:0|max:999',
+            'last_score' => 'required|numeric|min:0|max:999',
+            'course' => 'required',
+            'num_studnet' => 'required|numeric'
+        ]);
+
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all(),
+                'state' => false]);
+        }
+        $fscore = $request->first_score;
+        $lscore = $request->last_score;
+        $course = $request->course;
+        $num = $request->num_studnet;
+        if($fscore > $lscore)
+        {
+            return response()->json(['errors' => 'The first_score must be greater than or equal to the last_score!',
+                'state' => false
+            ]);
+        }
+        $class_id =  Classes::query()->where('course_id',$course)->select('id')->get();
+        $users = User_Class::query()->whereIn('class_id',$class_id)->select('user_id')->get();
+        $exams = Exam::query()->where('course_id','=',$course)->select('id')->get();
+        if($num == 0)
+        {
+            $examResults = Exam_Result::query()
+                ->whereIn('exam_id',$exams)
+                ->whereNotIn('user_id',$users)
+                ->where('score','>',$fscore)
+                ->where('score','<=',$lscore)
+                ->get();
+        }
+        else
+        {
+            $examResults = Exam_Result::query()
+                ->whereIn('exam_id',$exams)
+                ->whereNotIn('user_id',$users)
+                ->where('score','>',$fscore)
+                ->where('score','<=',$lscore)
+                ->take($num)
+                ->get();
+        }
+        $datasss = [];
+        foreach ($examResults as $examResult)
+        {
+            $datasss[] = [
+                'user_id' =>$examResult->user_id,
+                'username' => $examResult->user->username,
+                'score' => $examResult->score
+            ];
+        }
+
+
+        return response()->json(['success'=>$datasss,
+            'state' => true]);
+    }
+
     public  function checkVoucher(Request $request)
     {
-        $voucher = Voucher::query()
+        $voucher = Detail_Voucher::query()
             ->where('code','=',$request->voucher)
             ->where('state','=',0)
             ->first();
@@ -283,6 +382,33 @@ class AjaxController extends Controller
             return response()->json(['success'=> $course->price,
                 'state' => true]);
         }
+    }
+
+
+
+    public  function  getExam(Request $request)
+    {
+        $exams = Exam::query()->where('course_id','=',$request->course)->get();
+        $i=1;
+        foreach ($exams as $exam)
+        {
+            if($i++ ==1)
+            {
+                echo ('<option value="'.$exam->id.'" selected>'.$exam->shift->name.' - '.$exam->classroom->name.'
+                            - '.$exam->start_date.' </option>');
+            }
+            else
+            {
+                echo ('<option value="'.$exam->id.'">'.$exam->shift->name.' - '.$exam->classroom->name.'
+                            - '.$exam->start_date.' </option>');
+            }
+        }
+    }
+
+    public  function  getExamResult(Request $request)
+    {
+        $exam = $request->exam;
+        echo $exam;
     }
 
 }

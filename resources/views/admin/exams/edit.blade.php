@@ -13,6 +13,30 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Khóa học</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="course_id" id="courses">
+                                @foreach($courses as $course)
+                                    @if($exam->course_id == $course->id)
+                                        <option value="{{$course->id}}" selected>{{$course->name}}</option>
+                                    @else
+                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label for="inputEmail3" class="col-sm-2 control-label">Thời gian:</label>
+                        @foreach( $courses as $course)
+                            @if($exam->course_id == $course->id)
+                                <div class="col-sm-10" id="detail_course">
+                                    <label for="inputEmail3" class=" control-label">Khoa học bắt đầu từ ngày: {{$course->start_date}} và kết thúc vào ngày: {{$course->end_date}};</label>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="title" placeholder="Title" value="{{ $exam->title }}">
@@ -39,20 +63,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Khóa học</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="course_id" id="courses">
-                                @foreach($courses as $course)
-                                    @if($exam->course_id == $course->id)
-                                        <option value="{{$course->id}}" selected>{{$course->name}}</option>
-                                    @else
-                                        <option value="{{$course->id}}">{{$course->name}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Phòng thi</label>
                         <div class="col-sm-10">
@@ -123,6 +134,13 @@
                 });
 
             });
+
+            $('#courses').change(function () {
+                var course_id = $(this).val();
+                $.get("{{asset('admin/ajax/getdetailcourse')}}" + "/" + course_id, function (data) {
+                    $('#detail_course').html(data)
+                });
+            })
         })
     </script>
 

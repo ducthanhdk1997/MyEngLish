@@ -13,7 +13,8 @@ class Course extends Model
         'name','start_date', 'end_date','describe','price'
     ];
 
-    public function grade(){
-        return $this->belongsTo('App\Grade');
+    public function classes()
+    {
+        return $this->hasMany('App\Classes');
     }
 }

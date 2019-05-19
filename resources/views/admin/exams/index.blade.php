@@ -3,9 +3,11 @@
 @section('content')
 
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30">
-        <a href="{{ route('admin.exam.create') }}" class="btn btn-primary pull-left">
-            <i class="fa fa-plus-circle"> Create</i>
-        </a>
+        @if(Auth::user()->role_id == 1)
+            <a href="{{ route('admin.exam.create') }}" class="btn btn-primary pull-left">
+                <i class="fa fa-plus-circle"> Thêm</i>
+            </a>
+        @endif
         <div class="x_panel">
             <div class="title_right pull-right">
                 <div class="form-group pull-right top_search">
@@ -54,15 +56,17 @@
                             <td><a href="{{ route('admin.exam.show', $exam) }}">{{ $exam->title }}</a></td>
                             <td>{{ $exam->start_date }}</td>
                             <td>{{$exam->shift->name}}</td>
-                            <td>{{ $exam->classroom->name }}</td>
                             <td>{{ $exam->course->name }}</td>
+                            <td>{{ $exam->classroom->name }}</td>
                             <td>{{ $exam->deadline}}</td>
                             @if($exam->state==0)
                                 <td>Chưa xong</td>
                                 <td>
-                                    <a href="{{ route('admin.exam.edit', $exam) }}" class="btn btn-success">
-                                        <i class="fa fa-edit"></i> Sửa
-                                    </a>
+                                    @if(Auth::user()->role_id == 1)
+                                        <a href="{{ route('admin.exam.edit', $exam) }}" class="btn btn-success">
+                                            <i class="fa fa-edit"></i> Sửa
+                                        </a>
+                                    @endif
                                 </td>
                             @else
                                 <td>Đã xong</td>

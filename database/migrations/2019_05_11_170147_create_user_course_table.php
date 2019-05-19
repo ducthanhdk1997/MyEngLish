@@ -29,7 +29,7 @@ class CreateUserCourseTable extends Migration
                 ->onDelete('set null');
             $table->foreign('voucher_id')
                 ->references('id')
-                ->on('vouchers')
+                ->on('detail_voucher')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 

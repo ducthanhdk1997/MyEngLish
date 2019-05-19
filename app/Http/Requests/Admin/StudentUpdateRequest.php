@@ -30,7 +30,7 @@ class StudentUpdateRequest extends FormRequest
                 Rule::unique('users')->ignore($this->route('user')->id)
             ],
             'phone' => 'required',
-            'facebook' => 'required',
+
         ];
     }
 }

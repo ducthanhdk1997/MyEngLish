@@ -15,12 +15,14 @@ class ClassTableSeeder extends Seeder
             [
                 'name' => 'Toeic01_CB_01',
                 'course_id' => 1,
-                'teacher_id' =>4,
+                'state' => false,
+                'teacher_id' =>2,
             ],
             [
                 'name' => 'Toeic01_NC_02',
                 'course_id' => 1,
-                'teacher_id' =>105,
+                'state' => false,
+                'teacher_id' =>453,
             ],
 
         ];

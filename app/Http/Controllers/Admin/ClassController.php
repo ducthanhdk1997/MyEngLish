@@ -25,21 +25,44 @@ class ClassController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $courses = Course::all();
         $scheduleclass = Schedule_Class::all();
-        $classes = Classes::query()->paginate(10);
-        $course_id = -1;
-        return view('admin.classes.index',
-            [
-                'classes'=>$classes,
-                'courses'=>$courses,
-                'course_id'=>$course_id,
-                'scheduleclass' => $scheduleclass
-            ]);
+
+        if(!empty($request->filter))
+        {
+            $filter = $request->filter;
+            $classes = Classes::query()->where('course_id','=',$filter)->paginate(10);
+            return view('admin.classes.index',
+                [
+                    'classes' => $classes,
+                    'filter' => $filter,
+                    'courses' => $courses,
+                    'scheduleclass' => $scheduleclass
+                ]);
+        }
+        else
+        {
+            $course = $courses->first();
+            $classes = Classes::query()->where('course_id','=',$course->id)->paginate(10);
+            return view('admin.classes.index',
+                [
+                    'classes' => $classes,
+                    'courses' => $courses,
+                    'scheduleclass' => $scheduleclass
+                ]);
+        }
     }
 
+
+    public function update_state(Classes $class)
+    {
+        $class -> state = 1;
+        $class->save();
+        flash()->success('Thành công');
+        return redirect()->back();
+    }
     public  function showByCourses($course_id)
     {
         $courses = Course::all();
@@ -103,6 +126,7 @@ class ClassController extends Controller
         $class->name = $request->name;
         $class->teacher_id = $request->teacher;
         $class->course_id = $request->course_id;
+        $class->state = 0;
         if($class->save()){
             flash()->success('Tạo lớp học thành công');
             return redirect()->route('admin.classes.index');

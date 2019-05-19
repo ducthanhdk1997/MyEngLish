@@ -1,4 +1,4 @@
-<script src="{{ asset('/vendor/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('/vendor/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
     <script src="{{ asset('/vendor/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- FastClick -->
@@ -38,4 +38,8 @@
 
     <script src='{{asset('/vendor/fullcalendar/core/main.js')}}'></script>
     <script src='{{asset('/vendor/fullcalendar/daygrid/main.js')}}'></script>
+    <script src="{{asset('/vendor/jquery.tagsinput/src/jquery.tagsinput.js')}}"></script>
+    <script src="{{asset('/vendor/switchery/dist/switchery.min.js')}}"></script>
+    <script src="{{asset('/vendor/google-code-prettify/src/prettify.js')}}"></script>
+
 

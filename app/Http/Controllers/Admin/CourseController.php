@@ -94,9 +94,8 @@ class CourseController extends Controller
     public function update(CourseStoreRequest $request, Course $course)
     {
         $course->name = $request->name;
-        $course->time_start = $request->time_start;
-        $course->time_end = $request->time_end;
-        $course->actua_end_date = $request->actua_end_date;
+        $course->start_date = $request->start_date;
+        $course->end_date = $request->end_date;
         $course->price = $request->price;
         $course->describe = $request->describe;
 //        dd($course);

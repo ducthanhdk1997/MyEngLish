@@ -18,10 +18,10 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'username' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'password' => bcrypt ('abc123'), // secret
         'remember_token' => str_random(10),
         'address'=> $faker->address,
-        'avatar' => str_random(10).'png',
+        'avatar' => 'image.jpg',
         'gender' => array_rand($gender),
         'phone' => $faker->phoneNumber,
         'facebook' =>'',
@@ -39,5 +39,12 @@ $factory->state(App\User::class,'teachers', function (Faker $faker) {
     return [
         'level' => 'Thạc sĩ',
         'role_id'=> 3,
+    ];
+});
+
+$factory->state(App\User::class,'employee', function (Faker $faker) {
+    return [
+        'level' => '',
+        'role_id'=> 2,
     ];
 });
