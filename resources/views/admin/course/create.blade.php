@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Mô tả</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" id="summary-ckeditor" name="describe">{{ old('describe') }}</textarea>
+                            <textarea class="form-control"  name="describe">{{ old('describe') }}</textarea>
                         </div>
                     </div>
 

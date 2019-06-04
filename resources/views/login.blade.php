@@ -43,7 +43,7 @@
                         <input type="email" class="form-control" placeholder="Email" name="email" />
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Password"  name="password"/>
+                        <input type="password" class="form-control" placeholder="Password" value="abc123" name="password"/>
                     </div>
                     <button type="submit" class="btn btn-default">Login</button>
 

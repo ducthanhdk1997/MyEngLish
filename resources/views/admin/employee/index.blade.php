@@ -5,7 +5,7 @@
 
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30">
         <a href="{{ route('admin.employee.create') }}" class="btn btn-primary pull-left">
-            <i class="fa fa-plus-circle"> Create</i>
+            <i class="fa fa-plus-circle"> Thêm</i>
         </a>
         <div class="x_panel">
             <div class="x_title">

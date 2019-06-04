@@ -54,10 +54,12 @@
                         <div class="col-sm-10">
                             <select class="form-control" name="shift_id" id="shifts">
                                 @foreach($shifts as $shift)
-                                    @if($exam->shift_id == $shift->id)
-                                        <option value="{{$shift->id}} " selected>{{$shift->name}}</option>
-                                    @else
-                                        <option value="{{$shift->id}}">{{$shift->name}}</option>
+                                    @if($shift->id >= 6)
+                                        @if($exam->shift_id == $shift->id)
+                                            <option value="{{$shift->id}} " selected>{{$shift->name}}</option>
+                                        @else
+                                            <option value="{{$shift->id}}">{{$shift->name}}</option>
+                                        @endif
                                     @endif
                                 @endforeach
                             </select>

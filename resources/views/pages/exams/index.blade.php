@@ -5,11 +5,7 @@
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30">
 
         <div class="x_panel">
-            <div class="title_right pull-right">
-                <div class="form-group pull-right top_search">
-                    <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for title.." title="Type in a title">
-                </div>
-            </div>
+
             <div class="x_title">
                 <h2>Danh sách lịch thi đầu vào</h2>
                 <div class="clearfix"></div>
@@ -39,7 +35,6 @@
                         <th>Hạn đăng ký</th>
                         <th>Trạng thái</th>
                         <th>Điểm</th>
-
                     </tr>
                     </thead>
                     <tbody>
@@ -59,6 +54,14 @@
                                 <td>Chưa xong</td>
                             @else
                                 <td>Đã xong</td>
+                            @endif
+                            @php
+                                $exam_result = Auth::user()->examResult()->where('exam_id','=',$exam->id)->first();
+                            @endphp
+                            @if($exam_result !='')
+                                <td>{{$exam_result->score}}</td>
+                            @else
+                                <td></td>
                             @endif
 
                         </tr>

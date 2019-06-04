@@ -103,6 +103,7 @@
             $('#start').change(function () {
                 var start_date = $(this).val();
                 var shift_id = $('#shifts').val();
+
                 $.get("{{asset('admin/ajax/getroombyshiftandday')}}"+"/"+start_date+"/"+shift_id, function (data) {
                     $('#classrooms').html(data)
 
@@ -120,12 +121,6 @@
 
             });
 
-            {{--$('#courses').change(function () {--}}
-                {{--var course_id = $(this).val();--}}
-                {{--$.get("{{asset('admin/ajax/getdetailcourse')}}" + "/" + course_id, function (data) {--}}
-                    {{--$('#detail_course').html(data)--}}
-                {{--});--}}
-            {{--})--}}
         })
     </script>
 

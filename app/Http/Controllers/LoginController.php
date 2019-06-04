@@ -34,7 +34,7 @@ class LoginController extends Controller
                 }
                 if($role == 4)
                 {
-                    return redirect()->route('student.exam.index');
+                    return redirect()->route('student.course.index');
                 }
             }
         }

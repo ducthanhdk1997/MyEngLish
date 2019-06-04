@@ -4,14 +4,17 @@
     @endphp
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            @if($role == 1 || $role == 2)
-                <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>MyEL!</span></a>
+            @if($role == 1)
+                <a href="{{route('admin.courses.index')}}" class="site_title"><i class="fa fa-paw"></i> <span>MyEL!</span></a>
              @endif
+            @if($role == 2)
+                <a href="{{route('employee.home.index')}}" class="site_title"><i class="fa fa-paw"></i> <span>MyEL!</span></a>
+            @endif
             @if($role == 3)
                 <a href="{{route('teacher.class.index')}}" class="site_title"><i class="fa fa-paw"></i> <span>MyEL!</span></a>
             @endif
             @if($role == 4)
-                <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>MyEL!</span></a>
+                <a href="{{route('student.course.index')}}" class="site_title"><i class="fa fa-paw"></i> <span>MyEL!</span></a>
             @endif
         </div>
 
@@ -57,7 +60,6 @@
                             <ul class="nav child_menu">
                                 <li><a href="{{route('admin.classes.index')}}">Danh sách lớp học</a></li>
                                 <li><a href="{{route('admin.classes.create')}}">Mở lớp học</a></li>
-                                <li><a href="{{route('admin.schedule.index')}}">Thời khóa biểu</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-table"></i>Quản lý thi đầu vào <span class="fa fa-chevron-down"></span></a>
@@ -88,18 +90,17 @@
 
                     <li><a><i class="fa fa-cogs"></i>Giao diện<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-
                             <li><a href="{{route('employee.courses.index')}}">Danh sách khóa học</a></li>
                             <li><a href="{{route('employee.classes.addUser')}}">Thêm học viên vào lớp</a></li>
                             <li><a href="{{route('employee.user_course.index')}}">Giao diện đóng học phí</a></li>
-                            <li><a href="{{route('employee.courses.index')}}">Giao diện chuyển lớp,bảo lưu</a></li>
+                            <li><a href="{{route('employee.courses.index')}}">Giao diện chuyển lớp</a></li>
+                            <li><a href="{{route('employee.courses.index')}}">Giao diện bảo lưu</a></li>
                         </ul>
                     </li>
 
                     <li><a><i class="fa fa-desktop"></i>Quản lý lớp học<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{route('employee.classes.index')}}">Danh sách lớp học</a></li>
-                            <li><a href="{{route('employee.schedule.index')}}">Thời khóa biểu</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-table"></i>Quản lý thi đầu vào <span class="fa fa-chevron-down"></span></a>
@@ -141,7 +142,6 @@
                         <li><a><i class="fa fa-desktop"></i>Quản lý lớp học<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="{{route('teacher.class.index')}}">Danh sách lớp học của bạn</a></li>
-                                <li><a href="{{route('admin.schedule.index')}}">Thời khóa biểu</a></li>
                             </ul>
                         </li>
                     @endif
@@ -154,6 +154,7 @@
                         <li><a><i class="fa fa-cogs"></i>Giao diện<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="{{route('notification.notification')}}">Giao diện thông báo</a></li>
+                                <li><a href="{{route('student.course.index')}}">Danh sách khóa học sắp mở</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-table"></i>Lịch thi thử<span class="fa fa-chevron-down"></span></a>
@@ -166,7 +167,11 @@
                         <li><a><i class="fa fa-desktop"></i>Quản lý lớp học<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="{{route('student.class.index')}}">Danh sách lớp học của bạn</a></li>
-                                <li><a href="{{route('admin.schedule.index')}}">Thời khóa biểu</a></li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-desktop"></i>Quản lý lớp học<span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="{{route('student.class.index')}}">Danh sách lớp học của bạn</a></li>
                             </ul>
                         </li>
                     @endif

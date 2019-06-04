@@ -36,6 +36,8 @@
                         <th>Tên giảng viên</th>
                         <th>Khóa học</th>
                         <th>Lịch học</th>
+                        <th>Số buổi đã học</th>
+                        <th>Số buổi còn lại</th>
                         <th>Trạng thái</th>
                     </tr>
                     </thead>
@@ -60,7 +62,15 @@
                                     @endif
                                 @endforeach
                             </td>
-
+                            <td>{{$class->class_session->where('state','=',1)->count()}}</td>
+                            <td>{{$class->class_session->where('state','=',0)->count()}}</td>
+                            <td>
+                                @if($class->class_session->where('state','=',0)->count() == 0)
+                                    Đã kết thúc
+                                @else
+                                    Chưa xong
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

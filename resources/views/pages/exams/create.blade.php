@@ -93,9 +93,16 @@
                                     <td>{{$hasExams->shift->name}}</td>
                                     <td>{{ $hasExams->classroom->name }}</td>
                                     <td>{{ $hasExams->deadline}}</td>
-                                    <td>
-                                        <input type="radio" id="hasExam" name="hasExam" value="{{$hasExams->id}}">
-                                    </td>
+
+                                    @php
+                                        $now = \Carbon\Carbon::now()->toDateString();
+                                    @endphp
+
+                                    @if(strtotime($now) < strtotime($hasExams->deadline))
+                                        <td><input type="radio" id="hasExam" name="hasExam" value="{{$hasExams->id}}"></td>
+                                    @endif
+
+
                                 @endif
                             </tr>
                         </tbody>

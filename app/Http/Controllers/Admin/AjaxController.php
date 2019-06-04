@@ -66,19 +66,17 @@ class AjaxController extends Controller
     {
         $day = $request->day;
         $shift = $request->shift;
-
         $arrroom_id = array();
-
 
         if($shift == 6)
         {
-            $shift_id = [1,2];
+            $shift_id = [1,2,6];
         }
         else
         {
             if($shift == 7)
             {
-                $shift_id = [3,4];
+                $shift_id = [3,4,7];
             }
             else
             {
@@ -91,7 +89,6 @@ class AjaxController extends Controller
             ->whereIn('shift_id',$shift_id)
             ->where('state','=',0)
             ->get();
-
         $rooms2 = Exam::query()
             ->where('start_date','=',$day)
             ->whereIn('shift_id',$shift_id)
@@ -99,10 +96,13 @@ class AjaxController extends Controller
             ->get();
 
 
+
+
         foreach ($rooms1 as $room)
         {
             array_push($arrroom_id, $room->classroom_id);
         }
+
 
         foreach ($rooms2 as $room)
         {
@@ -147,15 +147,40 @@ class AjaxController extends Controller
             'shift' => 'required',
         ]);
 
-        if ($validator->fails())
-        {
-            return response()->json(['errors'=>$validator->errors()->all(),
-                'state' => false]);
-        }
-        $start_date = Carbon::parse($request->start_date);
-        $end_date = Carbon::parse($request->end_date);
 
-        $ngaychenhlech = ($request->weekday - $start_date->dayOfWeek);
+        if(asset($request->schedule))
+        {
+            $schedule_id = $request->schedule;
+            $cs = Class_Session::query()->where('schedule_id','=',$schedule_id)->select('id')->get();
+            if ($validator->fails())
+            {
+                return response()->json(['errors'=>$validator->errors()->all(),
+                    'state' => false]);
+            }
+            $start_date = Carbon::parse($request->start_date);
+            $end_date = Carbon::parse($request->end_date);
+            $shift = $request->shift;
+
+            if($shift <=2)
+            {
+                $shift_id = [$shift,6];
+            }
+            else
+            {
+                if($shift == 3 || $shift == 4)
+                {
+                    $shift_id = [$shift,7];
+                }
+                else
+                {
+                    if($shift == 5)
+                    {
+                        $shift_id = [$shift];
+                    }
+                }
+            }
+
+            $ngaychenhlech = ($request->weekday - $start_date->dayOfWeek);
             if($ngaychenhlech < 0) {
                 $ngaychenhlech += 7;
             }
@@ -164,33 +189,104 @@ class AjaxController extends Controller
 
 
 
-        //    return $days;
-        $danhsachphongcolich = [];
-        for ($dayStudy = $firstDayStudy; $dayStudy->lessThanOrEqualTo($end_date); $dayStudy->addWeek()) {
-            $start = clone $dayStudy;
+            //    return $days;
+            $danhsachphongcolich = [];
+            for ($dayStudy = $firstDayStudy; $dayStudy->lessThanOrEqualTo($end_date); $dayStudy->addWeek()) {
+                $start = clone $dayStudy;
 
-            $rooms1 = Class_Session::query()
-                ->where('start_date','=',$start->toDateString())
-                ->where('shift_id','=',$request->shift)
-                ->where('state','!=','2')
-                ->get();
-            $rooms2 = Exam::query()->where('start_date','=',$start->toDateString())
-                ->where('shift_id','=',$request->shift)
-                ->where('state','!=','2')
-                ->get();
-            foreach ($rooms1 as $room)
-            {
-                array_push($danhsachphongcolich, $room->classroom_id);
-            }
+                $rooms1 = Class_Session::query()
+                    ->where('start_date','=',$start->toDateString())
+                    ->whereIn('shift_id',$shift_id)
+                    ->where('state','=',0)
+                    ->whereNotIn('id',$cs)
+                    ->get();
+                $rooms2 = Exam::query()->where('start_date','=',$start->toDateString())
+                    ->whereIn('shift_id',$shift_id)
+                    ->where('state','=',0)
+                    ->get();
+                foreach ($rooms1 as $room)
+                {
+                    array_push($danhsachphongcolich, $room->classroom_id);
+                }
 
-            foreach ($rooms2 as $room)
-            {
-                array_push($danhsachphongcolich, $room->classroom_id);
+                foreach ($rooms2 as $room)
+                {
+                    array_push($danhsachphongcolich, $room->classroom_id);
+                }
             }
+            $danhSachNgayCanCheck = Classroom::query()->whereNotIn('id',$danhsachphongcolich)->get();
+            return response()->json(['success'=>$danhSachNgayCanCheck,
+                'state' => true]);
         }
-        $danhSachNgayCanCheck = Classroom::query()->whereNotIn('id',$danhsachphongcolich)->get();
-        return response()->json(['success'=>$danhSachNgayCanCheck,
-            'state' => true]);
+        else
+        {
+            if ($validator->fails())
+            {
+                return response()->json(['errors'=>$validator->errors()->all(),
+                    'state' => false]);
+            }
+            $start_date = Carbon::parse($request->start_date);
+            $end_date = Carbon::parse($request->end_date);
+            $shift = $request->shift;
+
+            if($shift <=2)
+            {
+                $shift_id = [$shift,6];
+            }
+            else
+            {
+                if($shift == 3 || $shift == 4)
+                {
+                    $shift_id = [$shift,7];
+                }
+                else
+                {
+                    if($shift == 5)
+                    {
+                        $shift_id = [$shift];
+                    }
+                }
+            }
+
+            $ngaychenhlech = ($request->weekday - $start_date->dayOfWeek);
+            if($ngaychenhlech < 0) {
+                $ngaychenhlech += 7;
+            }
+
+            $firstDayStudy = (clone $start_date)->addDay($ngaychenhlech);
+
+
+
+            //    return $days;
+            $danhsachphongcolich = [];
+            for ($dayStudy = $firstDayStudy; $dayStudy->lessThanOrEqualTo($end_date); $dayStudy->addWeek()) {
+                $start = clone $dayStudy;
+
+                $rooms1 = Class_Session::query()
+                    ->where('start_date','=',$start->toDateString())
+                    ->whereIn('shift_id',$shift_id)
+                    ->where('state','=',0)
+                    ->get();
+                $rooms2 = Exam::query()->where('start_date','=',$start->toDateString())
+                    ->whereIn('shift_id',$shift_id)
+                    ->where('state','=',0)
+                    ->get();
+                foreach ($rooms1 as $room)
+                {
+                    array_push($danhsachphongcolich, $room->classroom_id);
+                }
+
+                foreach ($rooms2 as $room)
+                {
+                    array_push($danhsachphongcolich, $room->classroom_id);
+                }
+            }
+            $danhSachNgayCanCheck = Classroom::query()->whereNotIn('id',$danhsachphongcolich)->get();
+            return response()->json(['success'=>$danhSachNgayCanCheck,
+                'state' => true]);
+        }
+
+
     }
 
     public function checkChangeClassSession($change_id)

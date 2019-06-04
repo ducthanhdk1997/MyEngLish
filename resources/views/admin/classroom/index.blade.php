@@ -5,7 +5,7 @@
 
 
     <div class="post col-md-12 col-sm-12 col-xs-12 padding-r-l-30">
-        <a href="{{ route('admin.classroom.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Create</a>
+        <a href="{{ route('admin.classroom.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Thêm mới</a>
         <div class="x_panel">
             <div class="x_title">
                 <h2>Danh sách khóa học</h2>

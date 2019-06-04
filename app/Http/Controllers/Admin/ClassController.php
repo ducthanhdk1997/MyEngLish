@@ -6,6 +6,7 @@ use App\Classes;
 use App\Classroom;
 use App\Course;
 use App\Http\Requests\Admin\AddUserStoreRequest;
+use App\Http\Requests\Admin\ClassesUpdateRequest;
 use App\Http\Requests\Admin\ClassStoreRequest;
 use App\Schedule_Class;
 use App\Shift;
@@ -180,7 +181,7 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ClassStoreRequest $request, Classes $class)
+    public function update(ClassesUpdateRequest $request, Classes $class)
     {
         $class->name = $request->name;
         $class->teacher_id = $request->teacher;

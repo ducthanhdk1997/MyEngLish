@@ -42,7 +42,7 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">Mật khẩu</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="password" placeholder="Nhập mật khẩu">
-                            <p>( Để trống nếu để mật khẩu mặc định là secret)</p>
+                            <p>( Để trống nếu để mật khẩu mặc định là abc123)</p>
                         </div>
                     </div>
 

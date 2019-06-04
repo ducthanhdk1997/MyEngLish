@@ -57,6 +57,10 @@ Route::group(['prefix' => 'student', 'middleware' => 'student', 'as' => 'student
         Route::get('/','ClassController@index')->name('index');
         Route::get('detail/{class}','ClassController@detail')->name('detail');
     });
+    Route::group(['prefix' => 'course' , 'as' => 'course.'], function (){
+        Route::get('/','CourseController@index')->name('index');
+
+    });
 });
 
 Route::group(['prefix' => 'teacher','middleware' => 'teacher', 'as' => 'teacher.'],function (){
@@ -82,7 +86,7 @@ Route::group(['prefix' => 'teacher','middleware' => 'teacher', 'as' => 'teacher.
 
 
 
-Route::group(['prefix'=>'admin','middleware'=>'admin_and_employee','as'=>'admin.'],function(){
+Route::group(['prefix'=>'admin','as'=>'admin.'],function(){
 
     Route::group(['prefix'=>'ajax','as'=>'ajax.'],function (){
         Route::get('classtypetable/{course_id}', 'Admin\AjaxController@getClassTypeTable')->name('classtypetable');

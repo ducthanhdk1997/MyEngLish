@@ -16,7 +16,7 @@
 		</div>
         @if(Auth::user()->role_id == 1)
             <a href="{{ route('admin.classes.create') }}" class="btn btn-primary pull-left">
-                <i class="fa fa-plus-circle"> Create</i>
+                <i class="fa fa-plus-circle"> Thêm</i>
             </a>
         @endif
 		<div class="x_panel">
@@ -33,6 +33,8 @@
 						<th>Tên giảng viên</th>
 						<th>Khóa học</th>
 						<th>Lịch học</th>
+						<th>Số buổi đã học</th>
+						<th>Số buổi còn lại</th>
 						<th>Action</th>
 					</tr>
 					</thead>
@@ -57,16 +59,21 @@
 									@endif
 								@endforeach
 							</td>
-							<td>
-								<a href="{{ route('admin.classes.edit', $class) }}" class="btn btn-success">
-									<i class="fa fa-edit"></i> Sửa
-								</a>
-							</td>
-							<td>
-								<a href="{{ route('admin.classes.schedule', $class) }}" class="btn btn-success">
-									<i class="fa fa-edit"></i> Lịch học
-								</a>
-							</td>
+							<td>{{$class->class_session->where('state','=',1)->count()}}</td>
+							<td>{{$class->class_session->where('state','=',0)->count()}}</td>
+							@if(Auth::user()->role_id == 1)
+								<td>
+									<a href="{{ route('admin.classes.edit', $class) }}" class="btn btn-success">
+										<i class="fa fa-edit"></i> Sửa
+									</a>
+								</td>
+								<td>
+									<a href="{{ route('admin.classes.schedule', $class) }}" class="btn btn-success">
+										<i class="fa fa-edit"></i> Lịch học
+									</a>
+								</td>
+							@endif
+
 						</tr>
 					@endforeach
 					</tbody>

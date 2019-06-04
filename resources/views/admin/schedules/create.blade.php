@@ -19,6 +19,15 @@
                             @endisset
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">Thông tin: </label>
+                            <div class="col-sm-10">
+                                <label for="" class="control-label">Khóa học:{{$class->course->name}} bắt đầu từ: {{$class->course->start_date}}
+                                    kết thúc vào: {{$class->course->end_date}}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
                             <label class="col-sm-2 control-label" for="courses">Thứ trong tuần:</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="weekdays" name="weekdays">
@@ -35,7 +44,7 @@
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Ngày bắt đầu:</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" name="start_date" value="{{$start_date}}" max="{{$end_date}}" min="{{$start_date}}" id="start" placeholder="Ngày bắt đầu" >
+                                <input type="date" class="form-control" name="start_date" value="{{\Carbon\Carbon::now()->toDateString()}}" max="{{$end_date}}" min="{{$start_date}}" id="start" placeholder="Ngày bắt đầu" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -50,7 +59,9 @@
                             <div class="col-sm-10">
                                 <select class="form-control" name="shifts" id="shifts">
                                     @foreach($shifts as $shift)
-                                        <option value="{{$shift->id}}" {{ old('shifts') == $shift->id ? 'selected' : '' }}>{{$shift->name}}</option>
+                                        @if($shift->id <= 5)
+                                            <option value="{{$shift->id}}" {{ old('shifts') == $shift->id ? 'selected' : '' }}>{{$shift->name}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>

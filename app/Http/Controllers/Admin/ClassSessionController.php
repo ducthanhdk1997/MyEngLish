@@ -64,19 +64,22 @@ class ClassSessionController extends Controller
         $classroom = $request->classroom;
         $weekday = $request->weekdays;
 
-        if($shift == 6)
+        if($shift <=2)
         {
-            $shift_id = [1,2];
+            $shift_id = [$shift,6];
         }
         else
         {
-            if($shift == 7)
+            if($shift == 3 || $shift == 4)
             {
-                $shift_id = [3,4];
+                $shift_id = [$shift,7];
             }
             else
             {
-                $shift_id = [$shift];
+                if($shift == 5)
+                {
+                    $shift_id = [$shift];
+                }
             }
         }
 
@@ -222,6 +225,8 @@ class ClassSessionController extends Controller
 
     public  function update(ClassSessionStoreRequest $request, Schedule_Class $schedule)
     {
+        $schedule_id = $request->schedule;
+        $cs = Class_Session::query()->where('schedule_id','=',$schedule_id)->select('id')->get();
         $shift = $request->shifts;
         $classroom = $request->classroom;
         $weekday = $request->weekdays;
@@ -261,6 +266,7 @@ class ClassSessionController extends Controller
                 ->whereIn('shift_id',  $shift_id)
                 ->where('classroom_id', '=', $request->classroom)
                 ->where('state','!=','2')
+                ->whereNotIn('id',$cs)
                 ->count();
 
             $exam = Exam::query()->where('start_date', '=', $start->toDateString())
@@ -277,7 +283,7 @@ class ClassSessionController extends Controller
             }
         }
 
-
+        //dd('tao dc lich');
         //tao lich chung
         $schedule->start_date = $request->start_date;
         $schedule->shift_id = $request->shifts;
@@ -290,8 +296,6 @@ class ClassSessionController extends Controller
         if ($schedule->save()) {
             $deleteSession = Class_Session::query()->where('schedule_id','=',$schedule->id)
                 ->delete();
-
-
             $checkSaveSchedule = 0;
             $firstDayStudy = (clone $start_date)->addDay($ngaychenhlech);
 

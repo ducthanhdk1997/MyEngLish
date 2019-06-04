@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label for="inputEmail3" class=" control-label">Mật khẩu</label>
                         <input type="text" class="form-control" name="password" placeholder="Nhập mật khẩu">
-                        <p>( Để trống nếu để mật khẩu mặc định là secret)</p>
+                        <p>( Để trống nếu để mật khẩu mặc định là abc123)</p>
                     </div>
 
                     <div class="form-group">

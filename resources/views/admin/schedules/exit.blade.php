@@ -19,6 +19,9 @@
                             @endisset
                         </div>
                         <div class="form-group">
+                            <input type="text" name="schedule" value="{{$schedule->id}}" hidden>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label" for="courses">Thứ trong tuần:</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="weekdays" name="weekdays">
@@ -41,13 +44,13 @@
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Ngày bắt đầu:</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" name="start_date" value="{{$schedule->start_date}}" min="{{$schedule->class->course->start_date}}" max="{{$schedule->class->course->end_date}}" id="start" placeholder="Ngày bắt đầu" >
+                                <input type="date" class="form-control" name="start_date" value="{{$schedule->start_date}}" min="{{\Carbon\Carbon::now()->toDateString()}}" max="{{$schedule->class->course->end_date}}" id="start" placeholder="Ngày bắt đầu" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Ngày kết thúc</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" name="end_date" value="{{$schedule->end_date}}" min="{{$schedule->class->course->start_date}}" max="{{$schedule->class->course->end_date}}"  id="end" placeholder="Ngày kết thúc" >
+                                <input type="date" class="form-control" name="end_date" value="{{$schedule->end_date}}" min="{{\Carbon\Carbon::now()->toDateString()}}" max="{{$schedule->class->course->end_date}}"  id="end" placeholder="Ngày kết thúc" >
                             </div>
                         </div>
 
@@ -56,7 +59,9 @@
                             <div class="col-sm-10">
                                 <select class="form-control" name="shifts" id="shifts">
                                     @foreach($shifts as $shift)
-                                        <option value="{{$shift->id}}" {{ $schedule->shift_id == $shift->id ? 'selected' : '' }}>{{$shift->name}}</option>
+                                        @if($shift->id <= 5)
+                                            <option value="{{$shift->id}}" {{ $schedule->shift_id == $shift->id ? 'selected' : '' }}>{{$shift->name}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -98,6 +103,7 @@
                 var weekday = $('#weekdays').val();
                 var shift = $('#shifts').val();
                 var end_date = $('#end').val();
+                var schedule = {{$schedule->id}}
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -110,28 +116,25 @@
                         start_date: start_date,
                         weekday: weekday,
                         shift: shift,
-                        end_date: end_date
+                        end_date: end_date,
+                        schedule: schedule
                     },
                     success: function(data){
                         if(data.state == false)
                         {
                             $('.alert-danger').html('');
                             jQuery.each(data.errors, function(key, value){
-                                jQuery('.alert-danger').show();
-                                jQuery('.alert-danger').append('<p>'+value+'</p>');
+                                jQuery('.alert-danger').show().append('<p>'+value+'</p>');
                             });
                         }
                         else
                         {
-                            $('.alert-danger').html('');
-                            $('.alert-danger').hide();
+                            $('.alert-danger').html('').hide();
                             $('#classroom').html('');
-                            $('#classroom').append(`<option value="{{$schedule->classroom_id}}" selected>{{$schedule->classroom->name}}</option>`)
+
                             $.each(data.success, function(key, value){
                                 var room = value;
-                                if(room.id !=roomId)
-                                    $('#classroom').append(`<option value="${room.id}" >${room.name}</option>`)
-
+                                $('#classroom').append(`<option value="${room.id}" >${room.name}</option>`)
                             });
                         }
 
@@ -147,6 +150,7 @@
                 var start_date = $('#start').val();
                 var shift = $('#shifts').val();
                 var end_date = $('#end').val();
+                var schedule = {{$schedule->id}}
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -159,26 +163,23 @@
                         start_date: start_date,
                         weekday: weekday,
                         shift: shift,
-                        end_date: end_date
+                        end_date: end_date,
+                        schedule: schedule
                     },
                     success: function(data){
                         if(data.state == false)
                         {
                             $('.alert-danger').html('');
                             jQuery.each(data.errors, function(key, value){
-                                jQuery('.alert-danger').show();
-                                jQuery('.alert-danger').append('<p>'+value+'</p>');
+                                jQuery('.alert-danger').show().append('<p>'+value+'</p>');
                             });
                         }
                         else
                         {
-                            $('.alert-danger').html('');
-                            $('.alert-danger').hide();
+                            $('.alert-danger').html('').hide();
                             $('#classroom').html('');
-                            $('#classroom').append(`<option value="{{$schedule->classroom_id}}" selected>{{$schedule->classroom->name}}</option>`)
                             $.each(data.success, function(key, value){
                                 var room = value;
-                                if(room.id !=roomId)
                                 $('#classroom').append(`<option value="${room.id}" >${room.name}</option>`)
 
                             });
@@ -194,6 +195,7 @@
                 var start_date = $('#start').val();
                 var weekday = $('#weekdays').val();
                 var end_date = $('#end').val();
+                var schedule = {{$schedule->id}}
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -206,7 +208,8 @@
                         start_date: start_date,
                         weekday: weekday,
                         shift: shift,
-                        end_date: end_date
+                        end_date: end_date,
+                        schedule: schedule
                     },
 
                     success: function(data){
@@ -214,21 +217,16 @@
                         {
                             $('.alert-danger').html('');
                             jQuery.each(data.errors, function(key, value){
-                                jQuery('.alert-danger').show();
-                                jQuery('.alert-danger').append('<p>'+value+'</p>');
+                                jQuery('.alert-danger').show().append('<p>'+value+'</p>');
                             });
                         }
                         else
                         {
-                            $('.alert-danger').html('');
-                            $('.alert-danger').hide();
+                            $('.alert-danger').html('').hide();
                             $('#classroom').html('');
-                            $('#classroom').append(`<option value="{{$schedule->classroom_id}}" selected>{{$schedule->classroom->name}}</option>`)
                             $.each(data.success, function(key, value){
                                 var room = value;
-                                if(room.id !=roomId)
-                                    $('#classroom').append(`<option value="${room.id}" >${room.name}</option>`)
-
+                                $('#classroom').append(`<option value="${room.id}" >${room.name}</option>`)
                             });
                         }
                     }

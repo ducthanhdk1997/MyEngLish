@@ -9,11 +9,7 @@
             </a>
         @endif
         <div class="x_panel">
-            <div class="title_right pull-right">
-                <div class="form-group pull-right top_search">
-                    <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for title.." title="Type in a title">
-                </div>
-            </div>
+
             <div class="x_title">
                 <h2>Danh sách lịch thi đầu vào</h2>
                 <div class="clearfix"></div>
@@ -43,7 +39,9 @@
                         <th>Phòng thi</th>
                         <th>Hạn đăng ký</th>
                         <th>Trạng thái</th>
-                        <th>Action</th>
+                        @if(Auth::user()->role_id == 1)
+                            <th>Action</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>

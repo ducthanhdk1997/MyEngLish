@@ -39,7 +39,7 @@
                                     @endphp
                                     @if($class_session->state == 0)
                                         <option value="{{$class_session->id}}" >
-                                            {{ $weekdays[$start_date->dayOfWeek]}} - ngày
+                                            {{$weekdays[$class_session->Schedule->weekday]}} - ngày
                                             {{$class_session->start_date}} -
                                             {{$class_session->classroom->name}} -
                                             {{$class_session->shift->name }}
@@ -69,7 +69,9 @@
                                 @php $i=1;
                                 @endphp
                                 @foreach($shifts as $shift)
-                                    <option value="{{$shift->id}}" {{ old('shift_id') == $shift->id ? 'selected' : '' }}  >{{$shift->name}}</option>
+                                    @if($shift->id <= 5)
+                                        <option value="{{$shift->id}}" {{ old('shift_id') == $shift->id ? 'selected' : '' }}  >{{$shift->name}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
